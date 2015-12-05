@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Screens.testScreen;
+import Screens.Test;
+import Screens.ListView;
 
 public class ProjectFrame extends JFrame {
 
@@ -39,12 +40,13 @@ public class ProjectFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		;
+		//Here, set the screen you want to see on start up
+		setContentPane(new Test());
 		
 	}
 	
 	
-	
+	//Call this method to change the content pane
 	public void setContentPane(JPanel panel){
 		this.getContentPane().removeAll();
 		this.getContentPane().add(panel);

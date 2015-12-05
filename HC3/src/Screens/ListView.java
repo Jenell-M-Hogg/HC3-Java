@@ -9,27 +9,19 @@ import Global.Constants;
 
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import Widgets.HeaderBar;
+import Widgets.BottomBar;
 
-public class testScreen extends JPanel {
+public class ListView extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public testScreen() {
+	public ListView() {
 		this.setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
 		
-		JButton test = new JButton("New button");
-		test.setHorizontalAlignment(SwingConstants.LEADING);
-		test.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				test.setText("Yoooo");
-				
-			}
-			
-		});
-		add(test);
+		BottomBar bottomBar = new BottomBar();
+		add(bottomBar);
 		
 		
 		
