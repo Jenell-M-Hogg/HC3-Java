@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Screens.testScreen;
+
 public class ProjectFrame extends JFrame {
 
 	private JPanel contentPane;
@@ -36,7 +38,18 @@ public class ProjectFrame extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+		
+		;
+		
+	}
+	
+	
+	
+	public void setContentPane(JPanel panel){
+		this.getContentPane().removeAll();
+		this.getContentPane().add(panel);
+		this.revalidate();
+		this.repaint();
 	}
 
 }
