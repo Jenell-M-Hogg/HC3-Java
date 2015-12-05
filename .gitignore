@@ -1,47 +1,60 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+#################
+## Eclipse
+#################
 
-# Folder config file
-Desktop.ini
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+*.pydevproject
+.metadata
+.gradle
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# Eclipse Core
+.project
 
-# Windows shortcuts
-*.lnk
+# External tool builders
+.externalToolBuilders/
 
-# =========================
-# Operating System Files
-# =========================
+# Locally stored "Eclipse launch configurations"
+*.launch
 
-# OSX
-# =========================
+# CDT-specific
+.cproject
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# JDT-specific (Eclipse Java Development Tools)
+.classpath
 
-# Thumbnails
-._*
+# Java annotation processor (APT)
+.factorypath
 
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
+# PDT-specific
+.buildpath
 
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# sbteclipse plugin
+.target
+
+# TeXlipse plugin
+.texlipse
+
+# STS (Spring Tool Suite)
+.springBeans
