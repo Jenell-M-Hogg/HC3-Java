@@ -41,7 +41,7 @@ public class ProjectFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		//Here, set the screen you want to see on start up
-		setContentPane(new Test());
+		setContentPane(new ListView());
 		
 	}
 	
