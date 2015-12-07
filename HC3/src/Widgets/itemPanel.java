@@ -39,7 +39,7 @@ public class ItemPanel extends JPanel {
 		int panelHeight = 25;
 		this.setSize(panelWidth, panelHeight);
 
-		String categoryIconFileLocation = "/images/DefaultCategoryIcon.png"; //item.getCategory().getIconLocation();
+		String categoryIconFileLocation = item.getCategory().getIconLocation();
 		String name = item.getName();
 		int quantity = item.getQuantity();
 		int countDown = item.getCountDown();
@@ -48,9 +48,9 @@ public class ItemPanel extends JPanel {
 		BufferedImage itemCategoryPicture = ImageIO.read(new File(getClass().getResource(categoryIconFileLocation).toURI()));
 		BufferedImage itemExpiryPicture = ImageIO.read(new File(getClass().getResource(expiryIconFileLocation).toURI()));
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{25, 37, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWidths = new int[]{25, 37, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		JLabel itemCategoryIcon = new JLabel(new ImageIcon(itemCategoryPicture));
@@ -70,7 +70,7 @@ public class ItemPanel extends JPanel {
 		GridBagConstraints gbc_lblQty = new GridBagConstraints();
 		gbc_lblQty.insets = new Insets(0, 0, 0, 5);
 		gbc_lblQty.anchor = GridBagConstraints.WEST;
-		gbc_lblQty.gridx = 8;
+		gbc_lblQty.gridx = 9;
 		gbc_lblQty.gridy = 0;
 		add(lblQty, gbc_lblQty);
 		JLabel itemExpiryIcon = new JLabel(new ImageIcon(itemExpiryPicture));
@@ -81,7 +81,7 @@ public class ItemPanel extends JPanel {
 		GridBagConstraints gbc_itemExpiryIcon = new GridBagConstraints();
 		gbc_itemExpiryIcon.insets = new Insets(0, 0, 0, 5);
 		gbc_itemExpiryIcon.anchor = GridBagConstraints.NORTHWEST;
-		gbc_itemExpiryIcon.gridx = 9;
+		gbc_itemExpiryIcon.gridx = 10;
 		gbc_itemExpiryIcon.gridy = 0;
 		add(itemExpiryIcon, gbc_itemExpiryIcon);
 	}
