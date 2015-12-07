@@ -1,8 +1,10 @@
 package Repository;
 
 import java.util.Date;
+import Global.FridgeLocation;
 
 public class Item {
+	
 	private String name="";
 	private String category="";
 	private int countDown=0;
@@ -10,6 +12,7 @@ public class Item {
 	private String units="";
 	private Date bestBefore;
 	private String ownerShip="";
+	private FridgeLocation location;
 	
 	public String getCategory() {
 		return category;

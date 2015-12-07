@@ -227,3 +227,5 @@ pip-log.txt
 .recommenders/index/*
 .recommenders/repository/*
 >>>>>>> origin/master
+.recommenders/caches/identified-project-coordinates.json
+*.json
