@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Screens.Test;
 import Screens.ListView;
+import Screens.MainMenu;
 
 public class ProjectFrame extends JFrame {
 
@@ -41,7 +42,7 @@ public class ProjectFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		//Here, set the screen you want to see on start up
-		setContentPane(new ListView());
+		setContentPane(new MainMenu());
 		
 	}
 	
