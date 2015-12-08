@@ -118,25 +118,25 @@ public class MainMenu extends JPanel {
 		
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(FridgePanel, "Fridge");
+				AddToList(FridgePanel, "Fridge", scrollPane_1 );
 			}
 		});
 		
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveFromList(FridgePanel);
+				RemoveFromList(FridgePanel, scrollPane_1);
 			}
 		});
 		
 		btnAddShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(Shoppingpanel, "Shopping List");
+				AddToList(Shoppingpanel, "Shopping List", scrollPane);
 			}
 		});
 		
 		btnRemoveShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveFromList(Shoppingpanel);
+				RemoveFromList(Shoppingpanel, scrollPane);
 			}
 		});
 		
@@ -144,7 +144,7 @@ public class MainMenu extends JPanel {
 	
 	
 	//add items to both lists based on which list and which panel
-	public void AddToList(JPanel currentPanel, String type){
+	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane){
 		Button hi = new Button();
 		
 		hi.setName("button" + (currentPanel.getComponentCount()+1));
@@ -154,17 +154,12 @@ public class MainMenu extends JPanel {
 		
 		currentPanel.add(hi);
 		
-		//currentPanel.setPreferredSize(currentPanel.getPreferredSize());
-		//currentPanel.getParent().setPreferredSize(getPreferredSize());
-		currentPanel.getParent().validate();
-		//currentPanel.getParent().repaint();
-		currentPanel.revalidate();
-		currentPanel.repaint();
+		UpdateScreens(currentPanel, jPane);
 	}
 	
 	
 	//remove items from both lists
-	public void RemoveFromList(JPanel currentPanel){
+	public void RemoveFromList(JPanel currentPanel, JScrollPane jPane){
 		if(currentPanel.getComponentCount() > 0){
 		    Component[] components = currentPanel.getComponents();
 		    
@@ -174,24 +169,20 @@ public class MainMenu extends JPanel {
 		    	}
 		    }
 		    
-		   // currentPanel.setPreferredSize(currentPanel.getPreferredSize());
-		    //currentPanel.getParent().setPreferredSize(getPreferredSize());
-			currentPanel.getParent().validate();
-			//currentPanel.getParent().repaint();
-			currentPanel.revalidate();
-			currentPanel.repaint();
+		    	UpdateScreens(currentPanel, jPane);
 		    
 		}
 		
-		
 	}
 	
-	public void DeleteItem(Container c) {
-	    Component[] components = c.getComponents();
-	    for(Component com : components) {
 	
-	    }
+	
+	public void UpdateScreens(JPanel currentPanel, JScrollPane jPane){
+	   currentPanel.getParent().setPreferredSize(jPane.getPreferredSize());
+		jPane.getParent().revalidate();
+		jPane.getParent().repaint();
 	}
+	
 
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
