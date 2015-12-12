@@ -30,8 +30,13 @@ import java.awt.event.MouseEvent;
 import java.awt.Panel;
 
 public class ItemPanel extends JPanel {
-	private JTextField txtSdf;
 	private Item item;
+	private BufferedImage itemCategoryPicture;
+	private JLabel itemCategoryIcon;
+	private JLabel lblQty;
+	private ExpiryCountDown expiryCountDown;
+	
+	private String tempActionListenerString = "";
 	
 	/**
 	 * Create the panel.
@@ -42,34 +47,14 @@ public class ItemPanel extends JPanel {
 		this.item = item;
 		this.setSize(Constants.FRAME_WIDTH/2, 25);
 		
-		
-		
-		updateItemPanel(item);
-	}
-	
-	public Item getItem() {
-		return item;
-	}
-	
-	public void setItem(Item item) throws IOException, URISyntaxException {
-		this.item = item;
-		updateItemPanel(item);
-	}
-
-	private void updateItemPanel(Item item2) throws IOException, URISyntaxException {
-		String name = item.getName();
-		int quantity = item.getQuantity();
-		int countDown = item.getCountDown();
+		itemCategoryPicture = ImageIO.read(new File(getClass().getResource(item.getCategory().getIconLocation()).toURI()));
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println("Item " + name + "was clicked; open item details pop-up");
+				System.out.println(tempActionListenerString);
 			}
 		});
-		
-		String categoryIconFileLocation = item.getCategory().getIconLocation();
-		BufferedImage itemCategoryPicture = ImageIO.read(new File(getClass().getResource(categoryIconFileLocation).toURI()));
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{25, 37, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -77,10 +62,12 @@ public class ItemPanel extends JPanel {
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
-		JLabel itemCategoryIcon = new JLabel(new ImageIcon(itemCategoryPicture));
-		itemCategoryIcon.setText(name);
+		
+		itemCategoryIcon = new JLabel(new ImageIcon(itemCategoryPicture));
+		
+		//itemCategoryIcon.setText(item.getName());
 		itemCategoryIcon.setHorizontalAlignment(SwingConstants.LEFT);
-		itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(categoryIconFileLocation)));
+		//itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
 		GridBagConstraints gbc_itemCategoryIcon = new GridBagConstraints();
 		gbc_itemCategoryIcon.anchor = GridBagConstraints.WEST;
 		gbc_itemCategoryIcon.insets = new Insets(0, 0, 0, 5);
@@ -89,7 +76,7 @@ public class ItemPanel extends JPanel {
 		gbc_itemCategoryIcon.gridy = 0;
 		add(itemCategoryIcon, gbc_itemCategoryIcon);
 		
-		JLabel lblQty = new JLabel(" x" + quantity);
+		lblQty = new JLabel(" x" + item.getQuantity());
 		
 		GridBagConstraints gbc_lblQty = new GridBagConstraints();
 		gbc_lblQty.insets = new Insets(0, 0, 0, 5);
@@ -98,12 +85,50 @@ public class ItemPanel extends JPanel {
 		gbc_lblQty.gridy = 0;
 		add(lblQty, gbc_lblQty);
 		
-		ExpiryCountDown expiryCountDown = new ExpiryCountDown(countDown);
+		expiryCountDown = new ExpiryCountDown(item.getCountDown());
 		GridBagConstraints gbc_expiryCountDown = new GridBagConstraints();
 		gbc_expiryCountDown.insets = new Insets(0, 0, 0, 5);
 		gbc_expiryCountDown.fill = GridBagConstraints.EAST;
 		gbc_expiryCountDown.gridx = 10;
 		gbc_expiryCountDown.gridy = 0;
 		add(expiryCountDown, gbc_expiryCountDown);
+		
+		update();
+	}
+	
+	public Item getItem() {
+		return item;
+	}
+	
+	public void setItem(Item item) throws IOException, URISyntaxException {
+		this.item = item;
+		
+		String name = item.getName();
+		int quantity = item.getQuantity();
+		int countDown = item.getCountDown();
+		String categoryIconFileLocation = item.getCategory().getIconLocation();
+		
+		BufferedImage itemCategoryPicture = ImageIO.read(new File(getClass().getResource(categoryIconFileLocation).toURI()));
+
+		update();
+	}
+
+	private void update() throws IOException, URISyntaxException {
+		
+		itemCategoryIcon.setText(item.getName());
+		itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
+		
+		String qtyText = " x" + item.getQuantity();
+		if (this.item.getQuantity() == -1) {
+			lblQty.setVisible(false); 
+		} else {
+			lblQty.setVisible(true);
+		}
+		lblQty.setText(qtyText);
+		
+		expiryCountDown.setCountDown(item.getCountDown());
+		expiryCountDown.update();
+		
+		tempActionListenerString = "Item " + this.item.getName() + "was clicked; open item details pop-up";
 	}
 }
