@@ -30,4 +30,8 @@ public class ShopList {
 	public void removeItem(Item item) {
 		shopListItems.remove(item);
 	}
+	
+	public ShopList(String name){
+		this.name= name;
+	}
 }
