@@ -71,17 +71,8 @@ public class MainMenu extends JPanel {
 		
 		JFrame popFrame = new JFrame("JOptionPane showMessageDialog example");
 		
-		final JOptionPane optionPane = new JOptionPane(
-			    "The only way to close this dialog is by\n"
-			    + "pressing one of the following buttons.\n"
-			    + "Do you understand?",
-			    JOptionPane.QUESTION_MESSAGE,
-			    JOptionPane.YES_NO_OPTION);
+
 		
-		//optionPane.showMessageDialog(popFrame, "Test");
-		
-		
-		//JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
 		
 		JButton btnRemove = new JButton("remove Fridge");
 		JButton btnAdd = new JButton("Add Fridge");
@@ -197,12 +188,25 @@ public class MainMenu extends JPanel {
 		//confirm deletion
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveFromList(Shoppingpanel, scrollPane);
-				RemoveFromList(FridgePanel, scrollPane_1);
-				SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
-				SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
-				btnNewButton.setVisible(false);
-				btnCancel.setVisible(false);
+				
+				Object[] options = {"Please continue",
+		        "Cancel"};
+				int result = JOptionPane.showOptionDialog(popFrame,
+		"This action will permanently remove selected objects. Are you sure you want to proceed?",
+		"A Silly Question",
+		JOptionPane.YES_NO_OPTION,
+		JOptionPane.WARNING_MESSAGE,
+		null,     //do not use a custom Icon
+		options,  //the titles of buttons
+		options[0]); //default button title
+				if(result == JOptionPane.YES_OPTION){
+					RemoveFromList(Shoppingpanel, scrollPane);
+					RemoveFromList(FridgePanel, scrollPane_1);
+					SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
+					SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
+					btnNewButton.setVisible(false);
+					btnCancel.setVisible(false);
+				}
 			}
 		});
 		
