@@ -5,6 +5,7 @@ import javax.swing.JScrollPane;
 
 import Global.Constants;
 import Global.ProjectFrame;
+import Repository.Fridge;
 import Repository.Item;
 
 import javax.swing.JComboBox;
@@ -51,7 +52,7 @@ public class MainMenu extends JPanel {
 	private final Action action = new SwingAction();
 	private JTextField txtMainMenu;
 	
-	
+	ArrayList<Fridge> fridgeData = new ArrayList();
 
 	/**
 	 * Create the panel.
@@ -280,7 +281,7 @@ public class MainMenu extends JPanel {
 			JPanel childpanel = new JPanel();
 			Button fridgeAccess = new Button();
 			Checkbox confirmDelete = new Checkbox();
-			//ListView listview = new ListView();
+			Fridge fridge = new Fridge(fridgeName, null);
 			
 			fridgeAccess.setPreferredSize(new Dimension(100,75));
 			fridgeAccess.setLabel(fridgeName);
@@ -288,9 +289,7 @@ public class MainMenu extends JPanel {
 			fridgeAccess.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(type.equals("Shopping List")){
-						fridgeAccess.setLabel("NOICE");
-						JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
-						
+											
 					}
 					else{
 						fridgeAccess.setLabel("WHATUP");
@@ -306,15 +305,15 @@ public class MainMenu extends JPanel {
 			confirmDelete.setName("checkbox");
 			
 			
-			childpanel.setName("Panel" + (currentPanel.getComponentCount() +1));
+			childpanel.setName(fridgeName);
 			
 			
-			//childpanel.add(listview);
+			fridgeData.add(fridge);
 			childpanel.add(confirmDelete);
 			childpanel.add(fridgeAccess);
 			currentPanel.add(childpanel);
 					
-				UpdateScreens(currentPanel, jPane);
+			UpdateScreens(currentPanel, jPane);
 		}
 	}
 	
@@ -332,6 +331,11 @@ public class MainMenu extends JPanel {
 		    	Component[] imbedcomp = ((Container) com).getComponents();
 		    	for(Component checkbox : imbedcomp){
 		    		if(checkbox.getName().equals("checkbox") && ((Checkbox) checkbox).getState() == true){
+		    			
+		    			for(int i = 0; i<fridgeData.size(); i++)
+		    				if(com.getName().equals(fridgeData.get(i).returnName()))
+		    					fridgeData.remove(i);
+		    					
 		    			currentPanel.remove(com); 
 		    		}
 		    	}
