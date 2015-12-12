@@ -31,6 +31,7 @@ import java.awt.Panel;
 
 public class ItemPanel extends JPanel {
 	private JTextField txtSdf;
+	private Item item;
 	
 	/**
 	 * Create the panel.
@@ -38,13 +39,27 @@ public class ItemPanel extends JPanel {
 	 * @throws URISyntaxException 
 	 */
 	public ItemPanel(Item item) throws IOException, URISyntaxException {
+		this.item = item;
 		this.setSize(Constants.FRAME_WIDTH/2, 25);
+		
+		
+		
+		updateItemPanel(item);
+	}
+	
+	public Item getItem() {
+		return item;
+	}
+	
+	public void setItem(Item item) throws IOException, URISyntaxException {
+		this.item = item;
+		updateItemPanel(item);
+	}
 
-		String categoryIconFileLocation = item.getCategory().getIconLocation();
+	private void updateItemPanel(Item item2) throws IOException, URISyntaxException {
 		String name = item.getName();
 		int quantity = item.getQuantity();
 		int countDown = item.getCountDown();
-		String expiryIconFileLocation = "/images/ExpiryCountdown.png";
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -53,8 +68,8 @@ public class ItemPanel extends JPanel {
 			}
 		});
 		
+		String categoryIconFileLocation = item.getCategory().getIconLocation();
 		BufferedImage itemCategoryPicture = ImageIO.read(new File(getClass().getResource(categoryIconFileLocation).toURI()));
-		BufferedImage itemExpiryPicture = ImageIO.read(new File(getClass().getResource(expiryIconFileLocation).toURI()));
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{25, 37, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -74,19 +89,7 @@ public class ItemPanel extends JPanel {
 		gbc_itemCategoryIcon.gridy = 0;
 		add(itemCategoryIcon, gbc_itemCategoryIcon);
 		
-		/*JLabel itemExpiryIcon = new JLabel(new ImageIcon(itemExpiryPicture));
-		itemExpiryIcon.setText("");
-		itemExpiryIcon.setHorizontalAlignment(SwingConstants.LEFT);
-		itemExpiryIcon.setVerticalAlignment(SwingConstants.BOTTOM);
-		itemExpiryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(expiryIconFileLocation)));
-		GridBagConstraints gbc_itemExpiryIcon = new GridBagConstraints();
-		gbc_itemExpiryIcon.insets = new Insets(0, 0, 0, 5);
-		gbc_itemExpiryIcon.anchor = GridBagConstraints.NORTHWEST;
-		gbc_itemExpiryIcon.gridx = 10;
-		gbc_itemExpiryIcon.gridy = 0;
-		add(itemExpiryIcon, gbc_itemExpiryIcon);*/
-		
-		JLabel lblQty = new JLabel("Qty: " + quantity);
+		JLabel lblQty = new JLabel(" x" + quantity);
 		
 		GridBagConstraints gbc_lblQty = new GridBagConstraints();
 		gbc_lblQty.insets = new Insets(0, 0, 0, 5);
