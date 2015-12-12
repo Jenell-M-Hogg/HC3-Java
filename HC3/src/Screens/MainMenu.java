@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import Global.Constants;
+import Repository.Item;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -12,8 +13,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 import java.awt.GridLayout;
 import java.awt.List;
+import java.awt.PopupMenu;
 import java.awt.Button;
 import java.awt.CardLayout;
+import java.awt.Checkbox;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -30,10 +33,12 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.GridBagLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainMenu extends JPanel {
 	private final Action action = new SwingAction();
 	private JTextField txtMainMenu;
+	
 	
 
 	/**
@@ -59,15 +64,20 @@ public class MainMenu extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
+		
+		JButton btnNewButton = new JButton("Confirm");
+		btnNewButton.setVisible(false);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setVisible(false);
 		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap(68, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addContainerGap(97, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addGroup(groupLayout.createSequentialGroup()
 							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 								.addGroup(groupLayout.createSequentialGroup()
 									.addComponent(btnAddShoppingList)
@@ -80,9 +90,15 @@ public class MainMenu extends JPanel {
 								.addComponent(scrollPane)
 								.addComponent(scrollPane_1))
 							.addGap(39))
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(txtMainMenu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(120))))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(117)
+					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 118, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnCancel, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+					.addGap(72))
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -101,7 +117,11 @@ public class MainMenu extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnAddShoppingList)
 						.addComponent(btnRemoveShoppingList))
-					.addContainerGap(128, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(btnCancel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+					.addGap(37))
 		);
 		
 		JPanel Shoppingpanel = new JPanel();
@@ -124,7 +144,9 @@ public class MainMenu extends JPanel {
 		
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveFromList(FridgePanel, scrollPane_1);
+				SetCheckBoxesOn(FridgePanel, scrollPane_1,true);
+				btnNewButton.setVisible(true);
+				btnCancel.setVisible(true);
 			}
 		});
 		
@@ -136,23 +158,73 @@ public class MainMenu extends JPanel {
 		
 		btnRemoveShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveFromList(Shoppingpanel, scrollPane);
+				SetCheckBoxesOn(Shoppingpanel, scrollPane,true);
+				btnNewButton.setVisible(true);
+				btnCancel.setVisible(true);
 			}
 		});
 		
+		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RemoveFromList(Shoppingpanel, scrollPane);
+				RemoveFromList(FridgePanel, scrollPane_1);
+				SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
+				SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
+				btnNewButton.setVisible(false);
+				btnCancel.setVisible(false);
+			}
+		});
+		
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
+				SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
+				btnNewButton.setVisible(false);
+				btnCancel.setVisible(false);
+			}
+		});
 	}
 	
 	
 	//add items to both lists based on which list and which panel
 	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane){
-		Button hi = new Button();
 		
-		hi.setName("button" + (currentPanel.getComponentCount()+1));
-		hi.setPreferredSize(new Dimension(100,75));
+	JPanel childpanel = new JPanel();
+	Button fridgeAccess = new Button();
+	Checkbox confirmDelete = new Checkbox();
+	//ListView listview = new ListView();
+	
+	fridgeAccess.setPreferredSize(new Dimension(100,75));
+	fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
+	
+	fridgeAccess.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+			if(type.equals("Shopping List")){
+				fridgeAccess.setLabel("NOICE");
+			}
+			else{
+				fridgeAccess.setLabel("WHATUP");
+			}
+		}
+	});
+	
+	confirmDelete.setVisible(false);
+	if(type.equals("Shopping List"))
+		confirmDelete.setLabel("Remove Shopping List" + " " +(currentPanel.getComponentCount() +1));
+	else
+		confirmDelete.setLabel("Remove Fridge" + " " +(currentPanel.getComponentCount() +1));
+	confirmDelete.setName("checkbox");
+	
+	
+	childpanel.setName("Panel" + (currentPanel.getComponentCount() +1));
+	
+	
+	//childpanel.add(listview);
+	childpanel.add(confirmDelete);
+	childpanel.add(fridgeAccess);
+	currentPanel.add(childpanel);
 		
-		hi.setLabel(type + " " + (currentPanel.getComponentCount()+1));
-		
-		currentPanel.add(hi);
 		
 		UpdateScreens(currentPanel, jPane);
 	}
@@ -160,12 +232,16 @@ public class MainMenu extends JPanel {
 	
 	//remove items from both lists
 	public void RemoveFromList(JPanel currentPanel, JScrollPane jPane){
+		
 		if(currentPanel.getComponentCount() > 0){
 		    Component[] components = currentPanel.getComponents();
 		    
 		    for(Component com : components) {
-		    	if(com.getName().equals("button"+ currentPanel.getComponentCount())){
-		    		currentPanel.remove(com); 
+		    	Component[] imbedcomp = ((Container) com).getComponents();
+		    	for(Component checkbox : imbedcomp){
+		    		if(checkbox.getName().equals("checkbox") && ((Checkbox) checkbox).getState() == true){
+		    			currentPanel.remove(com); 
+		    		}
 		    	}
 		    }
 		    
@@ -177,6 +253,32 @@ public class MainMenu extends JPanel {
 	
 	
 	
+	
+	public void SetCheckBoxesOn(JPanel currentPanel, JScrollPane jPane, Boolean state){
+		if(currentPanel.getComponentCount() > 0){
+		    Component[] components = currentPanel.getComponents();
+		    
+		    for(Component com : components) {
+		    	Component[] imbedcomp = ((Container) com).getComponents();
+		    	for(Component checkbox : imbedcomp){
+		    		if(checkbox.getName().equals("checkbox") && state){
+		    			checkbox.setVisible(true); 
+		    		}else if(checkbox.getName().equals("checkbox") && !state){
+		    			checkbox.setVisible(false); 
+		    		}
+		    	}
+		    }
+		    
+		    	UpdateScreens(currentPanel, jPane);
+		    
+		}
+		
+	}
+	
+	
+	
+	
+	//updates the screen to display the different fridges correctly
 	public void UpdateScreens(JPanel currentPanel, JScrollPane jPane){
 	   currentPanel.getParent().setPreferredSize(jPane.getPreferredSize());
 		jPane.getParent().revalidate();
@@ -184,6 +286,9 @@ public class MainMenu extends JPanel {
 	}
 	
 
+	
+	
+	
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "SwingAction");
@@ -193,3 +298,46 @@ public class MainMenu extends JPanel {
 		}
 	}
 }
+
+
+
+
+
+//old addfridge:--------------------------------------------------
+/*Button fridgeAccess = new Button();
+//Checkbox confirmDelete = new Checkbox();
+
+fridgeAccess.setName("button" + (currentPanel.getComponentCount()+1));
+fridgeAccess.setPreferredSize(new Dimension(100,75));
+
+fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
+
+fridgeAccess.addActionListener(new ActionListener() {
+	public void actionPerformed(ActionEvent e) {
+		if(type.equals("Shopping List")){
+			fridgeAccess.setLabel("NOICE");
+		}
+		else{
+			fridgeAccess.setLabel("WHATUP");
+		}
+	}
+});
+
+
+currentPanel.add(fridgeAccess);
+//currentPanel.add(confirmDelete);*/
+
+
+//old removeFridge:--------------------------------------------------
+/*if(currentPanel.getComponentCount() > 0){
+Component[] components = currentPanel.getComponents();
+
+for(Component com : components) {
+	if(com.getName().equals("button"+ currentPanel.getComponentCount())){
+		currentPanel.remove(com); 
+	}
+}
+
+	UpdateScreens(currentPanel, jPane);
+
+}*/
