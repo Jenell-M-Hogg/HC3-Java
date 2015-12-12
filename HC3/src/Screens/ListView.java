@@ -3,6 +3,7 @@ package Screens;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -16,6 +17,8 @@ import Widgets.HeaderBar;
 import Widgets.ItemPanel;
 
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -30,6 +33,8 @@ import javax.swing.JList;
 import java.awt.Component;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.JScrollPane;
@@ -37,10 +42,22 @@ import javax.swing.ScrollPaneConstants;
 
 import java.awt.BorderLayout;
 
+import Repository.Category;
+
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.CompoundBorder;
+
 public class ListView extends JPanel {
 	Fridge fridge;
 	String[] labels= {"Name", "Fewest Days","Most Days","Category","Location"};
 	private JLabel displayedFridge;
+	
+	private ArrayList<String> locations=new ArrayList<String>();
+	private ArrayList<Category> categories= new ArrayList<Category>();
+	private ArrayList<ItemPanel> itemPanels= new ArrayList<ItemPanel>();
+	private JScrollPane scrollPane;
+	private JPanel paneWindow;
 	/**
 	 * Create the panel.
 	 */
@@ -127,26 +144,76 @@ public class ListView extends JPanel {
 		
 		JPanel listPane = new JPanel();
 		bottomPanel.add(listPane, BorderLayout.CENTER);
-		listPane.setLayout(new GridLayout(0, 1, 0, 0));
+		listPane.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane();
+		paneWindow= new JPanel();
+		paneWindow.setBorder(new CompoundBorder());
+		paneWindow.setPreferredSize(new Dimension(100,100));
+		paneWindow.setLayout(new GridBagLayout());
+		
+		paneWindow.setBackground(Color.WHITE);
+		
+		
+		
+		
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setMinimumSize(listPane.getSize());
+		scrollPane.setViewportView(paneWindow);
+		
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		listPane.add(scrollPane);
 		
 		
-		
+		listPane.add(scrollPane, BorderLayout.CENTER);
 		
 	
 		
 		
 		
+		setUpList(sortBy);
 
 	}
 	
-	private void setUpList() throws IOException, URISyntaxException {
+	private void setUpList(JPanel sortBy) {
+		//Given a fridge, initialize the screen.
 		
 		
+		//We want to create Item Panels from the Items in the fridge and sort them by Location
+		ArrayList<Item> items= fridge.getItems();
+		for(int i=0; i<items.size(); i++){
+			try {
+				this.itemPanels.add(new ItemPanel(items.get(i)));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		//By default, the list is sorted by name. Enable the "Name" button
+		Component[] components=sortBy.getComponents();
+		
+		for (int i=0; i<components.length; i++){
+			if (components[i] instanceof JToggleButton){
+				if (((JToggleButton) components[i]).getText().equals(labels[0])){
+					((JToggleButton)components[i]).setSelected(true);
+					break;
+				}
+				
+			}
+		}
+		
+		//Sort by name
+		this.sortBy(labels[0]);
+	
+		
+		
+		
+	}
+	
+	private void addItem(Item item){
 		
 	}
 
@@ -182,6 +249,7 @@ public class ListView extends JPanel {
 		//If button equals name
 		if(button.equals(labels[0])){
 			//Sort the things by name
+			nameSort();
 		}
 		else if (button.equals(labels[1])){
 			//Sort by Fewest days
@@ -197,6 +265,64 @@ public class ListView extends JPanel {
 		else if (button.equals(labels[4])){
 			//Sort by location
 		}
+	}
+
+	private void nameSort() {
+		//Sorts the item panels by name
+		
+		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
+		
+		sorted.add(this.itemPanels.get(0));
+		String thisName;
+		String thatName;
+		for(int i=1;i<itemPanels.size();i++){
+			thisName=itemPanels.get(i).getItem().getName();
+			for(int m=0; m<sorted.size(); m++){
+				thatName=sorted.get(m).getItem().getName();
+				
+				if(thatName.compareTo(thisName)>0){
+					//If this is true, that Name goes behind thisName
+					sorted.add(m, itemPanels.get(i));
+					break;
+				}
+				else{
+					//thisName goes behind thatName
+					sorted.add(m+1, itemPanels.get(i));
+					break;
+				}
+			}
+		}
+		
+		//The item Panels are sorted alphabetically, now display them on the scrollPane
+		this.itemPanels=sorted;
+		this.updateList();
+
+		
+		
+	}
+
+	private void updateList() {
+		
+		
+		GridBagConstraints gbc_itemPanel= new GridBagConstraints();
+		gbc_itemPanel.ipady = 10;
+		gbc_itemPanel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_itemPanel.fill = GridBagConstraints.BOTH;
+		
+		gbc_itemPanel.gridx = 0;
+		gbc_itemPanel.gridy = 0;
+		
+		for(int i=0; i<this.itemPanels.size(); i++){
+			gbc_itemPanel.gridy=i;
+			((JPanel)scrollPane.getViewport().getView()).add(itemPanels.get(i),gbc_itemPanel);
+		}
+		
+		
+		
+		
+		scrollPane.repaint();
+		
+		
 	}
 	
 	

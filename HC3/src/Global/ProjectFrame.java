@@ -9,8 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Repository.Fridge;
 import Repository.Item;
-import Screens.MainMenu;
-import Screens.Test;
+import Screens.JScrollPaneHeadersandCorners;
 import Screens.ListView;
 
 public class ProjectFrame extends JFrame {
@@ -20,22 +19,38 @@ public class ProjectFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	
+	private static void fridgeTest(){
+		try {
+			
+			
+			Fridge fridge= new Fridge("My Fridge", FridgeType.SINGLE_DOOR);
+			Item item= new Item("My Item");
+			Item otherItem= new Item("This Item");
+			fridge.addItem(item);
+			fridge.addItem(otherItem);
+			
+			ProjectFrame frame = new ProjectFrame();
+			
+			thisInstance.setContentPane(new ListView(fridge));
+			thisInstance.setVisible(true);
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private static void testingScrollExample(){
+		JScrollPaneHeadersandCorners t= new JScrollPaneHeadersandCorners();
+		t.main();
+		
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {	
-				try {
-					
-					
-				
-					ProjectFrame frame = new ProjectFrame();
-					
-					thisInstance.setContentPane(new MainMenu());
-					thisInstance.setVisible(true);
-					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				fridgeTest();
 			}
 		});
 	}
