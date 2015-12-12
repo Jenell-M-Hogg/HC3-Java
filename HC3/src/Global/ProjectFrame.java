@@ -7,11 +7,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Repository.Fridge;
+import Repository.Item;
+import Screens.MainMenu;
 import Screens.Test;
 import Screens.ListView;
 
 public class ProjectFrame extends JFrame {
-
+	public static ProjectFrame thisInstance;
 	private JPanel contentPane;
 
 	/**
@@ -19,10 +22,17 @@ public class ProjectFrame extends JFrame {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
-			public void run() {
+			public void run() {	
 				try {
+					
+					
+				
 					ProjectFrame frame = new ProjectFrame();
-					frame.setVisible(true);
+					
+					thisInstance.setContentPane(new MainMenu());
+					thisInstance.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,18 +50,17 @@ public class ProjectFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		//Here, set the screen you want to see on start up
-		setContentPane(new ListView());
+		this.thisInstance= this;
 		
 	}
 	
 	
 	//Call this method to change the content pane
 	public void setContentPane(JPanel panel){
-		this.getContentPane().removeAll();
-		this.getContentPane().add(panel);
-		this.revalidate();
-		this.repaint();
+		this.thisInstance.getContentPane().removeAll();
+		this.thisInstance.getContentPane().add(panel);
+		this.thisInstance.revalidate();
+		this.thisInstance.repaint();
 	}
 
 }
