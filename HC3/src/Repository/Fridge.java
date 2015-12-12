@@ -23,4 +23,8 @@ public class Fridge {
 	public ArrayList<Item> getItems(){
 		return items;
 	}
+	
+	public String returnName(){
+		return this.name;
+	}
 }

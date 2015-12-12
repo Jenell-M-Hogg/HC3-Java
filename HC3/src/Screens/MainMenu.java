@@ -5,7 +5,9 @@ import javax.swing.JScrollPane;
 
 import Global.Constants;
 import Global.ProjectFrame;
+import Repository.Fridge;
 import Repository.Item;
+import Repository.ShopList;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -51,7 +53,10 @@ public class MainMenu extends JPanel {
 	private final Action action = new SwingAction();
 	private JTextField txtMainMenu;
 	
+	ArrayList<Fridge> fridgeData = new ArrayList();
+	ArrayList<ShopList> shopData = new ArrayList();
 	
+	private int defaulthandler = 0;
 
 	/**
 	 * Create the panel.
@@ -170,7 +175,12 @@ public class MainMenu extends JPanel {
 	                    null,
 	                    "");
 				
+				if(!FridgeName.equals(""))
 				AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton,FridgeName);
+				else{
+					AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton,"Default" + defaulthandler);
+					defaulthandler++;
+				}
 			}
 		});
 		
@@ -201,7 +211,12 @@ public class MainMenu extends JPanel {
 	                    null,
 	                    "");
 				
+				if(!ShoppingListName.equals(""))
 				AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton,ShoppingListName);
+				else{
+					AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton,"Default" + " " + defaulthandler);
+					defaulthandler++;
+				}
 			}
 		});
 		
@@ -280,7 +295,15 @@ public class MainMenu extends JPanel {
 			JPanel childpanel = new JPanel();
 			Button fridgeAccess = new Button();
 			Checkbox confirmDelete = new Checkbox();
-			//ListView listview = new ListView();
+			
+			Fridge fridge = null;
+			ShopList shoplist = null;
+			
+			if(type.equals("Shopping List")){
+				shoplist = new ShopList(fridgeName);
+			}else{
+				fridge = new Fridge(fridgeName, null);
+			}
 			
 			fridgeAccess.setPreferredSize(new Dimension(100,75));
 			fridgeAccess.setLabel(fridgeName);
@@ -288,9 +311,7 @@ public class MainMenu extends JPanel {
 			fridgeAccess.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(type.equals("Shopping List")){
-						fridgeAccess.setLabel("NOICE");
-						JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
-						
+											
 					}
 					else{
 						fridgeAccess.setLabel("WHATUP");
@@ -306,15 +327,21 @@ public class MainMenu extends JPanel {
 			confirmDelete.setName("checkbox");
 			
 			
-			childpanel.setName("Panel" + (currentPanel.getComponentCount() +1));
+			childpanel.setName(fridgeName);
 			
+			if(fridge != null)
+				fridgeData.add(fridge);
 			
-			//childpanel.add(listview);
+			if(shoplist != null)
+				shopData.add(shoplist);
+			
 			childpanel.add(confirmDelete);
 			childpanel.add(fridgeAccess);
 			currentPanel.add(childpanel);
+			
+			System.out.println(shopData.size() + " " + fridgeData.size());
 					
-				UpdateScreens(currentPanel, jPane);
+			UpdateScreens(currentPanel, jPane);
 		}
 	}
 	
@@ -332,6 +359,15 @@ public class MainMenu extends JPanel {
 		    	Component[] imbedcomp = ((Container) com).getComponents();
 		    	for(Component checkbox : imbedcomp){
 		    		if(checkbox.getName().equals("checkbox") && ((Checkbox) checkbox).getState() == true){
+		    			
+		    			for(int i = 0; i<fridgeData.size(); i++)
+		    				if(com.getName().equals(fridgeData.get(i).returnName()))
+		    					fridgeData.remove(i);
+		    			
+		    			for(int i = 0; i<shopData.size(); i++)
+		    				if(com.getName().equals(shopData.get(i).getName()))
+		    					shopData.remove(i);
+		    					
 		    			currentPanel.remove(com); 
 		    		}
 		    	}

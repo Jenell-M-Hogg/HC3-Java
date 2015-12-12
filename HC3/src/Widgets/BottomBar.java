@@ -5,6 +5,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,97 +16,122 @@ import javax.swing.JPanel;
 
 import Global.Constants;
 
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
 public class BottomBar extends JPanel {
 
 	JButton homeButton;
 	JButton changeViewButton;
 	JButton searchByCategoryButton;
+	private JTextField txtGfhgfhg;
 	
 	/**
 	 * Create the panel.
 	 */
-	public BottomBar(boolean isFridgeView) {
-		/*homeIconLocation = "/images/Home.png";
-		listViewIconLocation = "/images/ListIcon.png";
-		fridgeViewIconLocation = "/images/single"*/
+	public BottomBar(String currentScreen) {
+		String homeIconLocation = "/images/Home.png";
+		String listViewIconLocation = "/images/ListIcon.png";
+		String fridgeViewIconLocation = "/images/singleDoorIcon.png";
 		
-		/*this.setSize((int) (Constants.FRAME_WIDTH), Constants.FRAME_HEIGHT/15);
+		this.setSize((int) (Constants.FRAME_WIDTH), Constants.FRAME_HEIGHT/15);
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{133, 133, 133, 0};
-		gridBagLayout.rowHeights = new int[]{40, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{60, 60, 100, 160};
+		gridBagLayout.rowHeights = new int[]{40, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		setLayout(gridBagLayout);
 		
 		
 		homeButton = new JButton();
-		rightButton.setIcon(new ImageIcon(HeaderBar.class.getResource("/images/images/addIcon.png")));
-		GridBagConstraints gbc_addButton = new GridBagConstraints();
-		gbc_addButton.fill = GridBagConstraints.BOTH;
-		gbc_addButton.insets = new Insets(0, 0, 0, 5);
-		gbc_addButton.gridx = 0;
-		gbc_addButton.gridy = 0;
+		homeButton.setIcon(new ImageIcon(BottomBar.class.getResource(homeIconLocation)));
+		GridBagConstraints gbc_homeButton = new GridBagConstraints();
+		gbc_homeButton.fill = GridBagConstraints.VERTICAL;
+		gbc_homeButton.insets = new Insets(0, 0, 5, 5);
+		gbc_homeButton.gridx = 0;
+		gbc_homeButton.gridy = 0;
 		
 		
 		//Add action listener
-		rightButton.addActionListener(new ActionListener(){
+		homeButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addNewItem();
-				
+				//go to main menu
 			}
-
-
-			
 		});
+
+		add(homeButton, gbc_homeButton);
 		
+		changeViewButton = new JButton();
+		if (currentScreen.equals("FridgeView")) {
+			changeViewButton.setVisible(true);
+			changeViewButton.setIcon(new ImageIcon(BottomBar.class.getResource(listViewIconLocation)));
+		} else if (currentScreen.equals("ListView")) {
+			changeViewButton.setVisible(true);
+			changeViewButton.setIcon(new ImageIcon(BottomBar.class.getResource(fridgeViewIconLocation)));
+		} else {
+			changeViewButton.setVisible(false);
+		}
+		GridBagConstraints gbc_changeViewButton = new GridBagConstraints();
+		gbc_changeViewButton.fill = GridBagConstraints.VERTICAL;
+		gbc_changeViewButton.insets = new Insets(0, 0, 5, 5);
+		gbc_changeViewButton.gridx = 1;
+		gbc_changeViewButton.gridy = 0;
 		
-		add(rightButton, gbc_addButton);
-		
-		if (isFridgeView)
-		middleButton = new JButton("Move/Remove Items");
-		GridBagConstraints gbc_removeMoveButton = new GridBagConstraints();
-		gbc_removeMoveButton.fill = GridBagConstraints.BOTH;
-		gbc_removeMoveButton.insets = new Insets(0, 0, 0, 5);
-		gbc_removeMoveButton.gridx = 1;
-		gbc_removeMoveButton.gridy = 0;
-		
-		middleButton.addActionListener(new ActionListener(){
+		changeViewButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
-				
-			}
-
-
-			
+				if (currentScreen.equals("FridgeView")) {
+					//set to listView
+				} else {
+					//set to fridgeView
+				}
+			}	
 		});
-		add(middleButton, gbc_removeMoveButton);
+		add(changeViewButton, gbc_changeViewButton);
 		
-		leftButton = new JButton("Edit Fridge Details");
-		GridBagConstraints gbc_editFridgeDetails = new GridBagConstraints();
-		gbc_editFridgeDetails.fill = GridBagConstraints.BOTH;
-		gbc_editFridgeDetails.gridx = 2;
-		gbc_editFridgeDetails.gridy = 0;
+		searchByCategoryButton = new JButton("Search Category");
+		GridBagConstraints gbc_searchByCategoryButton = new GridBagConstraints();
+		gbc_searchByCategoryButton.insets = new Insets(0, 0, 5, 0);
+		gbc_searchByCategoryButton.fill = GridBagConstraints.VERTICAL;
+		gbc_searchByCategoryButton.gridx = 2;
+		gbc_searchByCategoryButton.gridy = 0;
 		
-		leftButton.addActionListener(new ActionListener(){
+		searchByCategoryButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				//Open the search category pop-up
+			}
+		});
+		add(searchByCategoryButton, gbc_searchByCategoryButton);
+		
+		txtGfhgfhg = new JTextField();
+		txtGfhgfhg.setEnabled(true);
+		txtGfhgfhg.setText("Enter text to search");
+		txtGfhgfhg.addFocusListener(new FocusListener(){
+	        @Override
+	        public void focusGained(FocusEvent e){
+	        	txtGfhgfhg.setEnabled(true);
+	        	txtGfhgfhg.setText("");
+	        }
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
 				
 			}
-
-
-			
-		});
-		add(leftButton, gbc_editFridgeDetails);*/
-		
-		
-
+	    });
+		GridBagConstraints gbc_txtGfhgfhg = new GridBagConstraints();
+		gbc_txtGfhgfhg.insets = new Insets(0, 0, 0, 5);
+		gbc_txtGfhgfhg.fill = GridBagConstraints.BOTH;
+		gbc_txtGfhgfhg.gridx = 3;
+		gbc_txtGfhgfhg.gridy = 0;
+		add(txtGfhgfhg, gbc_txtGfhgfhg);
+		txtGfhgfhg.setColumns(10);
 
 	}
-
 }
