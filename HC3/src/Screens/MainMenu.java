@@ -70,7 +70,6 @@ public class MainMenu extends JPanel {
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		JFrame popFrame = new JFrame("JOptionPane showMessageDialog example");
-		
 
 		
 		
@@ -156,7 +155,16 @@ public class MainMenu extends JPanel {
 		//add fridge
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton);
+				String FridgeName = (String)JOptionPane.showInputDialog(
+						popFrame,
+	                    "Give the new fridge a name.",
+	                    "Customized Dialog",
+	                    JOptionPane.PLAIN_MESSAGE,
+	                    null,
+	                    null,
+	                    "");
+				
+				AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton,FridgeName);
 			}
 		});
 		
@@ -172,7 +180,17 @@ public class MainMenu extends JPanel {
 		//add shopping panel
 		btnAddShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton);
+				
+				String ShoppingListName = (String)JOptionPane.showInputDialog(
+						popFrame,
+	                    "Give the new shopping list a name.",
+	                    "Customized Dialog",
+	                    JOptionPane.PLAIN_MESSAGE,
+	                    null,
+	                    null,
+	                    "");
+				
+				AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton,ShoppingListName);
 			}
 		});
 		
@@ -188,7 +206,8 @@ public class MainMenu extends JPanel {
 		//confirm deletion
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+			
+		//--------popup -----------------------------------
 				Object[] options = {"Please continue",
 		        "Cancel"};
 				int result = JOptionPane.showOptionDialog(popFrame,
@@ -199,6 +218,8 @@ public class MainMenu extends JPanel {
 		null,     //do not use a custom Icon
 		options,  //the titles of buttons
 		options[0]); //default button title
+		//----------popup setup ends -------------------------
+				
 				if(result == JOptionPane.YES_OPTION){
 					RemoveFromList(Shoppingpanel, scrollPane);
 					RemoveFromList(FridgePanel, scrollPane_1);
@@ -209,6 +230,7 @@ public class MainMenu extends JPanel {
 				}
 			}
 		});
+		
 		
 		//cancel deletion
 		btnCancel.addActionListener(new ActionListener() {
@@ -223,7 +245,7 @@ public class MainMenu extends JPanel {
 	
 	
 	//add items to both lists based on which list and which panel
-	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane,JButton confirm){
+	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane,JButton confirm, String fridgeName){
 		if(!confirm.isVisible()){
 			JPanel childpanel = new JPanel();
 			Button fridgeAccess = new Button();
@@ -231,7 +253,7 @@ public class MainMenu extends JPanel {
 			//ListView listview = new ListView();
 			
 			fridgeAccess.setPreferredSize(new Dimension(100,75));
-			fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
+			fridgeAccess.setLabel(fridgeName);
 			
 			fridgeAccess.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -248,9 +270,9 @@ public class MainMenu extends JPanel {
 			
 			confirmDelete.setVisible(false);
 			if(type.equals("Shopping List"))
-				confirmDelete.setLabel("Remove Shopping List" + " " +(currentPanel.getComponentCount() +1));
+				confirmDelete.setLabel("Remove Shopping List" + " " + fridgeName);
 			else
-				confirmDelete.setLabel("Remove Fridge" + " " +(currentPanel.getComponentCount() +1));
+				confirmDelete.setLabel("Remove Fridge" + " " +fridgeName);
 			confirmDelete.setName("checkbox");
 			
 			
