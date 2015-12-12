@@ -11,7 +11,6 @@ import Global.Constants;
 import Repository.ShopList;
 import Widgets.BottomBar;
 import Widgets.HeaderBar;
-import Widgets.ViewTitle;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

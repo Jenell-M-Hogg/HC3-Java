@@ -11,6 +11,16 @@ public class Fridge {
 	ArrayList<Item> items;
 	
 	public Fridge(String name, FridgeType type){
-		
+		this.name= name;
+		this.model=type;
+		this.items=new ArrayList<Item>();
+	}
+	
+	public void addItem(Item item){
+		items.add(item);
+	}
+	
+	public ArrayList<Item> getItems(){
+		return items;
 	}
 }
