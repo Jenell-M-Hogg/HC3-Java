@@ -70,18 +70,8 @@ public class MainMenu extends JPanel {
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
 		JFrame popFrame = new JFrame("JOptionPane showMessageDialog example");
+
 		
-		final JOptionPane optionPane = new JOptionPane(
-			    "The only way to close this dialog is by\n"
-			    + "pressing one of the following buttons.\n"
-			    + "Do you understand?",
-			    JOptionPane.QUESTION_MESSAGE,
-			    JOptionPane.YES_NO_OPTION);
-		
-		//optionPane.showMessageDialog(popFrame, "Test");
-		
-		
-		//JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
 		
 		JButton btnRemove = new JButton("remove Fridge");
 		JButton btnAdd = new JButton("Add Fridge");
@@ -104,18 +94,24 @@ public class MainMenu extends JPanel {
 					.addContainerGap(97, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 									.addComponent(btnAddShoppingList)
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(btnRemoveShoppingList))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(13)
 									.addComponent(btnAdd)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnRemove))
-								.addComponent(scrollPane_1)
-								.addComponent(scrollPane))
-							.addGap(39))
+									.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+									.addComponent(btnRemove)
+									.addGap(12))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)))
+							.addGap(19))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(txtMainMenu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(120))))
@@ -135,8 +131,8 @@ public class MainMenu extends JPanel {
 					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAdd)
-						.addComponent(btnRemove))
+						.addComponent(btnRemove)
+						.addComponent(btnAdd))
 					.addGap(36)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
@@ -165,7 +161,16 @@ public class MainMenu extends JPanel {
 		//add fridge
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton);
+				String FridgeName = (String)JOptionPane.showInputDialog(
+						popFrame,
+	                    "Give the new fridge a name.",
+	                    "Customized Dialog",
+	                    JOptionPane.PLAIN_MESSAGE,
+	                    null,
+	                    null,
+	                    "");
+				
+				AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton,FridgeName);
 			}
 		});
 		
@@ -175,13 +180,28 @@ public class MainMenu extends JPanel {
 				SetCheckBoxesOn(FridgePanel, scrollPane_1,true);
 				btnNewButton.setVisible(true);
 				btnCancel.setVisible(true);
+				scrollPane.setVisible(false);
+				btnAddShoppingList.setVisible(false);
+				btnRemoveShoppingList.setVisible(false);
+				btnRemove.setVisible(false);
+				btnAdd.setVisible(false);
 			}
 		});
 		
 		//add shopping panel
 		btnAddShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton);
+				
+				String ShoppingListName = (String)JOptionPane.showInputDialog(
+						popFrame,
+	                    "Give the new shopping list a name.",
+	                    "Customized Dialog",
+	                    JOptionPane.PLAIN_MESSAGE,
+	                    null,
+	                    null,
+	                    "");
+				
+				AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton,ShoppingListName);
 			}
 		});
 		
@@ -191,20 +211,49 @@ public class MainMenu extends JPanel {
 				SetCheckBoxesOn(Shoppingpanel, scrollPane,true);
 				btnNewButton.setVisible(true);
 				btnCancel.setVisible(true);
+				scrollPane_1.setVisible(false);
+				btnAddShoppingList.setVisible(false);
+				btnRemoveShoppingList.setVisible(false);
+				btnRemove.setVisible(false);
+				btnAdd.setVisible(false);
 			}
 		});
 		
 		//confirm deletion
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveFromList(Shoppingpanel, scrollPane);
-				RemoveFromList(FridgePanel, scrollPane_1);
-				SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
-				SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
-				btnNewButton.setVisible(false);
-				btnCancel.setVisible(false);
+			
+		//--------popup -----------------------------------
+				Object[] options = {"Please continue",
+		        "Cancel"};
+				int result = JOptionPane.showOptionDialog(popFrame,
+		"This action will permanently remove selected objects. Are you sure you want to proceed?",
+		"A Silly Question",
+		JOptionPane.YES_NO_OPTION,
+		JOptionPane.WARNING_MESSAGE,
+		null,     //do not use a custom Icon
+		options,  //the titles of buttons
+		options[0]); //default button title
+		//----------popup setup ends -------------------------
+				
+				if(result == JOptionPane.YES_OPTION){
+					RemoveFromList(Shoppingpanel, scrollPane);
+					RemoveFromList(FridgePanel, scrollPane_1);
+					SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
+					SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
+					btnNewButton.setVisible(false);
+					btnCancel.setVisible(false);
+					
+					scrollPane.setVisible(true);
+					scrollPane_1.setVisible(true);
+					btnAddShoppingList.setVisible(true);
+					btnRemoveShoppingList.setVisible(true);
+					btnRemove.setVisible(true);
+					btnAdd.setVisible(true);
+				}
 			}
 		});
+		
 		
 		//cancel deletion
 		btnCancel.addActionListener(new ActionListener() {
@@ -213,13 +262,20 @@ public class MainMenu extends JPanel {
 				SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
 				btnNewButton.setVisible(false);
 				btnCancel.setVisible(false);
+				
+				scrollPane.setVisible(true);
+				scrollPane_1.setVisible(true);
+				btnAddShoppingList.setVisible(true);
+				btnRemoveShoppingList.setVisible(true);
+				btnRemove.setVisible(true);
+				btnAdd.setVisible(true);
 			}
 		});
 	}
 	
 	
 	//add items to both lists based on which list and which panel
-	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane,JButton confirm){
+	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane,JButton confirm, String fridgeName){
 		if(!confirm.isVisible()){
 			JPanel childpanel = new JPanel();
 			Button fridgeAccess = new Button();
@@ -227,7 +283,7 @@ public class MainMenu extends JPanel {
 			//ListView listview = new ListView();
 			
 			fridgeAccess.setPreferredSize(new Dimension(100,75));
-			fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
+			fridgeAccess.setLabel(fridgeName);
 			
 			fridgeAccess.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -244,9 +300,9 @@ public class MainMenu extends JPanel {
 			
 			confirmDelete.setVisible(false);
 			if(type.equals("Shopping List"))
-				confirmDelete.setLabel("Remove Shopping List" + " " +(currentPanel.getComponentCount() +1));
+				confirmDelete.setLabel("Remove Shopping List" + " " + fridgeName);
 			else
-				confirmDelete.setLabel("Remove Fridge" + " " +(currentPanel.getComponentCount() +1));
+				confirmDelete.setLabel("Remove Fridge" + " " +fridgeName);
 			confirmDelete.setName("checkbox");
 			
 			
