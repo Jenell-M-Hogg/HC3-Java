@@ -94,18 +94,24 @@ public class MainMenu extends JPanel {
 					.addContainerGap(97, Short.MAX_VALUE)
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 									.addComponent(btnAddShoppingList)
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(btnRemoveShoppingList))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 283, GroupLayout.PREFERRED_SIZE))
 								.addGroup(groupLayout.createSequentialGroup()
+									.addGap(13)
 									.addComponent(btnAdd)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(btnRemove))
-								.addComponent(scrollPane_1)
-								.addComponent(scrollPane))
-							.addGap(39))
+									.addPreferredGap(ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+									.addComponent(btnRemove)
+									.addGap(12))
+								.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 307, GroupLayout.PREFERRED_SIZE)))
+							.addGap(19))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(txtMainMenu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(120))))
@@ -125,8 +131,8 @@ public class MainMenu extends JPanel {
 					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnAdd)
-						.addComponent(btnRemove))
+						.addComponent(btnRemove)
+						.addComponent(btnAdd))
 					.addGap(36)
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
@@ -174,6 +180,11 @@ public class MainMenu extends JPanel {
 				SetCheckBoxesOn(FridgePanel, scrollPane_1,true);
 				btnNewButton.setVisible(true);
 				btnCancel.setVisible(true);
+				scrollPane.setVisible(false);
+				btnAddShoppingList.setVisible(false);
+				btnRemoveShoppingList.setVisible(false);
+				btnRemove.setVisible(false);
+				btnAdd.setVisible(false);
 			}
 		});
 		
@@ -200,6 +211,11 @@ public class MainMenu extends JPanel {
 				SetCheckBoxesOn(Shoppingpanel, scrollPane,true);
 				btnNewButton.setVisible(true);
 				btnCancel.setVisible(true);
+				scrollPane_1.setVisible(false);
+				btnAddShoppingList.setVisible(false);
+				btnRemoveShoppingList.setVisible(false);
+				btnRemove.setVisible(false);
+				btnAdd.setVisible(false);
 			}
 		});
 		
@@ -227,6 +243,13 @@ public class MainMenu extends JPanel {
 					SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
 					btnNewButton.setVisible(false);
 					btnCancel.setVisible(false);
+					
+					scrollPane.setVisible(true);
+					scrollPane_1.setVisible(true);
+					btnAddShoppingList.setVisible(true);
+					btnRemoveShoppingList.setVisible(true);
+					btnRemove.setVisible(true);
+					btnAdd.setVisible(true);
 				}
 			}
 		});
@@ -239,6 +262,13 @@ public class MainMenu extends JPanel {
 				SetCheckBoxesOn(Shoppingpanel, scrollPane,false);
 				btnNewButton.setVisible(false);
 				btnCancel.setVisible(false);
+				
+				scrollPane.setVisible(true);
+				scrollPane_1.setVisible(true);
+				btnAddShoppingList.setVisible(true);
+				btnRemoveShoppingList.setVisible(true);
+				btnRemove.setVisible(true);
+				btnAdd.setVisible(true);
 			}
 		});
 	}
