@@ -4,9 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import Global.Constants;
+import Global.ProjectFrame;
 import Repository.Item;
 
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
@@ -43,10 +45,7 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextPane;
 import java.awt.Insets;
 import javax.swing.JLabel;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.JOptionPane;
 
 public class MainMenu extends JPanel {
 	private final Action action = new SwingAction();
@@ -69,6 +68,20 @@ public class MainMenu extends JPanel {
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		
+		JFrame popFrame = new JFrame("JOptionPane showMessageDialog example");
+		
+		final JOptionPane optionPane = new JOptionPane(
+			    "The only way to close this dialog is by\n"
+			    + "pressing one of the following buttons.\n"
+			    + "Do you understand?",
+			    JOptionPane.QUESTION_MESSAGE,
+			    JOptionPane.YES_NO_OPTION);
+		
+		//optionPane.showMessageDialog(popFrame, "Test");
+		
+		
+		//JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
 		
 		JButton btnRemove = new JButton("remove Fridge");
 		JButton btnAdd = new JButton("Add Fridge");
@@ -220,6 +233,8 @@ public class MainMenu extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					if(type.equals("Shopping List")){
 						fridgeAccess.setLabel("NOICE");
+						JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
+						
 					}
 					else{
 						fridgeAccess.setLabel("WHATUP");
