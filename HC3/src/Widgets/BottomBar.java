@@ -5,12 +5,17 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Global.Constants;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -105,7 +110,21 @@ public class BottomBar extends JPanel {
 		add(searchByCategoryButton, gbc_searchByCategoryButton);
 		
 		txtGfhgfhg = new JTextField();
-		txtGfhgfhg.setText("Search");
+		txtGfhgfhg.setEnabled(true);
+		txtGfhgfhg.setText("Enter text to search");
+		txtGfhgfhg.addFocusListener(new FocusListener(){
+	        @Override
+	        public void focusGained(FocusEvent e){
+	        	txtGfhgfhg.setEnabled(true);
+	        	txtGfhgfhg.setText("");
+	        }
+
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	    });
 		GridBagConstraints gbc_txtGfhgfhg = new GridBagConstraints();
 		gbc_txtGfhgfhg.insets = new Insets(0, 0, 0, 5);
 		gbc_txtGfhgfhg.fill = GridBagConstraints.BOTH;
