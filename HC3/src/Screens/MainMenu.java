@@ -34,6 +34,19 @@ import java.awt.GridBagLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JPopupMenu;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.DropMode;
+import javax.swing.BoxLayout;
+import java.awt.GridBagConstraints;
+import javax.swing.JTextPane;
+import java.awt.Insets;
+import javax.swing.JLabel;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class MainMenu extends JPanel {
 	private final Action action = new SwingAction();
@@ -87,8 +100,8 @@ public class MainMenu extends JPanel {
 									.addComponent(btnAdd)
 									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 									.addComponent(btnRemove))
-								.addComponent(scrollPane)
-								.addComponent(scrollPane_1))
+								.addComponent(scrollPane_1)
+								.addComponent(scrollPane))
 							.addGap(39))
 						.addGroup(groupLayout.createSequentialGroup()
 							.addComponent(txtMainMenu, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -136,12 +149,14 @@ public class MainMenu extends JPanel {
 		
 		//----------------------Action Listeners----------------------------//
 		
+		//add fridge
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(FridgePanel, "Fridge", scrollPane_1 );
+				AddToList(FridgePanel, "Fridge", scrollPane_1,btnNewButton);
 			}
 		});
 		
+		//remove fridge
 		btnRemove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SetCheckBoxesOn(FridgePanel, scrollPane_1,true);
@@ -150,12 +165,14 @@ public class MainMenu extends JPanel {
 			}
 		});
 		
+		//add shopping panel
 		btnAddShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddToList(Shoppingpanel, "Shopping List", scrollPane);
+				AddToList(Shoppingpanel, "Shopping List", scrollPane,btnNewButton);
 			}
 		});
 		
+		//remove shopping panel
 		btnRemoveShoppingList.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SetCheckBoxesOn(Shoppingpanel, scrollPane,true);
@@ -164,7 +181,7 @@ public class MainMenu extends JPanel {
 			}
 		});
 		
-		
+		//confirm deletion
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RemoveFromList(Shoppingpanel, scrollPane);
@@ -176,6 +193,7 @@ public class MainMenu extends JPanel {
 			}
 		});
 		
+		//cancel deletion
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				SetCheckBoxesOn(FridgePanel, scrollPane_1,false);
@@ -188,46 +206,49 @@ public class MainMenu extends JPanel {
 	
 	
 	//add items to both lists based on which list and which panel
-	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane){
-		
-	JPanel childpanel = new JPanel();
-	Button fridgeAccess = new Button();
-	Checkbox confirmDelete = new Checkbox();
-	//ListView listview = new ListView();
-	
-	fridgeAccess.setPreferredSize(new Dimension(100,75));
-	fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
-	
-	fridgeAccess.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			if(type.equals("Shopping List")){
-				fridgeAccess.setLabel("NOICE");
-			}
-			else{
-				fridgeAccess.setLabel("WHATUP");
-			}
+	public void AddToList(JPanel currentPanel, String type, JScrollPane jPane,JButton confirm){
+		if(!confirm.isVisible()){
+			JPanel childpanel = new JPanel();
+			Button fridgeAccess = new Button();
+			Checkbox confirmDelete = new Checkbox();
+			//ListView listview = new ListView();
+			
+			fridgeAccess.setPreferredSize(new Dimension(100,75));
+			fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
+			
+			fridgeAccess.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(type.equals("Shopping List")){
+						fridgeAccess.setLabel("NOICE");
+					}
+					else{
+						fridgeAccess.setLabel("WHATUP");
+					}
+				}
+			});
+			
+			confirmDelete.setVisible(false);
+			if(type.equals("Shopping List"))
+				confirmDelete.setLabel("Remove Shopping List" + " " +(currentPanel.getComponentCount() +1));
+			else
+				confirmDelete.setLabel("Remove Fridge" + " " +(currentPanel.getComponentCount() +1));
+			confirmDelete.setName("checkbox");
+			
+			
+			childpanel.setName("Panel" + (currentPanel.getComponentCount() +1));
+			
+			
+			//childpanel.add(listview);
+			childpanel.add(confirmDelete);
+			childpanel.add(fridgeAccess);
+			currentPanel.add(childpanel);
+					
+				UpdateScreens(currentPanel, jPane);
 		}
-	});
-	
-	confirmDelete.setVisible(false);
-	if(type.equals("Shopping List"))
-		confirmDelete.setLabel("Remove Shopping List" + " " +(currentPanel.getComponentCount() +1));
-	else
-		confirmDelete.setLabel("Remove Fridge" + " " +(currentPanel.getComponentCount() +1));
-	confirmDelete.setName("checkbox");
-	
-	
-	childpanel.setName("Panel" + (currentPanel.getComponentCount() +1));
-	
-	
-	//childpanel.add(listview);
-	childpanel.add(confirmDelete);
-	childpanel.add(fridgeAccess);
-	currentPanel.add(childpanel);
-		
-		
-		UpdateScreens(currentPanel, jPane);
 	}
+	
+	
+	
 	
 	
 	//remove items from both lists
@@ -253,7 +274,7 @@ public class MainMenu extends JPanel {
 	
 	
 	
-	
+	//sets the checkboxes in the imbeded checkboxes active
 	public void SetCheckBoxesOn(JPanel currentPanel, JScrollPane jPane, Boolean state){
 		if(currentPanel.getComponentCount() > 0){
 		    Component[] components = currentPanel.getComponents();
@@ -265,6 +286,7 @@ public class MainMenu extends JPanel {
 		    			checkbox.setVisible(true); 
 		    		}else if(checkbox.getName().equals("checkbox") && !state){
 		    			checkbox.setVisible(false); 
+		    			((Checkbox) checkbox).setState(false);
 		    		}
 		    	}
 		    }
@@ -296,6 +318,23 @@ public class MainMenu extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 		}
+	}
+	private static void addPopup(Component component, final JPopupMenu popup) {
+		component.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {
+				if (e.isPopupTrigger()) {
+					showMenu(e);
+				}
+			}
+			private void showMenu(MouseEvent e) {
+				popup.show(e.getComponent(), e.getX(), e.getY());
+			}
+		});
 	}
 }
 
