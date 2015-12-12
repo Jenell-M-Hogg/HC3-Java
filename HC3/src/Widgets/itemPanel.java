@@ -66,10 +66,10 @@ public class ItemPanel extends JPanel {
 		add(chckbxmntmNewCheckItem, gbc_chckbxmntmNewCheckItem);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{25, 37, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] {10, 30, 30, 30, 30};
+		gridBagLayout.rowHeights = new int[] {0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
+		gridBagLayout.rowWeights = new double[]{1.0};
 		setLayout(gridBagLayout);
 		
 		itemCategoryIcon = new JLabel(new ImageIcon(itemCategoryPicture));
@@ -80,8 +80,8 @@ public class ItemPanel extends JPanel {
 		GridBagConstraints gbc_itemCategoryIcon = new GridBagConstraints();
 		gbc_itemCategoryIcon.anchor = GridBagConstraints.WEST;
 		gbc_itemCategoryIcon.insets = new Insets(0, 0, 0, 5);
-		gbc_itemCategoryIcon.gridwidth = 5;
-		gbc_itemCategoryIcon.gridx = 3;
+		gbc_itemCategoryIcon.gridwidth = 2;
+		gbc_itemCategoryIcon.gridx = 1;
 		gbc_itemCategoryIcon.gridy = 0;
 		add(itemCategoryIcon, gbc_itemCategoryIcon);
 		
@@ -90,7 +90,7 @@ public class ItemPanel extends JPanel {
 		GridBagConstraints gbc_lblQty = new GridBagConstraints();
 		gbc_lblQty.insets = new Insets(0, 0, 0, 5);
 		gbc_lblQty.anchor = GridBagConstraints.CENTER;
-		gbc_lblQty.gridx = 8;
+		gbc_lblQty.gridx = 3;
 		gbc_lblQty.gridy = 0;
 		add(lblQty, gbc_lblQty);
 		
@@ -98,7 +98,7 @@ public class ItemPanel extends JPanel {
 		GridBagConstraints gbc_expiryCountDown = new GridBagConstraints();
 		gbc_expiryCountDown.insets = new Insets(0, 0, 0, 5);
 		gbc_expiryCountDown.fill = GridBagConstraints.EAST;
-		gbc_expiryCountDown.gridx = 10;
+		gbc_expiryCountDown.gridx = 4;
 		gbc_expiryCountDown.gridy = 0;
 		add(expiryCountDown, gbc_expiryCountDown);
 				
