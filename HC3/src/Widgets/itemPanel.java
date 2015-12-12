@@ -28,6 +28,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Panel;
+import javax.swing.JCheckBoxMenuItem;
 
 public class ItemPanel extends JPanel {
 	private Item item;
@@ -37,6 +38,7 @@ public class ItemPanel extends JPanel {
 	private ExpiryCountDown expiryCountDown;
 	
 	private String tempActionListenerString = "";
+	private JCheckBoxMenuItem chckbxmntmNewCheckItem;
 	
 	/**
 	 * Create the panel.
@@ -46,7 +48,7 @@ public class ItemPanel extends JPanel {
 	public ItemPanel(Item item) throws IOException, URISyntaxException {
 		this.item = item;
 		this.setSize(Constants.FRAME_WIDTH/2, 25);
-		
+				
 		itemCategoryPicture = ImageIO.read(new File(getClass().getResource(item.getCategory().getIconLocation()).toURI()));
 		
 		addMouseListener(new MouseAdapter() {
@@ -55,6 +57,13 @@ public class ItemPanel extends JPanel {
 				System.out.println(tempActionListenerString);
 			}
 		});
+		
+		chckbxmntmNewCheckItem = new JCheckBoxMenuItem("");
+		GridBagConstraints gbc_chckbxmntmNewCheckItem = new GridBagConstraints();
+		gbc_chckbxmntmNewCheckItem.insets = new Insets(0, 0, 0, 5);
+		gbc_chckbxmntmNewCheckItem.gridx = 11;
+		gbc_chckbxmntmNewCheckItem.gridy = 0;
+		add(chckbxmntmNewCheckItem, gbc_chckbxmntmNewCheckItem);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{25, 37, 46, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -92,7 +101,7 @@ public class ItemPanel extends JPanel {
 		gbc_expiryCountDown.gridx = 10;
 		gbc_expiryCountDown.gridy = 0;
 		add(expiryCountDown, gbc_expiryCountDown);
-		
+				
 		update();
 	}
 	
@@ -119,7 +128,7 @@ public class ItemPanel extends JPanel {
 		itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
 		
 		String qtyText = " x" + item.getQuantity();
-		if (this.item.getQuantity() == -1) {
+		if (item.getQuantity() == -1) {
 			lblQty.setVisible(false); 
 		} else {
 			lblQty.setVisible(true);
@@ -127,7 +136,7 @@ public class ItemPanel extends JPanel {
 		lblQty.setText(qtyText);
 		
 		expiryCountDown.setCountDown(item.getCountDown());
-		expiryCountDown.update();
+		expiryCountDown.update(item.getCountDownIsSet());
 		
 		tempActionListenerString = "Item " + this.item.getName() + "was clicked; open item details pop-up";
 	}

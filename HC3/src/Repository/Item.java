@@ -8,6 +8,7 @@ public class Item {
 	private String name="";
 	private Category category=new Category();
 	private int countDown=0;
+	private boolean countDownIsSet = false;
 	private int quantity=-1;
 	private String units="";
 	private Date bestBefore;
@@ -29,6 +30,14 @@ public class Item {
 
 	public void setCountDown(int countDown) {
 		this.countDown = countDown;
+	}
+	
+	public boolean getCountDownIsSet() {
+		return countDownIsSet;
+	}
+	
+	public void setCountDownIsSet(boolean countDownIsSet) {
+		this.countDownIsSet = countDownIsSet;
 	}
 
 	public int getQuantity() {

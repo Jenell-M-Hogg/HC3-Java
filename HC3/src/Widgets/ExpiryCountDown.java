@@ -54,7 +54,7 @@ public class ExpiryCountDown extends JPanel {
 		this.countDown = countDown;
 	}
 	
-	public void update() {
+	public void update(boolean countDownIsSet) {
 		if (countDown > 20) {
 			this.setBackground(Color.GREEN);
 		} else if (countDown > 10) {
@@ -65,5 +65,11 @@ public class ExpiryCountDown extends JPanel {
 			this.setBackground(Color.RED);
 		}
 		this.lblNewLabel.setText("" + countDown);
+		
+		if (countDownIsSet) {
+			this.setVisible(true);
+		} else {
+			this.setVisible(false);
+		}
 	}
 }
