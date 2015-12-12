@@ -308,17 +308,6 @@ public class MainMenu extends JPanel {
 			fridgeAccess.setPreferredSize(new Dimension(100,75));
 			fridgeAccess.setLabel(fridgeName);
 			
-			fridgeAccess.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if(type.equals("Shopping List")){
-											
-					}
-					else{
-						fridgeAccess.setLabel("WHATUP");
-					}
-				}
-			});
-			
 			confirmDelete.setVisible(false);
 			if(type.equals("Shopping List"))
 				confirmDelete.setLabel("Remove Shopping List" + " " + fridgeName);
@@ -339,7 +328,21 @@ public class MainMenu extends JPanel {
 			childpanel.add(fridgeAccess);
 			currentPanel.add(childpanel);
 			
-			System.out.println(shopData.size() + " " + fridgeData.size());
+			
+			Fridge tempFridge = fridge;
+			ShopList tempShopList = shoplist;
+			
+			fridgeAccess.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(type.equals("Shopping List")){
+						ProjectFrame.thisInstance.setContentPane(new ListView(tempFridge));				
+					}
+					else{
+						ProjectFrame.thisInstance.setContentPane(new ShoppingListView(tempShopList));
+					}
+				}
+			});
+			
 					
 			UpdateScreens(currentPanel, jPane);
 		}
