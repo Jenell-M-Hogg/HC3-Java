@@ -8,7 +8,7 @@ public class Item {
 	private String name="";
 	private Category category=new Category();
 	private int countDown=0;
-	private int quantity=0;
+	private int quantity=-1;
 	private String units="";
 	private Date bestBefore;
 	private String ownerShip="";
