@@ -13,6 +13,7 @@ public class Item {
 	private Date bestBefore;
 	private String ownerShip="";
 	private FridgeLocation location;
+
 	
 	public Category getCategory() {
 		return category;
