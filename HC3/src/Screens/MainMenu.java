@@ -409,7 +409,7 @@ public class MainMenu extends JPanel {
 	
 	//updates the screen to display the different fridges correctly
 	public void UpdateScreens(JPanel currentPanel, JScrollPane jPane){
-	   currentPanel.getParent().setPreferredSize(jPane.getPreferredSize());
+		jPane.setPreferredSize(jPane.getPreferredSize());
 		jPane.getParent().revalidate();
 		jPane.getParent().repaint();
 	}

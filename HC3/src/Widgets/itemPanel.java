@@ -22,12 +22,14 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Panel;
+
 import javax.swing.JCheckBoxMenuItem;
 
 public class ItemPanel extends JPanel {
@@ -47,7 +49,7 @@ public class ItemPanel extends JPanel {
 	 */
 	public ItemPanel(Item item) throws IOException, URISyntaxException {
 		this.item = item;
-		this.setSize(Constants.FRAME_WIDTH/2, 25);
+		
 				
 		itemCategoryPicture = ImageIO.read(new File(getClass().getResource(item.getCategory().getIconLocation()).toURI()));
 		
@@ -103,6 +105,9 @@ public class ItemPanel extends JPanel {
 		add(expiryCountDown, gbc_expiryCountDown);
 				
 		update();
+		
+		
+		this.setPreferredSize(this.getLayout().preferredLayoutSize(this));
 	}
 	
 	public Item getItem() {

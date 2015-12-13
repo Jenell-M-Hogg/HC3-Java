@@ -47,6 +47,11 @@ import Repository.Category;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.CompoundBorder;
+import java.awt.FlowLayout;
+import javax.swing.SpringLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import net.miginfocom.swing.MigLayout;
 
 public class ListView extends JPanel {
 	Fridge fridge;
@@ -149,23 +154,17 @@ public class ListView extends JPanel {
 		paneWindow= new JPanel();
 		paneWindow.setBorder(new CompoundBorder());
 		paneWindow.setPreferredSize(new Dimension(100,100));
-		paneWindow.setLayout(new GridBagLayout());
-		
 		paneWindow.setBackground(Color.WHITE);
-		
-		
-		
-		
-		
+
 		scrollPane = new JScrollPane();
-		scrollPane.setMinimumSize(listPane.getSize());
-		scrollPane.setViewportView(paneWindow);
-		
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setViewportView(paneWindow);
+		paneWindow.setLayout(new MigLayout("", "[][]", "[][]"));
+
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		
-		listPane.add(scrollPane, BorderLayout.CENTER);
+		listPane.add(scrollPane);
 		
 	
 		
@@ -302,25 +301,48 @@ public class ListView extends JPanel {
 	}
 
 	private void updateList() {
-		
-		
-		GridBagConstraints gbc_itemPanel= new GridBagConstraints();
-		gbc_itemPanel.ipady = 10;
-		gbc_itemPanel.anchor = GridBagConstraints.NORTHWEST;
-		gbc_itemPanel.fill = GridBagConstraints.BOTH;
-		
-		gbc_itemPanel.gridx = 0;
-		gbc_itemPanel.gridy = 0;
-		
+
+		resetLayout();
 		for(int i=0; i<this.itemPanels.size(); i++){
-			gbc_itemPanel.gridy=i;
-			((JPanel)scrollPane.getViewport().getView()).add(itemPanels.get(i),gbc_itemPanel);
+			addToScroll(this.itemPanels.get(i),i);
 		}
 		
 		
 		
+		scrollPane.setViewportView(paneWindow);
 		
+		Dimension preferred= scrollPane.getViewport().getView().getPreferredSize();
+		Dimension actual= scrollPane.getViewport().getViewSize();
+				
+		scrollPane.validate();
 		scrollPane.repaint();
+		
+		
+			
+		
+	}
+
+	private void resetLayout() {
+		paneWindow.removeAll();
+		
+		String rowConstraints="";
+		for (int i=0; i<this.itemPanels.size(); i++){
+			rowConstraints=rowConstraints+"[]";
+		}
+		paneWindow.setLayout(new MigLayout("", "[]", rowConstraints));
+		
+	}
+
+	private void addToScroll(ItemPanel itemPanel, int i) {
+	
+		paneWindow.add(itemPanel, "cell 0 "+Integer.toString(i)+",alignx");
+		
+		Dimension preferred= paneWindow.getPreferredSize();
+		preferred.setSize(preferred.getWidth(), preferred.getHeight()+itemPanel.getPreferredSize().getHeight());
+		
+		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
+		paneWindow.validate();
+		
 		
 		
 	}
