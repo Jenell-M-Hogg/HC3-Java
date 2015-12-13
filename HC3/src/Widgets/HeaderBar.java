@@ -143,6 +143,17 @@ public class HeaderBar extends JPanel {
 					listview.revalidate();
 					listview.repaint();
 				}else if(answer == JOptionPane.NO_OPTION){
+					Object[] optionsalt2 = {"Please continue",
+			        "Cancel"};
+					int result = JOptionPane.showOptionDialog(null,
+			"This action will permanently remove selected objects. Are you sure you want to proceed?",
+			"Confirmation PopUp",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			null,     //do not use a custom Icon
+			optionsalt2,  //the titles of buttons
+			optionsalt2[0]); //default button title
+					if(result == JOptionPane.YES_OPTION)
 					MainMenu.mainmenuInstance.DestroyObject(listview, null,listview.getFridge().returnName());
 				}
 			}else if(shoppingview instanceof ShoppingListView){
@@ -162,6 +173,17 @@ public class HeaderBar extends JPanel {
 					shoppingview.revalidate();
 					shoppingview.repaint();
 				}else if(answer == JOptionPane.NO_OPTION){
+					Object[] optionsalt = {"Please continue",
+			        "Cancel"};
+					int result = JOptionPane.showOptionDialog(null,
+			"This action will permanently remove selected objects. Are you sure you want to proceed?",
+			"Confirmation PopUp",
+			JOptionPane.YES_NO_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			null,     //do not use a custom Icon
+			optionsalt,  //the titles of buttons
+			optionsalt[0]); //default button title
+					if(result == JOptionPane.YES_OPTION)
 					MainMenu.mainmenuInstance.DestroyObject(null, shoppingview,shoppingview.getShopList().getName());
 				}
 				
