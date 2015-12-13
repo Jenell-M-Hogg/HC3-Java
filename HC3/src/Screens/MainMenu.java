@@ -463,7 +463,6 @@ public class MainMenu extends JPanel {
 			    				if(internalPanels.getName().equals(fridgeData.get(i).returnName()))
 			    					fridgeData.remove(i);
 						  
-			    		  System.out.println(internalPanels.getName());
 						  if(objectName.equals(internalPanels.getName())){
 							  
 							  fridgePanel.remove(internalPanels);
