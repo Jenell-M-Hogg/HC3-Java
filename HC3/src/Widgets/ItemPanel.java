@@ -33,7 +33,7 @@ import java.awt.Panel;
 
 import javax.swing.JCheckBoxMenuItem;
 
-public class SomethingElse extends JPanel {
+public class ItemPanel extends JPanel {
 	private Item item;
 	private BufferedImage itemCategoryPicture;
 	private JLabel itemCategoryIcon;
@@ -48,7 +48,7 @@ public class SomethingElse extends JPanel {
 	 * @throws IOException 
 	 * @throws URISyntaxException 
 	 */
-	public SomethingElse(Item item) throws IOException, URISyntaxException {
+	public ItemPanel(Item item) throws IOException, URISyntaxException {
 		this.item = item;
 		this.setBackground(Color.WHITE);
 		
@@ -131,7 +131,7 @@ public class SomethingElse extends JPanel {
 	private void update() throws IOException, URISyntaxException {
 		
 		itemCategoryIcon.setText(item.getName());
-		itemCategoryIcon.setIcon(new ImageIcon(SomethingElse.class.getResource(item.getCategory().getIconLocation())));
+		itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
 		
 		String qtyText = " x" + item.getQuantity();
 		if (item.getQuantity() == -1) {
