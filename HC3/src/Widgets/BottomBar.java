@@ -15,6 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Global.Constants;
+import Global.ProjectFrame;
+import Screens.ListView;
+import Screens.ShoppingListView;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -80,12 +83,15 @@ public class BottomBar extends JPanel {
 		gbc_changeViewButton.gridx = 1;
 		gbc_changeViewButton.gridy = 0;
 		
+		System.out.println(this.getRootPane());
 		changeViewButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (currentScreen.equals("FridgeView")) {
 					//set to listView
+					//this.getRootpane().getParent();
+					//ProjectFrame.thisInstance.setContentPane(new ListView());
 				} else {
 					//set to fridgeView
 				}
