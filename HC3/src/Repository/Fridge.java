@@ -6,7 +6,7 @@ import Global.FridgeType;
 
 public class Fridge {
 	
-	String name;
+	String name="";
 	FridgeType model;
 	ArrayList<Item> items;
 	
