@@ -479,7 +479,9 @@ public class MainMenu extends JPanel {
 	
 	
 	
-	public void UpdateNameLabels(ListView listview, ShoppingListView shoppinglist, String objectName){
+	public void UpdateNameLabels(ListView listview, ShoppingListView shoppinglist, String objectName, String originalName){
+		Component[] internalcomp = null;
+		
 		if(listview == null){
 			
 			  Component[] components = MainMenu.mainmenuInstance.getComponents();
@@ -489,11 +491,14 @@ public class MainMenu extends JPanel {
 			  Component[] panecomp = shoppingPanel.getComponents();
 			  
 			  for(Component internalPanels : panecomp) {
-				  Component[] internalcomp = ((Container)internalPanels).getComponents();
+				  if(internalPanels.getName().equals(originalName)){
+				  internalcomp = ((Container)internalPanels).getComponents();
+				  }
+			  }
 				  for(Component button : internalcomp){
 					  if(button.getName().equals("Button")){
 						  ((Button)button).setLabel(objectName);
-						  internalPanels.setName(objectName);
+						  internalcomp[0].getParent().setName(objectName);
 					  }
 					  
 					  if(button.getName().equals("checkbox")){
@@ -501,7 +506,7 @@ public class MainMenu extends JPanel {
 					  }
 				  }
 			  
-			  }
+			  
 		}
 		
 		if(shoppinglist == null){
@@ -514,19 +519,20 @@ public class MainMenu extends JPanel {
 					 Component[] panecomp = fridgePanel.getComponents();
 					   
 					  for(Component internalPanels : panecomp) {
-							  Component[] internalcomp = ((Container)internalPanels).getComponents();
-							  for(Component button : internalcomp){
-								  if(button.getName().equals("Button")){
-									  ((Button)button).setLabel(objectName);
-									  internalPanels.setName(objectName);
-								  }
-								  
-								  if(button.getName().equals("checkbox")){
-									  ((Checkbox)button).setLabel("Remove Fridge" + " " +objectName);
-								  }
+						  if(internalPanels.getName().equals(originalName)){
+						  internalcomp = ((Container)internalPanels).getComponents();
+						  }
+					  }
+						  for(Component button : internalcomp){
+							  if(button.getName().equals("Button")){
+								  ((Button)button).setLabel(objectName);
+								  internalcomp[0].getParent().setName(objectName);
 							  }
-						  
-					 }
+							  
+							  if(button.getName().equals("checkbox")){
+								  ((Checkbox)button).setLabel("Remove Fridge" + " " +objectName);
+							  }
+						  }
 				  
 			 	
 		}

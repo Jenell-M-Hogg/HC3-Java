@@ -138,8 +138,8 @@ public class HeaderBar extends JPanel {
 				
 				if(answer == JOptionPane.YES_OPTION){
 					System.out.println("change name: " + Field.getText());
+					MainMenu.mainmenuInstance.UpdateNameLabels(listview, null, Field.getText(),listview.getFridge().returnName());
 					listview.getFridge().setNewName(Field.getText());
-					MainMenu.mainmenuInstance.UpdateNameLabels(listview, null, Field.getText());
 					listview.revalidate();
 					listview.repaint();
 				}else if(answer == JOptionPane.NO_OPTION){
@@ -157,8 +157,8 @@ public class HeaderBar extends JPanel {
 			
 				if(answer == JOptionPane.YES_OPTION){
 					System.out.println("change name: " + Field.getText());
+					MainMenu.mainmenuInstance.UpdateNameLabels(null, shoppingview, Field.getText(),shoppingview.getShopList().getName());
 					shoppingview.getShopList().setName(Field.getText());
-					MainMenu.mainmenuInstance.UpdateNameLabels(null, shoppingview, Field.getText());
 					shoppingview.revalidate();
 					shoppingview.repaint();
 				}else if(answer == JOptionPane.NO_OPTION){
