@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.AbstractButton;
 import javax.swing.JButton;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import Global.Constants;
@@ -47,11 +48,20 @@ import Repository.Category;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.CompoundBorder;
+
 import java.awt.FlowLayout;
+
 import javax.swing.SpringLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 import net.miginfocom.swing.MigLayout;
+
+import javax.swing.JInternalFrame;
+import javax.swing.JPopupMenu;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ListView extends JPanel {
 	Fridge fridge;
@@ -62,7 +72,7 @@ public class ListView extends JPanel {
 	private ArrayList<Category> categories= new ArrayList<Category>();
 	private ArrayList<ItemPanel> itemPanels= new ArrayList<ItemPanel>();
 	private JScrollPane scrollPane;
-	private JPanel paneWindow;
+	private JLayeredPane paneWindow;
 	/**
 	 * Create the panel.
 	 */
@@ -101,7 +111,7 @@ public class ListView extends JPanel {
 		JLabel lblItemsIn = new JLabel("Items in");
 		panel.add(lblItemsIn);
 		
-		displayedFridge = new JLabel("<Fridge Name>");
+		displayedFridge = new JLabel(fridge.returnName());
 		panel.add(displayedFridge);
 		
 		JPanel bottomPanel = new JPanel();
@@ -151,10 +161,10 @@ public class ListView extends JPanel {
 		bottomPanel.add(listPane, BorderLayout.CENTER);
 		listPane.setLayout(new BorderLayout(0, 0));
 		
-		paneWindow= new JPanel();
+		paneWindow= new JLayeredPane();
 		paneWindow.setBorder(new CompoundBorder());
 		paneWindow.setPreferredSize(new Dimension(100,100));
-		paneWindow.setBackground(Color.WHITE);
+		
 
 		scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -170,27 +180,20 @@ public class ListView extends JPanel {
 		
 		
 		
-		setUpList(sortBy);
-
+		try {
+			setUpList(sortBy);
+		} catch (Exception e) {
+		}
 	}
 	
-	private void setUpList(JPanel sortBy) {
+	private void setUpList(JPanel sortBy) throws IOException, URISyntaxException {
 		//Given a fridge, initialize the screen.
 		
 		
-		//We want to create Item Panels from the Items in the fridge and sort them by Location
-		ArrayList<Item> items= fridge.getItems();
-		for(int i=0; i<items.size(); i++){
-			try {
-				this.itemPanels.add(new ItemPanel(items.get(i)));
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
-		}
+		//We want to create Item Panels from the Items in the fridge
 		
-		
+		createItemPanels();
+
 		//By default, the list is sorted by name. Enable the "Name" button
 		Component[] components=sortBy.getComponents();
 		
@@ -206,16 +209,9 @@ public class ListView extends JPanel {
 		
 		//Sort by name
 		this.sortBy(labels[0]);
-	
-		
-		
 		
 	}
 	
-	private void addItem(Item item){
-		
-	}
-
 	private void addToggleButton(String name, JPanel panel){
 		JToggleButton btnName = new JToggleButton(name);
 		
@@ -239,8 +235,17 @@ public class ListView extends JPanel {
 			}});		
 		panel.add(btnName);
 	}
-	
-	
+
+	private void createItemPanels() throws IOException, URISyntaxException {
+		// Gets the items from fridge and updates the itemPanels
+		ArrayList<Item> items= fridge.getItems();
+		itemPanels.clear();
+		
+		for(int i=0; i<items.size(); i++){
+			this.itemPanels.add(new ItemPanel(items.get(i)));
+		}
+	}
+
 	
 	//TODO
 	private void sortBy(String button){
@@ -333,7 +338,7 @@ public class ListView extends JPanel {
 		
 	}
 
-	private void addToScroll(ItemPanel itemPanel, int i) {
+	private void addToScroll(Component itemPanel, int i) {
 	
 		paneWindow.add(itemPanel, "cell 0 "+Integer.toString(i)+",alignx");
 		
@@ -350,4 +355,5 @@ public class ListView extends JPanel {
 	
 	
 
+	
 }
