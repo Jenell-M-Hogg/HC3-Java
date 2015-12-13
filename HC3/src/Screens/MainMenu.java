@@ -320,6 +320,7 @@ public class MainMenu extends JPanel {
 			
 			fridgeAccess.setPreferredSize(new Dimension(100,75));
 			fridgeAccess.setLabel(fridgeName);
+			fridgeAccess.setName("Button");
 			
 			confirmDelete.setVisible(false);
 			if(type.equals("Shopping List"))
@@ -421,7 +422,7 @@ public class MainMenu extends JPanel {
 	}
 	
 	
-	public void ChangeObjectDetails(ListView listview, ShoppingListView shoppinglist, String objectName){
+	public void DestroyObject(ListView listview, ShoppingListView shoppinglist, String objectName){
 		
 		if(listview == null){
 			  ProjectFrame.thisInstance.setContentPane(MainMenu.mainmenuInstance);
@@ -462,6 +463,7 @@ public class MainMenu extends JPanel {
 			    				if(internalPanels.getName().equals(fridgeData.get(i).returnName()))
 			    					fridgeData.remove(i);
 						  
+			    		  System.out.println(internalPanels.getName());
 						  if(objectName.equals(internalPanels.getName())){
 							  
 							  fridgePanel.remove(internalPanels);
@@ -474,7 +476,60 @@ public class MainMenu extends JPanel {
 
 	}
 	
-	public void UpdateNameLabels(){
+	
+	
+	
+	public void UpdateNameLabels(ListView listview, ShoppingListView shoppinglist, String objectName){
+		if(listview == null){
+			
+			  Component[] components = MainMenu.mainmenuInstance.getComponents();
+			  JViewport viewport = ((JScrollPane) components[5]).getViewport(); 
+			  JPanel shoppingPanel = (JPanel)viewport.getView();
+			  
+			  Component[] panecomp = shoppingPanel.getComponents();
+			  
+			  for(Component internalPanels : panecomp) {
+				  Component[] internalcomp = ((Container)internalPanels).getComponents();
+				  for(Component button : internalcomp){
+					  if(button.getName().equals("Button")){
+						  ((Button)button).setLabel(objectName);
+						  internalPanels.setName(objectName);
+					  }
+					  
+					  if(button.getName().equals("checkbox")){
+						  ((Checkbox)button).setLabel("Remove Shopping List" + " " +objectName);
+					  }
+				  }
+			  
+			  }
+		}
+		
+		if(shoppinglist == null){
+			
+			Component[] components = MainMenu.mainmenuInstance.getComponents();
+			
+					  JViewport viewport = ((JScrollPane) components[2]).getViewport(); 
+					  JPanel fridgePanel = (JPanel)viewport.getView();
+					  
+					 Component[] panecomp = fridgePanel.getComponents();
+					   
+					  for(Component internalPanels : panecomp) {
+							  Component[] internalcomp = ((Container)internalPanels).getComponents();
+							  for(Component button : internalcomp){
+								  if(button.getName().equals("Button")){
+									  ((Button)button).setLabel(objectName);
+									  internalPanels.setName(objectName);
+								  }
+								  
+								  if(button.getName().equals("checkbox")){
+									  ((Checkbox)button).setLabel("Remove Fridge" + " " +objectName);
+								  }
+							  }
+						  
+					 }
+				  
+			 	
+		}
 		
 	}
 	

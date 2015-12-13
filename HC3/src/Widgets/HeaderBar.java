@@ -139,10 +139,11 @@ public class HeaderBar extends JPanel {
 				if(answer == JOptionPane.YES_OPTION){
 					System.out.println("change name: " + Field.getText());
 					listview.getFridge().setNewName(Field.getText());
+					MainMenu.mainmenuInstance.UpdateNameLabels(listview, null, Field.getText());
 					listview.revalidate();
 					listview.repaint();
 				}else if(answer == JOptionPane.NO_OPTION){
-					MainMenu.mainmenuInstance.ChangeObjectDetails(listview, null,listview.getFridge().returnName());
+					MainMenu.mainmenuInstance.DestroyObject(listview, null,listview.getFridge().returnName());
 				}
 			}else if(shoppingview instanceof ShoppingListView){
 			      int answer = JOptionPane.showOptionDialog(null,
@@ -157,10 +158,11 @@ public class HeaderBar extends JPanel {
 				if(answer == JOptionPane.YES_OPTION){
 					System.out.println("change name: " + Field.getText());
 					shoppingview.getShopList().setName(Field.getText());
+					MainMenu.mainmenuInstance.UpdateNameLabels(null, shoppingview, Field.getText());
 					shoppingview.revalidate();
 					shoppingview.repaint();
 				}else if(answer == JOptionPane.NO_OPTION){
-					MainMenu.mainmenuInstance.ChangeObjectDetails(null, shoppingview,shoppingview.getShopList().getName());
+					MainMenu.mainmenuInstance.DestroyObject(null, shoppingview,shoppingview.getShopList().getName());
 				}
 				
 			}
