@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import javax.swing.Box;
+
 import java.awt.GridLayout;
 import java.awt.List;
 import java.awt.PopupMenu;
@@ -74,7 +76,7 @@ public class MainMenu extends JPanel {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		JFrame popFrame = new JFrame("JOptionPane showMessageDialog example");
+		JFrame popFrame = new JFrame();
 
 		
 		

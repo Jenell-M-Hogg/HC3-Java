@@ -1,10 +1,13 @@
 package Widgets;
 
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import Global.Constants;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Button;
 import java.awt.GridLayout;
@@ -14,6 +17,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 
 public class HeaderBar extends JPanel {
@@ -87,7 +91,31 @@ public class HeaderBar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO
+				
+				Object[] options = {"Confirm Name",
+		        "Remove Fridge"};
+				
+			      JTextField Field = new JTextField(5);
+
+			      JPanel myPanel = new JPanel();
+			      myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+			      myPanel.add(new JLabel("enter new name"));
+			      myPanel.add(Field);
+
+	int answer = JOptionPane.showOptionDialog(null,
+	myPanel,
+	"Fridge Details",
+	JOptionPane.YES_NO_OPTION,
+	JOptionPane.QUESTION_MESSAGE,
+	null,     //do not use a custom Icon
+	options,  //the titles of buttons
+	options[0]);
+			
+			if(answer == JOptionPane.YES_OPTION){
+				System.out.println("change name: " + Field.getText());
+			}else if(answer == JOptionPane.NO_OPTION){
+				System.out.println("destroy target object");
+			}
 				
 			}
 
