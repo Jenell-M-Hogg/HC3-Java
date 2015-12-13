@@ -47,6 +47,8 @@ import javax.swing.DropMode;
 import javax.swing.BoxLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextPane;
+import javax.swing.JViewport;
+
 import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -161,11 +163,15 @@ public class MainMenu extends JPanel {
 		JPanel Shoppingpanel = new JPanel();
 		scrollPane.setViewportView(Shoppingpanel);
 		Shoppingpanel.setLayout(new GridLayout(1, 0, 0, 0));
+		scrollPane.setName("shoppingpane");
 		
 		JPanel FridgePanel = new JPanel();
 		scrollPane_1.setViewportView(FridgePanel);
 		FridgePanel.setLayout(new GridLayout(1, 0, 0, 0));
 		setLayout(groupLayout);
+		scrollPane_1.setName("fridgepane");
+		
+		
 		
 		
 		//----------------------Action Listeners----------------------------//
@@ -415,6 +421,62 @@ public class MainMenu extends JPanel {
 	}
 	
 	
+	public void ChangeObjectDetails(ListView listview, ShoppingListView shoppinglist, String objectName){
+		
+		if(listview == null){
+			  ProjectFrame.thisInstance.setContentPane(MainMenu.mainmenuInstance);
+			
+			  Component[] components = MainMenu.mainmenuInstance.getComponents();
+			  JViewport viewport = ((JScrollPane) components[5]).getViewport(); 
+			  JPanel shoppingPanel = (JPanel)viewport.getView();
+			  
+			  Component[] panecomp = shoppingPanel.getComponents();
+			  
+			  for(Component internalPanels : panecomp) {
+				  
+	    			for(int i = 0; i<shopData.size(); i++)
+	    				if(internalPanels.getName().equals(shopData.get(i).getName()))
+	    					shopData.remove(i);
+				  
+				  if(objectName.equals(internalPanels.getName())){
+					  
+					  shoppingPanel.remove(internalPanels);
+				  }
+			 }
+		}
+		
+		if(shoppinglist == null){
+			
+			ProjectFrame.thisInstance.setContentPane(MainMenu.mainmenuInstance);
+			
+			Component[] components = MainMenu.mainmenuInstance.getComponents();
+			
+					  JViewport viewport = ((JScrollPane) components[2]).getViewport(); 
+					  JPanel fridgePanel = (JPanel)viewport.getView();
+					  
+					 Component[] panecomp = fridgePanel.getComponents();
+					   
+					  for(Component internalPanels : panecomp) {
+						  
+			    			for(int i = 0; i<fridgeData.size(); i++)
+			    				if(internalPanels.getName().equals(fridgeData.get(i).returnName()))
+			    					fridgeData.remove(i);
+						  
+						  if(objectName.equals(internalPanels.getName())){
+							  
+							  fridgePanel.remove(internalPanels);
+						  }
+					 }
+				  
+			 	
+		}
+		
+
+	}
+	
+	public void UpdateNameLabels(){
+		
+	}
 	
 	
 	//updates the screen to display the different fridges correctly

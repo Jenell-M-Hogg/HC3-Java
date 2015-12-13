@@ -2,6 +2,7 @@ package Widgets;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.LabelView;
 
 import Global.Constants;
 import Global.ProjectFrame;
@@ -101,38 +102,71 @@ public class HeaderBar extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
+				ShoppingListView shoppingview = null;
+				ListView listview = null;
+				
+				if(getParent() instanceof ListView){
+					listview = (ListView)getParent();
+				}else if(getParent() instanceof ShoppingListView){
+					shoppingview = (ShoppingListView)getParent();
+				}
+				
 				Object[] options = {"Confirm Name",
 		        "Remove Fridge"};
+
+				Object[] optionsshop = {"Confirm Name",
+			    "Remove Shopping List"};
 				
 			      JTextField Field = new JTextField(5);
 
 			      JPanel myPanel = new JPanel();
 			      myPanel.add(Box.createHorizontalStrut(15)); // a spacer
-			      myPanel.add(new JLabel("enter new name"));
+			      myPanel.add(new JLabel("Enter New Name"));
 			      myPanel.add(Field);
-
-	int answer = JOptionPane.showOptionDialog(null,
-	myPanel,
-	"Fridge Details",
-	JOptionPane.YES_NO_OPTION,
-	JOptionPane.QUESTION_MESSAGE,
-	null,     //do not use a custom Icon
-	options,  //the titles of buttons
-	options[0]);
+			      
+			      
+			      
+			 if(listview instanceof ListView){
+				      int answer = JOptionPane.showOptionDialog(null,
+				      myPanel,
+				      "Fridge Details",
+				      JOptionPane.YES_NO_OPTION,
+				      JOptionPane.QUESTION_MESSAGE,
+				      null,     //do not use a custom Icon
+				      options,  //the titles of buttons
+				      options[0]);
+				
+				if(answer == JOptionPane.YES_OPTION){
+					System.out.println("change name: " + Field.getText());
+					listview.getFridge().setNewName(Field.getText());
+					listview.revalidate();
+					listview.repaint();
+				}else if(answer == JOptionPane.NO_OPTION){
+					MainMenu.mainmenuInstance.ChangeObjectDetails(listview, null,listview.getFridge().returnName());
+				}
+			}else if(shoppingview instanceof ShoppingListView){
+			      int answer = JOptionPane.showOptionDialog(null,
+			      myPanel,
+			      "Fridge Details",
+			      JOptionPane.YES_NO_OPTION,
+			      JOptionPane.QUESTION_MESSAGE,
+			      null,     //do not use a custom Icon
+			      optionsshop,  //the titles of buttons
+			      optionsshop[0]);
 			
-			ListView listview = (ListView)getParent();
-			
-			if(answer == JOptionPane.YES_OPTION){
-				System.out.println("change name: " + Field.getText());
-				listview.getFridge().setNewName(Field.getText());
-				headerbar.revalidate();
-				headerbar.repaint();
-			}else if(answer == JOptionPane.NO_OPTION){
-				ProjectFrame.thisInstance.setContentPane(MainMenu.mainmenuInstance);
+				if(answer == JOptionPane.YES_OPTION){
+					System.out.println("change name: " + Field.getText());
+					shoppingview.getShopList().setName(Field.getText());
+					shoppingview.revalidate();
+					shoppingview.repaint();
+				}else if(answer == JOptionPane.NO_OPTION){
+					MainMenu.mainmenuInstance.ChangeObjectDetails(null, shoppingview,shoppingview.getShopList().getName());
+				}
 				
 			}
+	
 				
-			}
+	}
 
 
 			
