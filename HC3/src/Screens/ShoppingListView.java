@@ -27,6 +27,13 @@ import java.net.URISyntaxException;
 
 public class ShoppingListView extends JPanel {
 	ShopList shopList;
+	public ShopList getShopList() {
+		return shopList;
+	}
+	public void setShopList(ShopList shopList) {
+		this.shopList = shopList;
+	}
+
 	String[] labels= {"Name","Category","Most Expensive","Least Expensive"};
 	private JLabel displayedShopList;
 	/**
