@@ -44,12 +44,29 @@ import Widgets.BottomBar;
 public class ListView extends JPanel {
 	Fridge fridge;
 	
+	
+	
+	public Fridge getFridge() {
+		return fridge;
+	}
+
+	public void setFridge(Fridge fridge) {
+		this.fridge = fridge;
+	}
+	
+
 	private final String[] labels= {"Name", "Fewest Days","Most Days","Category","Location"};
 	private JLabel displayedFridge;
 
 	private ArrayList<ItemPanel> itemPanels= new ArrayList<ItemPanel>();
 	private JScrollPane scrollPane;
 	private JLayeredPane paneWindow;
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * Create the panel.
@@ -68,7 +85,6 @@ public class ListView extends JPanel {
 		
 		HeaderBar HeaderBar = new HeaderBar();
 		HeaderBar.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		
 		GridBagConstraints gbc_HeaderBar = new GridBagConstraints();
 		gbc_HeaderBar.weighty = 0.5;
 		gbc_HeaderBar.anchor = GridBagConstraints.NORTHWEST;
@@ -128,6 +144,9 @@ public class ListView extends JPanel {
 		gbc_lblSortBy.gridy = 0;
 		panel_1.add(lblSortBy, gbc_lblSortBy);
 		
+		
+		
+		
 		for(int i=0; i<labels.length; i++){
 			this.addToggleButton(labels[i], sortBy);
 		}
@@ -151,7 +170,11 @@ public class ListView extends JPanel {
 		
 		
 		listPane.add(scrollPane);
-
+		
+	
+		
+		
+		
 		try {
 			setUpList(sortBy);
 			
@@ -275,11 +298,15 @@ public class ListView extends JPanel {
 		//The item Panels are sorted alphabetically, now display them on the scrollPane
 		this.itemPanels=sorted;
 		this.updateList();
+
+		
+		
 	}
 
 	private void daySort(boolean fromLowest){
 		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
 		sorted.add(itemPanels.get(0));
+		
 		
 		for(int i=0;i<itemPanels.size();i++){
 			Item tbs= itemPanels.get(i).getItem();
@@ -319,6 +346,10 @@ public class ListView extends JPanel {
 				
 		scrollPane.validate();
 		scrollPane.repaint();
+		
+		
+			
+		
 	}
 
 	private void resetLayout() {
@@ -341,23 +372,13 @@ public class ListView extends JPanel {
 		
 		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
 		paneWindow.validate();
-	}
-	
-	public Fridge getFridge() {
-		return fridge;
-	}
-
-	public void setFridge(Fridge fridge) {
-		this.fridge = fridge;
-	}
-
-	public boolean getIsMoveRemoveMode() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	public void OpenItemDetails() {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
+	
+	
+	
+
+	
 }
