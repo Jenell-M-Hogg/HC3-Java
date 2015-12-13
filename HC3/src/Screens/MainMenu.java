@@ -59,12 +59,17 @@ public class MainMenu extends JPanel {
 	ArrayList<ShopList> shopData = new ArrayList();
 	
 	private int defaulthandler = 0;
+	
+	public static MainMenu mainmenuInstance;
 
 	/**
 	 * Create the panel.
 	 */
 	public MainMenu() {
 		this.setSize(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT);
+		
+		this.setName("carroll");
+		mainmenuInstance = this;
 		
 		txtMainMenu = new JTextField();
 		txtMainMenu.setFont(new Font("Times New Roman", Font.PLAIN, 19));

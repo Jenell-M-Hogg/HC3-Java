@@ -4,6 +4,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Global.Constants;
+import Global.ProjectFrame;
+import Screens.ListView;
+import Screens.MainMenu;
+import Screens.ShoppingListView;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,10 +28,15 @@ public class HeaderBar extends JPanel {
 	JButton rightButton;
 	JButton middleButton;
 	JButton leftButton;
+	
+	
 	/**
 	 * Create the panel.
 	 */
 	public HeaderBar() {
+		
+		HeaderBar headerbar = this;
+		
 		this.setSize((int) (Constants.FRAME_WIDTH), Constants.FRAME_HEIGHT/15);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{133, 133, 133, 0};
@@ -111,10 +120,16 @@ public class HeaderBar extends JPanel {
 	options,  //the titles of buttons
 	options[0]);
 			
+			ListView listview = (ListView)getParent();
+			
 			if(answer == JOptionPane.YES_OPTION){
 				System.out.println("change name: " + Field.getText());
+				listview.getFridge().setNewName(Field.getText());
+				headerbar.revalidate();
+				headerbar.repaint();
 			}else if(answer == JOptionPane.NO_OPTION){
-				System.out.println("destroy target object");
+				ProjectFrame.thisInstance.setContentPane(MainMenu.mainmenuInstance);
+				
 			}
 				
 			}

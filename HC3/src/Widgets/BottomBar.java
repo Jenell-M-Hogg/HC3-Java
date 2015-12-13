@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 import Global.Constants;
 import Global.ProjectFrame;
-import Screens.FridgeMainView;
+//import Screens.FridgeMainView;
 import Screens.ListView;
 import Screens.MainMenu;
 import Screens.ShoppingListView;
@@ -65,7 +65,7 @@ public class BottomBar extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//go to main menu
-				ProjectFrame.thisInstance.setContentPane(new MainMenu());
+				ProjectFrame.thisInstance.setContentPane(MainMenu.mainmenuInstance);
 			}
 		});
 

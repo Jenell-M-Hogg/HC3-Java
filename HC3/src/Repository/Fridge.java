@@ -27,4 +27,8 @@ public class Fridge {
 	public String returnName(){
 		return this.name;
 	}
+	
+	public void setNewName(String newName){
+		this.name = newName;
+	}
 }
