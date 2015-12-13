@@ -22,6 +22,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -32,7 +33,7 @@ import java.awt.Panel;
 
 import javax.swing.JCheckBoxMenuItem;
 
-public class ItemPanel extends JPanel {
+public class SomethingElse extends JPanel {
 	private Item item;
 	private BufferedImage itemCategoryPicture;
 	private JLabel itemCategoryIcon;
@@ -47,10 +48,10 @@ public class ItemPanel extends JPanel {
 	 * @throws IOException 
 	 * @throws URISyntaxException 
 	 */
-	public ItemPanel(Item item) throws IOException, URISyntaxException {
+	public SomethingElse(Item item) throws IOException, URISyntaxException {
 		this.item = item;
+		this.setBackground(Color.WHITE);
 		
-				
 		itemCategoryPicture = ImageIO.read(new File(getClass().getResource(item.getCategory().getIconLocation()).toURI()));
 		
 		addMouseListener(new MouseAdapter() {
@@ -130,7 +131,7 @@ public class ItemPanel extends JPanel {
 	private void update() throws IOException, URISyntaxException {
 		
 		itemCategoryIcon.setText(item.getName());
-		itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
+		itemCategoryIcon.setIcon(new ImageIcon(SomethingElse.class.getResource(item.getCategory().getIconLocation())));
 		
 		String qtyText = " x" + item.getQuantity();
 		if (item.getQuantity() == -1) {
