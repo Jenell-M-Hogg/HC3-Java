@@ -137,7 +137,6 @@ public class HeaderBar extends JPanel {
 				      options[0]);
 				
 				if(answer == JOptionPane.YES_OPTION){
-					System.out.println("change name: " + Field.getText());
 					MainMenu.mainmenuInstance.UpdateNameLabels(listview, null, Field.getText(),listview.getFridge().returnName());
 					listview.getFridge().setNewName(Field.getText());
 					listview.revalidate();
@@ -167,7 +166,6 @@ public class HeaderBar extends JPanel {
 			      optionsshop[0]);
 			
 				if(answer == JOptionPane.YES_OPTION){
-					System.out.println("change name: " + Field.getText());
 					MainMenu.mainmenuInstance.UpdateNameLabels(null, shoppingview, Field.getText(),shoppingview.getShopList().getName());
 					shoppingview.getShopList().setName(Field.getText());
 					shoppingview.revalidate();

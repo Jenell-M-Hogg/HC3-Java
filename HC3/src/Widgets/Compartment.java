@@ -29,7 +29,8 @@ public class Compartment extends JPanel {
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */
-	public Compartment(boolean isVertical) throws IOException, URISyntaxException {
+	public Compartment(boolean isVertical) throws IOException, URISyntaxException {		
+		
 		this.isVertical=isVertical;
 		
 		setLayout(new BorderLayout(0, 0));
@@ -48,14 +49,20 @@ public class Compartment extends JPanel {
 		}
 		
 		scrollPane.setViewportView(paneWindow);
-		paneWindow.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		FlowLayout fl_paneWindow = new FlowLayout(FlowLayout.LEFT, 5, 5);
+		fl_paneWindow.setAlignOnBaseline(true);
+		paneWindow.setLayout(fl_paneWindow);
 		add(scrollPane, BorderLayout.CENTER);
 
 	}
 	
 	
 	public void AddItems(ArrayList<ItemPanel> panels){
+		for(int i=0; i<panels.size();i++){
+			this.addItem(panels.get(i));
+		}
 		
+		repaint();
 
 	}
 	
@@ -63,19 +70,9 @@ public class Compartment extends JPanel {
 	//	
 	}
 	
-	public void addItem(ItemPanel itemPanel, int i){
+	public void addItem(ItemPanel itemPanel){
 		paneWindow.add(itemPanel);
-		
-		Dimension preferred= paneWindow.getPreferredSize();
-		
-		if(isVertical){
-			preferred.setSize(preferred.getWidth(), preferred.getHeight()+itemPanel.getPreferredSize().getHeight());	
-		}
-		else{
-			preferred.setSize(preferred.getWidth(), preferred.getHeight()+itemPanel.getPreferredSize().getHeight());	
-			
-		}
-		
+	
 		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
 		paneWindow.validate();
 	}
