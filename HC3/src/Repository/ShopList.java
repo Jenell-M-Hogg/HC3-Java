@@ -4,15 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShopList {
-	private String name="";
-	private List<Item> shopListItems = new ArrayList<Item>();
+	String name="";
+	ArrayList<Item> items;
 	
-	public List<Item> getShopListItems() {
-		return shopListItems;
-	}
-
-	public void setShopListItems(List<Item> shopListItems) {
-		this.shopListItems = shopListItems;
+	public ShopList(String name){
+		this.name= name;
+		this.items=new ArrayList<Item>();
 	}
 
 	public String getName() {
@@ -23,15 +20,15 @@ public class ShopList {
 		this.name = name;
 	}
 	
-	public void addItem(Item item) {
-		shopListItems.add(item);
+	public void addItem(Item item){
+		items.add(item);
 	}
 	
 	public void removeItem(Item item) {
-		shopListItems.remove(item);
+		items.remove(item);
 	}
 	
-	public ShopList(String name){
-		this.name= name;
+	public ArrayList<Item> getItems(){
+		return items;
 	}
 }

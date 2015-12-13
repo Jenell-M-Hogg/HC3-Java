@@ -1,19 +1,25 @@
 package Screens;
 
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
 
+import net.miginfocom.swing.MigLayout;
 import Global.Constants;
+import Repository.Item;
 import Repository.ShopList;
 import Widgets.BottomBar;
 import Widgets.HeaderBar;
+import Widgets.ItemPanel;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
@@ -24,18 +30,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 public class ShoppingListView extends JPanel {
 	ShopList shopList;
-	public ShopList getShopList() {
-		return shopList;
-	}
-	public void setShopList(ShopList shopList) {
-		this.shopList = shopList;
-	}
 
 	String[] labels= {"Name","Category","Most Expensive","Least Expensive"};
 	private JLabel displayedShopList;
+	
+	private ArrayList<ItemPanel> itemPanels= new ArrayList<ItemPanel>();
+	private JScrollPane scrollPane;
+	private JLayeredPane paneWindow;
+	
+	
 	/**
 	 * Create the panel.
 	 */
@@ -51,7 +58,7 @@ public class ShoppingListView extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0};
 		setLayout(gridBagLayout);
 		
-		HeaderBar HeaderBar = new HeaderBar(null, this);
+		HeaderBar HeaderBar = new HeaderBar();
 		HeaderBar.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 
 		GridBagConstraints gbc_HeaderBar = new GridBagConstraints();
@@ -121,19 +128,57 @@ public class ShoppingListView extends JPanel {
 		
 		JPanel listPane = new JPanel();
 		bottomPanel.add(listPane, BorderLayout.CENTER);
-		listPane.setLayout(new GridLayout(0, 1, 0, 0));
+		listPane.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		listPane.add(scrollPane);
+		paneWindow= new JLayeredPane();
+		paneWindow.setBorder(new CompoundBorder());
+		paneWindow.setPreferredSize(new Dimension(100,100));
+		
 
+		scrollPane = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setViewportView(paneWindow);
+		paneWindow.setLayout(new MigLayout("", "[][]", "[][]"));
+
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		
+		listPane.add(scrollPane);	
+		
+		try {
+			setUpList(sortBy);
+			
+			BottomBar bottomBar = new BottomBar("ListView");
+			bottomPanel.add(bottomBar, BorderLayout.SOUTH);
+		} catch (Exception e) {
+		}
 
 	}
-	private void setUpList() throws IOException, URISyntaxException {
+	
+	private void setUpList(JPanel sortBy) throws IOException, URISyntaxException {
+		//Given a fridge, initialize the screen.
+		
+		
+		//We want to create Item Panels from the Items in the fridge
+		
+		createItemPanels();
 
-
-
+		//By default, the list is sorted by name. Enable the "Name" button
+		Component[] components=sortBy.getComponents();
+		
+		for (int i=0; i<components.length; i++){
+			if (components[i] instanceof JToggleButton){
+				if (((JToggleButton) components[i]).getText().equals(labels[0])){
+					((JToggleButton)components[i]).setSelected(true);
+					break;
+				}
+				
+			}
+		}
+		
+		//Sort by name
+		this.sortBy(labels[0]);
+		
 	}
 
 	
@@ -161,6 +206,16 @@ public class ShoppingListView extends JPanel {
 		panel.add(btnName);
 	}
 	
+	private void createItemPanels() throws IOException, URISyntaxException {
+		// Gets the items from shopList and updates the itemPanels
+		ArrayList<Item> items= shopList.getItems();
+		itemPanels.clear();
+		
+		for(int i=0; i<items.size(); i++){
+			this.itemPanels.add(new ItemPanel(items.get(i)));
+		}
+	}
+	
 	//TODO
 	private void sortBy(String button){
 		
@@ -182,5 +237,120 @@ public class ShoppingListView extends JPanel {
 		else if (button.equals(labels[4])){
 			//Sort by location
 		}
+	}
+	
+	private void nameSort() {
+		//Sorts the item panels by name
+		
+		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
+		
+		sorted.add(this.itemPanels.get(0));
+		String thisName;
+		String thatName;
+		for(int i=1;i<itemPanels.size();i++){
+			thisName=itemPanels.get(i).getItem().getName();
+			for(int m=0; m<sorted.size(); m++){
+				thatName=sorted.get(m).getItem().getName();
+				
+				if(thatName.compareTo(thisName)>0){
+					//If this is true, that Name goes behind thisName
+					sorted.add(m, itemPanels.get(i));
+					break;
+				}
+				else{
+					//thisName goes behind thatName
+					sorted.add(m+1, itemPanels.get(i));
+					break;
+				}
+			}
+		}
+		
+		//The item Panels are sorted alphabetically, now display them on the scrollPane
+		this.itemPanels=sorted;
+		this.updateList();
+
+		
+		
+	}
+
+	private void daySort(boolean fromLowest){
+		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
+		sorted.add(itemPanels.get(0));
+		
+		
+		for(int i=0;i<itemPanels.size();i++){
+			Item tbs= itemPanels.get(i).getItem();
+			if(tbs.getCountDownIsSet()){
+				
+			}
+			
+			for(int m=0; m<sorted.size();m++){
+				Item th= sorted.get(m).getItem();
+				
+				if (fromLowest){
+					if(tbs.getCountDownIsSet()){
+						
+					}
+				}
+				
+				else{
+					
+				}
+			}
+		}
+	}
+	
+	private void updateList() {
+
+		resetLayout();
+		for(int i=0; i<this.itemPanels.size(); i++){
+			addToScroll(this.itemPanels.get(i),i);
+		}
+		
+		
+		
+		scrollPane.setViewportView(paneWindow);
+		
+		Dimension preferred= scrollPane.getViewport().getView().getPreferredSize();
+		Dimension actual= scrollPane.getViewport().getViewSize();
+				
+		scrollPane.validate();
+		scrollPane.repaint();
+		
+		
+			
+		
+	}
+
+	private void resetLayout() {
+		paneWindow.removeAll();
+		
+		String rowConstraints="";
+		for (int i=0; i<this.itemPanels.size(); i++){
+			rowConstraints=rowConstraints+"[]";
+		}
+		paneWindow.setLayout(new MigLayout("", "[]", rowConstraints));
+		
+	}
+
+	private void addToScroll(Component itemPanel, int i) {
+	
+		paneWindow.add(itemPanel, "cell 0 "+Integer.toString(i)+",alignx");
+		
+		Dimension preferred= paneWindow.getPreferredSize();
+		preferred.setSize(preferred.getWidth(), preferred.getHeight()+itemPanel.getPreferredSize().getHeight());
+		
+		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
+		paneWindow.validate();
+		
+		
+		
+	}
+	
+	public ShopList getShopList() {
+		return shopList;
+	}
+	public void setShopList(ShopList shopList) {
+		this.shopList = shopList;
 	}
 }
