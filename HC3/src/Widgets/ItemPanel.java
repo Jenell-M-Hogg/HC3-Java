@@ -8,6 +8,9 @@ import javax.swing.JPanel;
 import Global.Constants;
 import Repository.Category;
 import Repository.Item;
+import Screens.FridgeView;
+import Screens.ListView;
+import Screens.ShoppingListView;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -23,6 +26,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -58,10 +62,24 @@ public class ItemPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				System.out.println(tempActionListenerString);
+				
+				//Open item details pop-up
+				
+				if (FridgeView.class.isInstance(getParent())) {
+					FridgeView aView = (FridgeView) getParent();
+					//aView.OpenItemDetails();
+				} else if (ListView.class.isInstance(getParent())) {
+					ListView aView = (ListView) getParent();
+					aView.OpenItemDetails();
+				} else if (ShoppingListView.class.isInstance(getParent())) {
+					ShoppingListView aView = (ShoppingListView) getParent();
+					aView.OpenItemDetails();
+				}
 			}
 		});
 		
 		chckbxmntmNewCheckItem = new JCheckBoxMenuItem("");
+		chckbxmntmNewCheckItem.setVisible(false);
 		GridBagConstraints gbc_chckbxmntmNewCheckItem = new GridBagConstraints();
 		gbc_chckbxmntmNewCheckItem.insets = new Insets(0, 0, 0, 5);
 		gbc_chckbxmntmNewCheckItem.gridx = 11;
@@ -77,9 +95,7 @@ public class ItemPanel extends JPanel {
 		
 		itemCategoryIcon = new JLabel(new ImageIcon(itemCategoryPicture));
 		
-		//itemCategoryIcon.setText(item.getName());
 		itemCategoryIcon.setHorizontalAlignment(SwingConstants.LEFT);
-		//itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
 		GridBagConstraints gbc_itemCategoryIcon = new GridBagConstraints();
 		gbc_itemCategoryIcon.anchor = GridBagConstraints.WEST;
 		gbc_itemCategoryIcon.insets = new Insets(0, 0, 0, 5);
@@ -134,16 +150,23 @@ public class ItemPanel extends JPanel {
 		itemCategoryIcon.setIcon(new ImageIcon(ItemPanel.class.getResource(item.getCategory().getIconLocation())));
 		
 		String qtyText = " x" + item.getQuantity();
-		if (item.getQuantity() == -1) {
-			lblQty.setVisible(false); 
-		} else {
-			lblQty.setVisible(true);
-		}
+		lblQty.setVisible(item.getQuantity() != -1); 
 		lblQty.setText(qtyText);
 		
 		expiryCountDown.setCountDown(item.getCountDown());
 		expiryCountDown.update(item.getCountDownIsSet());
 		
-		tempActionListenerString = "Item " + this.item.getName() + "was clicked; open item details pop-up";
+		tempActionListenerString = "Item " + this.item.getName() + " was clicked; open item details pop-up";
+		
+		if (FridgeView.class.isInstance(this.getParent())) {
+			FridgeView aView = (FridgeView) this.getParent();
+			//chckbxmntmNewCheckItem.setVisible(aView.getIsMoveRemoveMode());
+		} else if (ListView.class.isInstance(this.getParent())) {
+			ListView aView = (ListView) this.getParent();
+			chckbxmntmNewCheckItem.setVisible(aView.getIsMoveRemoveMode());
+		} else if (ShoppingListView.class.isInstance(this.getParent())) {
+			ShoppingListView aView = (ShoppingListView) this.getParent();
+			chckbxmntmNewCheckItem.setVisible(aView.getIsMoveRemoveMode());
+		}
 	}
 }
