@@ -31,8 +31,9 @@ public class BottomBar extends JPanel {
 	
 	/**
 	 * Create the panel.
+	 * @param aView 
 	 */
-	public BottomBar(String currentScreen) {
+	public BottomBar(ListView aView, String currentScreen) {
 		String homeIconLocation = "/images/Home.png";
 		String listViewIconLocation = "/images/ListIcon.png";
 		String fridgeViewIconLocation = "/images/singleDoorIcon.png";
@@ -83,15 +84,13 @@ public class BottomBar extends JPanel {
 		gbc_changeViewButton.gridx = 1;
 		gbc_changeViewButton.gridy = 0;
 		
-		System.out.println(this.getRootPane());
 		changeViewButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (currentScreen.equals("FridgeView")) {
 					//set to listView
-					//this.getRootpane().getParent();
-					//ProjectFrame.thisInstance.setContentPane(new ListView());
+					ProjectFrame.thisInstance.setContentPane(new ListView(aView.getFridge()));
 				} else {
 					//set to fridgeView
 				}
