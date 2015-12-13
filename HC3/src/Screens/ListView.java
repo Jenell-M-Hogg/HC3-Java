@@ -3,8 +3,6 @@ package Screens;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.AbstractButton;
-import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
@@ -17,9 +15,6 @@ import Repository.Item;
 import Widgets.HeaderBar;
 import Widgets.ItemPanel;
 
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -29,14 +24,10 @@ import javax.swing.JLabel;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
-import javax.swing.JList;
-
 import java.awt.Component;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.border.BevelBorder;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -45,34 +36,29 @@ import java.awt.BorderLayout;
 
 import Repository.Category;
 
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.CompoundBorder;
 
-import java.awt.FlowLayout;
-
-import javax.swing.SpringLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-
 import net.miginfocom.swing.MigLayout;
-
-import javax.swing.JInternalFrame;
-import javax.swing.JPopupMenu;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import Widgets.BottomBar;
 
 public class ListView extends JPanel {
 	Fridge fridge;
-	String[] labels= {"Name", "Fewest Days","Most Days","Category","Location"};
-	private JLabel displayedFridge;
 	
-	private ArrayList<String> locations=new ArrayList<String>();
-	private ArrayList<Category> categories= new ArrayList<Category>();
+	
+	
+	private final String[] labels= {"Name", "Fewest Days","Most Days","Category","Location"};
+	private JLabel displayedFridge;
+
 	private ArrayList<ItemPanel> itemPanels= new ArrayList<ItemPanel>();
 	private JScrollPane scrollPane;
 	private JLayeredPane paneWindow;
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Create the panel.
 	 */
@@ -182,6 +168,9 @@ public class ListView extends JPanel {
 		
 		try {
 			setUpList(sortBy);
+			
+			BottomBar bottomBar = new BottomBar("ListView");
+			bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		} catch (Exception e) {
 		}
 	}
@@ -305,6 +294,33 @@ public class ListView extends JPanel {
 		
 	}
 
+	private void daySort(boolean fromLowest){
+		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
+		sorted.add(itemPanels.get(0));
+		
+		
+		for(int i=0;i<itemPanels.size();i++){
+			Item tbs= itemPanels.get(i).getItem();
+			if(tbs.getCountDownIsSet()){
+				
+			}
+			
+			for(int m=0; m<sorted.size();m++){
+				Item th= sorted.get(m).getItem();
+				
+				if (fromLowest){
+					if(tbs.getCountDownIsSet()){
+						
+					}
+				}
+				
+				else{
+					
+				}
+			}
+		}
+	}
+	
 	private void updateList() {
 
 		resetLayout();
