@@ -46,6 +46,14 @@ public class ListView extends JPanel {
 	
 	
 	
+	public Fridge getFridge() {
+		return fridge;
+	}
+
+	public void setFridge(Fridge fridge) {
+		this.fridge = fridge;
+	}
+
 	private final String[] labels= {"Name", "Fewest Days","Most Days","Category","Location"};
 	private JLabel displayedFridge;
 
@@ -74,7 +82,7 @@ public class ListView extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0};
 		setLayout(gridBagLayout);
 		
-		HeaderBar HeaderBar = new HeaderBar();
+		HeaderBar HeaderBar = new HeaderBar(this, null);
 		HeaderBar.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		GridBagConstraints gbc_HeaderBar = new GridBagConstraints();
 		gbc_HeaderBar.weighty = 0.5;
@@ -169,7 +177,7 @@ public class ListView extends JPanel {
 		try {
 			setUpList(sortBy);
 			
-			BottomBar bottomBar = new BottomBar("ListView");
+			BottomBar bottomBar = new BottomBar(this, "ListView");
 			bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		} catch (Exception e) {
 		}

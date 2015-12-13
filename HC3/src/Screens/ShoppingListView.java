@@ -44,7 +44,7 @@ public class ShoppingListView extends JPanel {
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0};
 		setLayout(gridBagLayout);
 		
-		HeaderBar HeaderBar = new HeaderBar();
+		HeaderBar HeaderBar = new HeaderBar(null, this);
 		HeaderBar.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 
 		GridBagConstraints gbc_HeaderBar = new GridBagConstraints();
