@@ -171,7 +171,7 @@ public class MainMenu extends JPanel {
 				String FridgeName = (String)JOptionPane.showInputDialog(
 						popFrame,
 	                    "Give the new fridge a name.",
-	                    "Customized Dialog",
+	                    "Fridge Name PopUp",
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null,
 	                    null,
@@ -207,7 +207,7 @@ public class MainMenu extends JPanel {
 				String ShoppingListName = (String)JOptionPane.showInputDialog(
 						popFrame,
 	                    "Give the new shopping list a name.",
-	                    "Customized Dialog",
+	                    "Shopping List Name PopUp",
 	                    JOptionPane.PLAIN_MESSAGE,
 	                    null,
 	                    null,
@@ -245,7 +245,7 @@ public class MainMenu extends JPanel {
 		        "Cancel"};
 				int result = JOptionPane.showOptionDialog(popFrame,
 		"This action will permanently remove selected objects. Are you sure you want to proceed?",
-		"A Silly Question",
+		"Confirmation PopUp",
 		JOptionPane.YES_NO_OPTION,
 		JOptionPane.WARNING_MESSAGE,
 		null,     //do not use a custom Icon
@@ -449,46 +449,3 @@ public class MainMenu extends JPanel {
 		});
 	}
 }
-
-
-
-
-
-//old addfridge:--------------------------------------------------
-/*Button fridgeAccess = new Button();
-//Checkbox confirmDelete = new Checkbox();
-
-fridgeAccess.setName("button" + (currentPanel.getComponentCount()+1));
-fridgeAccess.setPreferredSize(new Dimension(100,75));
-
-fridgeAccess.setLabel(type + " " + (currentPanel.getComponentCount()+1));
-
-fridgeAccess.addActionListener(new ActionListener() {
-	public void actionPerformed(ActionEvent e) {
-		if(type.equals("Shopping List")){
-			fridgeAccess.setLabel("NOICE");
-		}
-		else{
-			fridgeAccess.setLabel("WHATUP");
-		}
-	}
-});
-
-
-currentPanel.add(fridgeAccess);
-//currentPanel.add(confirmDelete);*/
-
-
-//old removeFridge:--------------------------------------------------
-/*if(currentPanel.getComponentCount() > 0){
-Component[] components = currentPanel.getComponents();
-
-for(Component com : components) {
-	if(com.getName().equals("button"+ currentPanel.getComponentCount())){
-		currentPanel.remove(com); 
-	}
-}
-
-	UpdateScreens(currentPanel, jPane);
-
-}*/
