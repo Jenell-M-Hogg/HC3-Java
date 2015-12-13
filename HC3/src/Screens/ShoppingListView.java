@@ -42,7 +42,6 @@ public class ShoppingListView extends JPanel {
 	private JScrollPane scrollPane;
 	private JLayeredPane paneWindow;
 	
-	
 	/**
 	 * Create the panel.
 	 */
@@ -148,18 +147,17 @@ public class ShoppingListView extends JPanel {
 		try {
 			setUpList(sortBy);
 			
-			BottomBar bottomBar = new BottomBar("ListView");
+			BottomBar bottomBar = new BottomBar("ShoppingListView");
 			bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		} catch (Exception e) {
 		}
-
 	}
 	
 	private void setUpList(JPanel sortBy) throws IOException, URISyntaxException {
-		//Given a fridge, initialize the screen.
+		//Given a shopList, initialize the screen.
 		
 		
-		//We want to create Item Panels from the Items in the fridge
+		//We want to create Item Panels from the Items in the shopList
 		
 		createItemPanels();
 
@@ -224,18 +222,13 @@ public class ShoppingListView extends JPanel {
 			//Sort the things by name
 		}
 		else if (button.equals(labels[1])){
-			//Sort by Fewest days
-		}
-		else if (button.equals(labels[2])){
-			//Sort by most days
-		}
-		
-		else if (button.equals(labels[3])){
 			//Sort by category
 		}
-		
-		else if (button.equals(labels[4])){
-			//Sort by location
+		else if (button.equals(labels[2])){
+			//Sort by most expensive
+		}
+		else if (button.equals(labels[3])){
+			//Sort by least expensive
 		}
 	}
 	
@@ -268,15 +261,11 @@ public class ShoppingListView extends JPanel {
 		//The item Panels are sorted alphabetically, now display them on the scrollPane
 		this.itemPanels=sorted;
 		this.updateList();
-
-		
-		
 	}
 
-	private void daySort(boolean fromLowest){
+/*	private void daySort(boolean fromLowest){
 		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
 		sorted.add(itemPanels.get(0));
-		
 		
 		for(int i=0;i<itemPanels.size();i++){
 			Item tbs= itemPanels.get(i).getItem();
@@ -298,7 +287,7 @@ public class ShoppingListView extends JPanel {
 				}
 			}
 		}
-	}
+	}*/
 	
 	private void updateList() {
 
@@ -316,10 +305,6 @@ public class ShoppingListView extends JPanel {
 				
 		scrollPane.validate();
 		scrollPane.repaint();
-		
-		
-			
-		
 	}
 
 	private void resetLayout() {
@@ -342,9 +327,6 @@ public class ShoppingListView extends JPanel {
 		
 		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
 		paneWindow.validate();
-		
-		
-		
 	}
 	
 	public ShopList getShopList() {
@@ -352,5 +334,15 @@ public class ShoppingListView extends JPanel {
 	}
 	public void setShopList(ShopList shopList) {
 		this.shopList = shopList;
+	}
+
+	public boolean getIsMoveRemoveMode() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public void OpenItemDetails() {
+		// TODO Auto-generated method stub
+		
 	}
 }
