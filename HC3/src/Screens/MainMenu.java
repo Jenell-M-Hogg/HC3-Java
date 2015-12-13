@@ -334,11 +334,11 @@ public class MainMenu extends JPanel {
 			
 			fridgeAccess.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(type.equals("Shopping List")){
-						ProjectFrame.thisInstance.setContentPane(new ListView(tempFridge));				
+					if(type.equals("Shopping List")){	
+						ProjectFrame.thisInstance.setContentPane(new ShoppingListView(tempShopList));
 					}
 					else{
-						ProjectFrame.thisInstance.setContentPane(new ShoppingListView(tempShopList));
+						ProjectFrame.thisInstance.setContentPane(new ListView(tempFridge));	
 					}
 				}
 			});
