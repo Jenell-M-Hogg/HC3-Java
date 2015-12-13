@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import Global.Constants;
 import Global.ProjectFrame;
+import Screens.FridgeView;
 //import Screens.FridgeMainView;
 import Screens.ListView;
 import Screens.MainMenu;
@@ -38,7 +39,7 @@ public class BottomBar extends JPanel {
 	public BottomBar(String currentScreen) {
 		String homeIconLocation = "/images/Home.png";
 		String listViewIconLocation = "/images/ListIcon.png";
-		String fridgeViewIconLocation = "/images/singleDoorIcon.png";
+		String fridgeViewIconLocation = "/images/singledoorIcon.png";
 		
 		this.setSize((int) (Constants.FRAME_WIDTH), Constants.FRAME_HEIGHT/15);
 		
@@ -98,9 +99,9 @@ public class BottomBar extends JPanel {
 					System.out.println(getParent());
 				} else if (currentScreen.equals("ListView")) {
 					//set to fridgeView
-					/*FridgeView fridgeView = (FridgeView) getParent();
-					ProjectFrame.thisInstance.setContentPane(new FridgeView(fridgeView.getFridge()));
-					System.out.println(getParent());*/
+					FridgeView fridgeView = (FridgeView) getParent();
+					//ProjectFrame.thisInstance.setContentPane(new FridgeView(fridgeView.getFridge()));
+					System.out.println(getParent());
 				}
 			}	
 		});
