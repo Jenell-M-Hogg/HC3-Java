@@ -152,12 +152,12 @@ public class ListView extends JPanel {
 		
 		listPane.add(scrollPane);
 
+		BottomBar bottomBar = new BottomBar("ListView");
+		bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		try {
 			setUpList(sortBy);
-			
-			BottomBar bottomBar = new BottomBar("ListView");
-			bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 		}
 	}
 	
@@ -359,5 +359,9 @@ public class ListView extends JPanel {
 	public void OpenItemDetails() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void AddItem() {
+		// TODO
 	}
 }

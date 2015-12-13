@@ -144,12 +144,12 @@ public class ShoppingListView extends JPanel {
 		
 		listPane.add(scrollPane);	
 		
+		BottomBar bottomBar = new BottomBar("ShoppingListView");
+		bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		try {
 			setUpList(sortBy);
-			
-			BottomBar bottomBar = new BottomBar("ShoppingListView");
-			bottomPanel.add(bottomBar, BorderLayout.SOUTH);
 		} catch (Exception e) {
+			System.err.println(e.getMessage());
 		}
 	}
 	
