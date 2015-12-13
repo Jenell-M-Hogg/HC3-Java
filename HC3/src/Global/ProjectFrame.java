@@ -9,7 +9,10 @@ import javax.swing.border.EmptyBorder;
 
 import Repository.Fridge;
 import Repository.Item;
+import Repository.ShopList;
 import Screens.ListView;
+import Screens.MainMenu;
+import Screens.ShoppingListView;
 
 public class ProjectFrame extends JFrame {
 	public static ProjectFrame thisInstance;
@@ -25,7 +28,7 @@ public class ProjectFrame extends JFrame {
 			
 			Fridge fridge= new Fridge("My Fridge", FridgeType.SINGLE_DOOR);
 			Item item;
-			
+			ShopList shopList= new ShopList("My Shop List");
 			
 			for(int i=0; i<2; i++){
 				
@@ -35,7 +38,7 @@ public class ProjectFrame extends JFrame {
 			
 			ProjectFrame frame = new ProjectFrame();
 			
-			thisInstance.setContentPane(new ListView(fridge));
+			thisInstance.setContentPane(new MainMenu());
 			thisInstance.setVisible(true);
 			
 			
@@ -44,7 +47,6 @@ public class ProjectFrame extends JFrame {
 		}
 		
 	}
-	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -65,7 +67,6 @@ public class ProjectFrame extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		this.thisInstance= this;
-		
 	}
 	
 	
