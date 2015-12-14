@@ -57,7 +57,7 @@ public class ItemDetailsPopUp extends JDialog {
 	 */
 	public ItemDetailsPopUp(Item item) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemDetailsPopUp.class.getResource("/images/DefaultCategoryIcon.png")));
-		setTitle("<ItemName>");
+		setTitle(item.getName());
 		setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setLocationRelativeTo(ProjectFrame.thisInstance);
@@ -69,7 +69,7 @@ public class ItemDetailsPopUp extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new MigLayout("", "[][][]", "[grow][grow][grow][grow][grow]"));
 		{
-			JLabel lblCategory = new JLabel("Category :");
+			JLabel lblCategory = new JLabel("Category : " + item.getCategory().getName());
 			lblCategory.setHorizontalAlignment(SwingConstants.LEFT);
 			contentPanel.add(lblCategory, "cell 0 0,alignx trailing");
 		}
@@ -95,7 +95,7 @@ public class ItemDetailsPopUp extends JDialog {
 			contentPanel.add(expiryCountDown, "cell 1 2");
 		}
 		{
-			JLabel lblQuantity = new JLabel("Quantity:");
+			JLabel lblQuantity = new JLabel("Quantity:" + item.getBestBefore());
 			contentPanel.add(lblQuantity, "cell 0 3,alignx trailing");
 		}
 		{
@@ -103,7 +103,7 @@ public class ItemDetailsPopUp extends JDialog {
 			contentPanel.add(label, "cell 1 3");
 		}
 		{
-			JLabel label = new JLabel("<Unit>");
+			JLabel label = new JLabel(item.getUnits());
 			contentPanel.add(label, "cell 2 3");
 		}
 		{

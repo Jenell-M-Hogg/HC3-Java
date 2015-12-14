@@ -49,7 +49,7 @@ public class HeaderBar extends JPanel {
 	JButton rightButton;
 	JButton middleButton;
 	JButton leftButton;
-	CategoryList categoryList = CategoryList.getInstance();
+	//CategoryList categoryList = CategoryList.getInstance();
 	
 	/**
 	 * Create the panel.
@@ -215,206 +215,14 @@ public class HeaderBar extends JPanel {
 						if(result == JOptionPane.YES_OPTION)
 							MainMenu.mainmenuInstance.DestroyObject(null, shoppingview,shoppingview.getShopList().getName());
 					}
-
 				}
-
-
 			}
-
-
-
 		});
 		add(leftButton, gbc_editFridgeDetails);
-
-
-
 	}
-
 
 	private void addNewItem() throws IOException, URISyntaxException, ParseException {
-		JTextField txtName;
-		
-		JPanel namePanel = new JPanel();
-		add(namePanel);
-		
-		JLabel lblName = new JLabel("Name: ");
-		namePanel.add(lblName);
-		
-		txtName = new JTextField();
-		txtName.setEnabled(true);
-		txtName.setText("Enter item name");
-		txtName.addFocusListener(new FocusListener(){
-	        @Override
-	        public void focusGained(FocusEvent e){
-	        	txtName.setEnabled(true);
-	        	if (txtName.getText().equals("Enter item name")) {
-					txtName.setText("");					
-				}	
-	        }
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				txtName.setEnabled(true);
-				if (txtName.getText().equals("")) {
-					txtName.setText("Enter item name");					
-				}				
-			}
-	    });
-		namePanel.add(txtName);
-		
-		JFormattedTextField txtQuantity;
-		
-		JPanel quantityPanel = new JPanel();
-		add(quantityPanel);
-		
-		JLabel lblQuantity = new JLabel("Quantity: ");
-		quantityPanel.add(lblQuantity);
-		
-		txtQuantity = new JFormattedTextField(NumberFormat.getNumberInstance());
-		//txtQuantity.setValue(new Double(-1));
-		txtQuantity.setColumns(10);
-		txtQuantity.setToolTipText("This field must be a number.");
-		
-		//txtQuantity = new JTextField();
-		txtQuantity.setEnabled(true);
-		//txtQuantity.setText("Enter item name");
-		
-		quantityPanel.add(txtQuantity);
-		
-		
-		JTextField txtBestBefore;
-		
-		JPanel bestBeforePanel = new JPanel();
-		add(bestBeforePanel);
-		
-		JLabel lblBestBefore = new JLabel("Expected Best Before Date: ");
-		bestBeforePanel.add(lblBestBefore);
-		
-		txtBestBefore = new JTextField();
-		txtBestBefore.setEnabled(true);
-		txtBestBefore.setText("ddmmyyyy");
-		txtBestBefore.setToolTipText("This field should be entered in the form of \"ddmmyyyy\".");
-		txtBestBefore.addFocusListener(new FocusListener(){
-	        @Override
-	        public void focusGained(FocusEvent e){
-	        	txtBestBefore.setEnabled(true);
-	        	if (txtBestBefore.getText().equals("ddmmyyyy")) {
-	        		txtBestBefore.setText("");					
-				}	
-	        }
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				txtBestBefore.setEnabled(true);
-				if (txtBestBefore.getText().equals("")) {
-					txtBestBefore.setText("ddmmyyyy");					
-				}				
-			}
-	    });
-		bestBeforePanel.add(txtBestBefore);
-		
-		JPanel categoryPanel = new JPanel();
-		add(categoryPanel);
-		
-		JLabel lblCategory = new JLabel("Category: ");
-		categoryPanel.add(lblCategory);
-		
-		JComboBox categoriesComboBox = new JComboBox();
-		
-		ArrayList<Category> catList = categoryList.getCategories();
-		Category[] catArray = catList.toArray(new Category[catList.size()]);
-		String[] catNames = new String[catArray.length];
-		for (int i = 0; i<catArray.length; i++) {
-			catNames[i] = catArray[i].getName();
-		}
-		categoriesComboBox.setModel(new DefaultComboBoxModel(catNames));
-		categoryPanel.add(categoriesComboBox);
-		
-		JPanel locationPanel = new JPanel();
-		add(locationPanel);
-		
-		JLabel lblLocation = new JLabel("Location: ");
-		locationPanel.add(lblLocation);
-
-		JComboBox locationsComboBox = new JComboBox();
-		
-		locationsComboBox.setModel(new DefaultComboBoxModel(new String[] {
-				"FREEZER_TOP",
-				"FREEZER_BOTTOM",
-				"FREEZER_DOOR",
-				"TOP_SHELF",
-				"MIDDLE_SHELF",
-				"BOTTOM_SHELF",
-				"CRISPER_RIGHT",
-				"CRISPER_LEFT",
-				"DOOR_TOP",
-				"DOOR_MIDDLE",
-				"DOOR_BOTTOM"}));
-		locationPanel.add(locationsComboBox);
-				
-		Object complexMsg[] = { "Please enter desired item details below: ", 
-				namePanel,
-				quantityPanel,
-				bestBeforePanel,
-				categoryPanel,
-				locationPanel};
-		
-		Object[] options = {"Confirm"};
-		int answer = JOptionPane.showOptionDialog(null,
-				complexMsg,
-				"Add Item",
-				JOptionPane.INFORMATION_MESSAGE,
-				JOptionPane.PLAIN_MESSAGE,
-				null,     //do not use a custom Icon
-				options,  //the titles of buttons
-				options[0]);
-		
-		ListView listView = null;
-		ShoppingListView shoppingListView = null;
-		FridgeView fridgeView = null;
-
-		if(answer == JOptionPane.OK_OPTION){
-	        if (txtName.getText().equals("Enter item name")) {
-				txtName.setText("");					
-			}
-	        Item item = new Item(txtName.getText());
-	        
-	        if (!(txtQuantity.getValue().equals(null))) {
-	        	item.setQuantity((double)txtQuantity.getValue());	
-	        }
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-			Calendar today = new GregorianCalendar();
-			Calendar bestBefore = new GregorianCalendar();
-			String day1 = "02122015";
-			String day2 = txtBestBefore.getText();
-			Date date = sdf.parse(day1);
-			today.setTime(date);
-			date = sdf.parse(day2);
-			bestBefore.setTime(date);
-			item.setBestBefore(date);
-
-			int countDown = item.daysBetween(today.getTime(),bestBefore.getTime());
-			item.setCountDown(countDown);
-			
-			Category category = new Category((String)categoriesComboBox.getSelectedItem());
-			item.setCategory(category);
-			
-			//FridgeLocation location = new FridgeLocation((String) locationsComboBox.getSelectedItem());
-			System.out.println(locationsComboBox.getSelectedItem());
-			item.setLocation(FridgeLocation.FREEZER_TOP);
-
-			if(getParent() instanceof ListView){
-				listView = (ListView)getParent();
-				listView.getFridge().addItem(item);
-			} else if(getParent() instanceof ShoppingListView){
-				shoppingListView = (ShoppingListView)getParent();
-				shoppingListView.getShopList().addItem(item);
-			} else if(getParent() instanceof FridgeView){
-				fridgeView = (FridgeView)getParent();
-				fridgeView.getFridge().addItem(item);
-			}
-		}
+		JPanel addItemPopup = new AddItemPopup();
+		add(addItemPopup);
 	}
-
 }
