@@ -23,47 +23,48 @@ import java.awt.GridLayout;
 public class Compartment extends JPanel {
 	private JPanel paneWindow;
 	boolean isVertical;
+	
+	int itemCount=0;
+	int columns;
+	int rows;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the panel.
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */
-	public Compartment(boolean isVertical) throws IOException, URISyntaxException {		
-		
-		this.isVertical=isVertical;
-		
+	public Compartment() throws IOException, URISyntaxException {		
+				
 		setLayout(new BorderLayout(0, 0));
 		
 		paneWindow = new JPanel();
 		
-		JScrollPane scrollPane = new JScrollPane();
-		if(isVertical){
-			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		}
-		else{
-			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-			
-		}
+		scrollPane = new JScrollPane();
+		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
 		
 		scrollPane.setViewportView(paneWindow);
-		FlowLayout fl_paneWindow = new FlowLayout(FlowLayout.LEFT, 5, 5);
-		fl_paneWindow.setAlignOnBaseline(true);
-		paneWindow.setLayout(fl_paneWindow);
+		GridBagLayout gbl_paneWindow = new GridBagLayout();
+		gbl_paneWindow.columnWidths = new int[]{0};
+		gbl_paneWindow.rowHeights = new int[]{0};
+		gbl_paneWindow.columnWeights = new double[]{Double.MIN_VALUE};
+		gbl_paneWindow.rowWeights = new double[]{Double.MIN_VALUE};
+		paneWindow.setLayout(gbl_paneWindow);
 		add(scrollPane, BorderLayout.CENTER);
 
 	}
 	
 	
 	public void AddItems(ArrayList<ItemPanel> panels){
-		for(int i=0; i<panels.size();i++){
-			this.addItem(panels.get(i));
-		}
+		Dimension actualSize= scrollPane.getViewport().getExtentSize();
 		
-		repaint();
-
+		double howManyFit= actualSize.getHeight()/panels.get(0).getPreferredSize().getHeight();
+		rows= (int) howManyFit;
+		columns=1;
+		
+		
 	}
 	
 	public void sort(){
@@ -73,7 +74,7 @@ public class Compartment extends JPanel {
 	public void addItem(ItemPanel itemPanel){
 		paneWindow.add(itemPanel);
 	
-		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
+		paneWindow.setPreferredSize(paneWindow.getPreferredSize());
 		paneWindow.validate();
 	}
 	

@@ -88,7 +88,7 @@ public class FridgeView extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		
 		
@@ -96,14 +96,14 @@ public class FridgeView extends JPanel {
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Hello", "Yooo"}));
-		panel_1.add(comboBox);
+		panel_1.add(comboBox, BorderLayout.WEST);
 		
 		fridgePanel = new JPanel();
 		fridgePanel.setBackground(Color.WHITE);
-		panel_1.add(fridgePanel);
+		panel_1.add(fridgePanel, BorderLayout.CENTER);
 		GridBagLayout gbl_fridgePanel = new GridBagLayout();
-		gbl_fridgePanel.columnWidths = new int[] {150};
-		gbl_fridgePanel.rowHeights = new int[] {150};
+		gbl_fridgePanel.columnWidths = new int[] {0};
+		gbl_fridgePanel.rowHeights = new int[] {0};
 		gbl_fridgePanel.columnWeights = new double[]{0.0};
 		gbl_fridgePanel.rowWeights = new double[]{0.0};
 		fridgePanel.setLayout(gbl_fridgePanel);
@@ -111,13 +111,18 @@ public class FridgeView extends JPanel {
 		
 		
 		initializeCompartments();
-		fillCompartments();
+		
 	}
 
 	private void initializeCompartments() throws IOException, URISyntaxException {
 		// TODO Auto-generated method stub
-		Compartment compartment = new Compartment(false);
+		Compartment compartment = new Compartment();
 		GridBagConstraints gbc_compartment = new GridBagConstraints();
+		gbc_compartment.ipady = 1;
+		gbc_compartment.ipadx = 1;
+		gbc_compartment.insets = new Insets(5, 5, 5, 5);
+		gbc_compartment.weighty = 1.0;
+		gbc_compartment.weightx = 1.0;
 		gbc_compartment.fill = GridBagConstraints.BOTH;
 		gbc_compartment.anchor = GridBagConstraints.NORTHWEST;
 		gbc_compartment.gridx = 0;
@@ -133,21 +138,10 @@ public class FridgeView extends JPanel {
 		}
 		
 		
-		for(ItemPanel panel : panels){
-			compartment.add(panel);
-		}
-		
+		compartment.AddItems(panels);
 		
 	}
 
-	private void fillCompartments() throws IOException, URISyntaxException {
-		// TODO Auto-generated method stub
-	
-		
-		
-		
-		
-		
-	}
+
 
 }
