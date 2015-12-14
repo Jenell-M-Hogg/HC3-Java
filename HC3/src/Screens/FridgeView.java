@@ -154,6 +154,21 @@ public class FridgeView extends JPanel {
 		
 	}
 
+	public Fridge getFridge() {
+		return fridge;
+	}
+	
+	public void setFridge(Fridge fridge) {
+		this.fridge = fridge;
+	}
 
+	public boolean getIsMoveRemoveMode() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 
+	public void OpenItemDetails() {
+		// TODO Auto-generated method stub
+		
+	}
 }

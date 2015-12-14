@@ -60,9 +60,7 @@ public class ItemPanel extends JPanel {
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.out.println(tempActionListenerString);
-				
+			public void mouseClicked(MouseEvent arg0) {				
 				//Open item details pop-up
 				
 				ItemDetailsPopUp p=new ItemDetailsPopUp(item);
@@ -72,7 +70,7 @@ public class ItemPanel extends JPanel {
 				
 				if (FridgeView.class.isInstance(getParent())) {
 					FridgeView aView = (FridgeView) getParent();
-					//aView.OpenItemDetails();
+					aView.OpenItemDetails();
 				} else if (ListView.class.isInstance(getParent())) {
 					ListView aView = (ListView) getParent();
 					aView.OpenItemDetails();
@@ -140,7 +138,7 @@ public class ItemPanel extends JPanel {
 		this.item = item;
 		
 		String name = item.getName();
-		int quantity = item.getQuantity();
+		double quantity = item.getQuantity();
 		int countDown = item.getCountDown();
 		String categoryIconFileLocation = item.getCategory().getIconLocation();
 		
@@ -165,7 +163,7 @@ public class ItemPanel extends JPanel {
 		
 		if (FridgeView.class.isInstance(this.getParent())) {
 			FridgeView aView = (FridgeView) this.getParent();
-			//chckbxmntmNewCheckItem.setVisible(aView.getIsMoveRemoveMode());
+			chckbxmntmNewCheckItem.setVisible(aView.getIsMoveRemoveMode());
 		} else if (ListView.class.isInstance(this.getParent())) {
 			ListView aView = (ListView) this.getParent();
 			chckbxmntmNewCheckItem.setVisible(aView.getIsMoveRemoveMode());

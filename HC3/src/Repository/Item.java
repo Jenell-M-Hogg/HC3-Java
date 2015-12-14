@@ -6,15 +6,18 @@ import Global.FridgeLocation;
 public class Item {
 	
 	private String name="";
-	private Category category=new Category();
+	private Category category=new Category("");
 	private int countDown=0;
 	private boolean countDownIsSet = false;
-	private int quantity=-1;
+	private double quantity=-1;
 	private String units="";
 	private Date bestBefore;
 	private String ownerShip="";
 	private FridgeLocation location;
 
+	public Item(String name){
+		this.name=name;
+	}
 	
 	public Category getCategory() {
 		return category;
@@ -40,12 +43,12 @@ public class Item {
 		this.countDownIsSet = countDownIsSet;
 	}
 
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setQuantity(double d) {
+		this.quantity = d;
 	}
 
 	public String getUnits() {
@@ -79,11 +82,8 @@ public class Item {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Item(String name){
-		this.name=name;
+	
+	public int daysBetween(Date d1, Date d2){
+		return (int)( (d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
 	}
-	
-	
-
 }
