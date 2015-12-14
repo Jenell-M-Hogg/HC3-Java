@@ -9,6 +9,7 @@ import net.miginfocom.swing.MigLayout;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import Repository.Item;
 
@@ -16,7 +17,9 @@ import java.awt.GridBagConstraints;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.awt.BorderLayout;
+
 import javax.swing.ScrollPaneConstants;
+
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
@@ -58,12 +61,25 @@ public class Compartment extends JPanel {
 	
 	
 	public void AddItems(ArrayList<ItemPanel> panels){
+	
 		Dimension actualSize= scrollPane.getViewport().getExtentSize();
+		Dimension parent= this.getParent().getSize();
 		
-		double howManyFit= actualSize.getHeight()/panels.get(0).getPreferredSize().getHeight();
+		double howManyFit= actualSize.getHeight()/(panels.get(0).getPreferredSize().getHeight()+4);
 		rows= (int) howManyFit;
 		columns=1;
 		
+		if (rows==0){
+			rows=1;
+		}
+		
+		for(int i=0; i<panels.size(); i++){
+			int rowIndex=i%rows;
+			if (rowIndex==0 & i!=0){
+				columns++;
+			}
+			this.addItem(panels.get(i),rowIndex,columns-1);
+		}
 		
 	}
 	
@@ -71,11 +87,17 @@ public class Compartment extends JPanel {
 	//	
 	}
 	
-	public void addItem(ItemPanel itemPanel){
-		paneWindow.add(itemPanel);
-	
-		paneWindow.setPreferredSize(paneWindow.getPreferredSize());
-		paneWindow.validate();
+	public void addItem(ItemPanel itemPanel, int row, int column){
+		GridBagConstraints gbc= new GridBagConstraints();
+		gbc.gridx=column;
+		gbc.gridy=row+1;
+		gbc.anchor= GridBagConstraints.EAST;
+		gbc.fill=GridBagConstraints.HORIZONTAL;
+		gbc.insets=new Insets(2,2,2,2);
+		
+		paneWindow.add(itemPanel,gbc);
+		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
+		
 	}
 	
 	
