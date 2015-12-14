@@ -303,16 +303,20 @@ public class ListView extends JPanel {
 		}
 	}
 	
+	public void addItem(Item item) throws IOException, URISyntaxException{
+		this.fridge.addItem(item);
+		this.itemPanels.add(new ItemPanel(item));
+		this.updateList();
+	}
+	
 	private void updateList() {
-
+		
 		resetLayout();
 		for(int i=0; i<this.itemPanels.size(); i++){
 			addToScroll(this.itemPanels.get(i),i);
 		}
 		
 		
-		
-		scrollPane.setViewportView(paneWindow);
 		
 		Dimension preferred= scrollPane.getViewport().getView().getPreferredSize();
 		Dimension actual= scrollPane.getViewport().getViewSize();
