@@ -339,13 +339,17 @@ public class HeaderBar extends JPanel {
 		JComboBox locationsComboBox = new JComboBox();
 		
 		locationsComboBox.setModel(new DefaultComboBoxModel(new String[] {
-				"FREEZER",
+				"FREEZER_TOP",
+				"FREEZER_BOTTOM",
 				"FREEZER_DOOR",
 				"TOP_SHELF",
 				"MIDDLE_SHELF",
 				"BOTTOM_SHELF",
 				"CRISPER_RIGHT",
-				"CRISPER_LEFT"}));
+				"CRISPER_LEFT",
+				"DOOR_TOP",
+				"DOOR_MIDDLE",
+				"DOOR_BOTTOM"}));
 		locationPanel.add(locationsComboBox);
 				
 		Object complexMsg[] = { "Please enter desired item details below: ", 
@@ -397,7 +401,8 @@ public class HeaderBar extends JPanel {
 			item.setCategory(category);
 			
 			//FridgeLocation location = new FridgeLocation((String) locationsComboBox.getSelectedItem());
-			FridgeLocation location = FridgeLocation.FREEZER;
+			System.out.println(locationsComboBox.getSelectedItem());
+			item.setLocation(FridgeLocation.FREEZER_TOP);
 
 			if(getParent() instanceof ListView){
 				listView = (ListView)getParent();
