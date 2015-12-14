@@ -1,5 +1,6 @@
 package Widgets;
 
+import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
@@ -20,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import Global.FridgeLocation;
+import Global.ProjectFrame;
 import Repository.Category;
 import Repository.CategoryList;
 import Repository.Item;
@@ -174,7 +176,7 @@ public class AddItemPopup extends JPanel {
 	        Item item = new Item(txtName.getText());
 	        
 	        if (txtQuantity.getValue() != null) {
-	        	item.setQuantity((double)txtQuantity.getValue());	
+	        	item.setQuantity(Integer.parseInt(txtQuantity.getText()));	
 	        }
 			
 	        try {
@@ -199,18 +201,15 @@ public class AddItemPopup extends JPanel {
 			
 			item.setLocation(FridgeLocation.valueOf((String)locationsComboBox.getSelectedItem()));
 
-			if(getParent() instanceof ListView){
-				listView = (ListView)getParent();
-				listView.getFridge().addItem(item);
-				listView.addItem(item);
-			} else if(getParent() instanceof ShoppingListView){
-				shoppingListView = (ShoppingListView)getParent();
-				shoppingListView.getShopList().addItem(item);
+			if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ListView){
+				((ListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+			} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ShoppingListView){
+				((ShoppingListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+				
 				//shoppingListView.addItem(item);
-			} else if(getParent() instanceof FridgeView){
-				fridgeView = (FridgeView)getParent();
-				fridgeView.getFridge().addItem(item);
-				fridgeView.addItem(item);
+			} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof FridgeView){
+				((FridgeView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+				
 			}
 		}
 	
