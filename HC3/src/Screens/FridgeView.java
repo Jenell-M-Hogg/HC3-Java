@@ -43,8 +43,32 @@ public class FridgeView extends JPanel {
 	private JLabel fridgeLabel;
 	private JLabel messageLbl;
 	private JPanel fridgePanel;
-	private Compartment compartment;
+	private Compartment door_top_shelf;
 	private JComboBox fridgeLocationBox;
+	private ArrayList<ItemPanel> itemPanels= new ArrayList<ItemPanel>();
+	
+	
+	private Compartment door_middle_shelf;
+
+	private Compartment door_bottom_shelf;
+
+	private Compartment freezer_top_shelf;
+
+	private Compartment freezer_door;
+
+	private Compartment freezer_bottom;
+
+	private Compartment top_shelf;
+
+	private Compartment bottom_shelf;
+
+	private Compartment middle_shelf;
+
+	private Compartment crisper_right;
+
+	private Compartment crisper_left;
+	
+	private ArrayList<Compartment> compartments= new ArrayList<Compartment>();
 
 	/**
 	 * Create the panel.
@@ -115,7 +139,8 @@ public class FridgeView extends JPanel {
 		gbl_fridgePanel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0};
 		fridgePanel.setLayout(gbl_fridgePanel);
 		
-		compartment = new Compartment();
+		door_top_shelf = new Compartment(FridgeLocation.DOOR_TOP);
+		compartments.add(door_top_shelf);
 		GridBagConstraints gbc_compartment = new GridBagConstraints();
 		gbc_compartment.gridheight = 19;
 		gbc_compartment.gridwidth = 13;
@@ -128,7 +153,7 @@ public class FridgeView extends JPanel {
 		gbc_compartment.anchor = GridBagConstraints.NORTHWEST;
 		gbc_compartment.gridx = 0;
 		gbc_compartment.gridy = 0;
-		fridgePanel.add(compartment, gbc_compartment);
+		fridgePanel.add(door_top_shelf, gbc_compartment);
 		
 		
 		
@@ -153,16 +178,14 @@ public class FridgeView extends JPanel {
 	
 	public void initializeCompartments() throws IOException, URISyntaxException {
 		// TODO Auto-generated method stub
-		Component[] comp = fridgePanel.getComponents();
-		for(Component k : comp){
-			fridgePanel.remove(k);
-		}
+		fridgePanel.removeAll();
 		
 		
 		if(fridgeLocationBox.getModel().getSelectedItem().equals("Fridge Body")){
 		
 		
-			compartment = new Compartment();
+			top_shelf = new Compartment(FridgeLocation.TOP_SHELF);
+			this.compartments.add(top_shelf);
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
 			gbc_compartment.gridheight = 5;
 			gbc_compartment.gridwidth = 13;
@@ -175,9 +198,10 @@ public class FridgeView extends JPanel {
 			gbc_compartment.anchor = GridBagConstraints.NORTHWEST;
 			gbc_compartment.gridx = 0;
 			gbc_compartment.gridy = 0;
-			fridgePanel.add(compartment, gbc_compartment);
+			fridgePanel.add(door_top_shelf, gbc_compartment);
 			
-			Compartment compartment_1 = new Compartment();
+			middle_shelf = new Compartment(FridgeLocation.MIDDLE_SHELF);
+			this.compartments.add(middle_shelf);
 			GridBagConstraints gbc_compartment_1 = new GridBagConstraints();
 			gbc_compartment_1.gridheight = 5;
 			gbc_compartment_1.gridwidth = 13;
@@ -185,9 +209,10 @@ public class FridgeView extends JPanel {
 			gbc_compartment_1.fill = GridBagConstraints.BOTH;
 			gbc_compartment_1.gridx = 0;
 			gbc_compartment_1.gridy = 5;
-			fridgePanel.add(compartment_1, gbc_compartment_1);
+			fridgePanel.add(middle_shelf, gbc_compartment_1);
 			
-			Compartment compartment_2 = new Compartment();
+			bottom_shelf = new Compartment(FridgeLocation.BOTTOM_SHELF);
+			this.compartments.add(bottom_shelf);
 			GridBagConstraints gbc_compartment_2 = new GridBagConstraints();
 			gbc_compartment_2.gridheight = 5;
 			gbc_compartment_2.gridwidth = 13;
@@ -195,9 +220,10 @@ public class FridgeView extends JPanel {
 			gbc_compartment_2.fill = GridBagConstraints.BOTH;
 			gbc_compartment_2.gridx = 0;
 			gbc_compartment_2.gridy = 10;
-			fridgePanel.add(compartment_2, gbc_compartment_2);
+			fridgePanel.add(bottom_shelf, gbc_compartment_2);
 			
-			Compartment compartment_3 = new Compartment();
+			crisper_right = new Compartment(FridgeLocation.CRISPER_RIGHT);
+			this.compartments.add(crisper_right);
 			GridBagConstraints gbc_compartment_3 = new GridBagConstraints();
 			gbc_compartment_3.gridwidth = 6;
 			gbc_compartment_3.gridheight = 4;
@@ -205,9 +231,10 @@ public class FridgeView extends JPanel {
 			gbc_compartment_3.fill = GridBagConstraints.BOTH;
 			gbc_compartment_3.gridx = 0;
 			gbc_compartment_3.gridy = 15;
-			fridgePanel.add(compartment_3, gbc_compartment_3);
+			fridgePanel.add(crisper_right, gbc_compartment_3);
 			
-			Compartment compartment_4 = new Compartment();
+			crisper_left = new Compartment(FridgeLocation.CRISPER_LEFT);
+			this.compartments.add(crisper_left);
 			GridBagConstraints gbc_compartment_4 = new GridBagConstraints();
 			gbc_compartment_4.gridheight = 4;
 			gbc_compartment_4.gridwidth = 7;
@@ -215,17 +242,17 @@ public class FridgeView extends JPanel {
 			gbc_compartment_4.fill = GridBagConstraints.BOTH;
 			gbc_compartment_4.gridx = 6;
 			gbc_compartment_4.gridy = 15;
-			fridgePanel.add(compartment_4, gbc_compartment_4);
+			fridgePanel.add(crisper_left, gbc_compartment_4);
 			
 			ArrayList<Item> items= fridge.getItems();
-			ArrayList<ItemPanel> panels= new ArrayList<ItemPanel>();
+			itemPanels= new ArrayList<ItemPanel>();
 			
 			for(Item item: items){
-				panels.add(new ItemPanel(item));
+				itemPanels.add(new ItemPanel(item));
 			}
 			
 			
-			compartment.AddItems(panels);
+			sortItems();
 			
 		}
 		
@@ -233,7 +260,7 @@ public class FridgeView extends JPanel {
 		
 		if(fridgeLocationBox.getModel().getSelectedItem().equals("Door")){
 			
-			compartment = new Compartment();
+			door_top_shelf = new Compartment(FridgeLocation.DOOR_TOP);
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
 			gbc_compartment.gridheight = 7;
 			gbc_compartment.gridwidth = 13;
@@ -246,9 +273,9 @@ public class FridgeView extends JPanel {
 			gbc_compartment.anchor = GridBagConstraints.NORTHWEST;
 			gbc_compartment.gridx = 0;
 			gbc_compartment.gridy = 0;
-			fridgePanel.add(compartment, gbc_compartment);
+			fridgePanel.add(door_top_shelf, gbc_compartment);
 			
-			Compartment compartment_1 = new Compartment();
+			door_middle_shelf = new Compartment(FridgeLocation.DOOR_MIDDLE);
 			GridBagConstraints gbc_compartment_1 = new GridBagConstraints();
 			gbc_compartment_1.gridheight = 6;
 			gbc_compartment_1.gridwidth = 13;
@@ -256,9 +283,9 @@ public class FridgeView extends JPanel {
 			gbc_compartment_1.fill = GridBagConstraints.BOTH;
 			gbc_compartment_1.gridx = 0;
 			gbc_compartment_1.gridy = 7;
-			fridgePanel.add(compartment_1, gbc_compartment_1);
+			fridgePanel.add(door_middle_shelf, gbc_compartment_1);
 			
-			Compartment compartment_2 = new Compartment();
+			door_bottom_shelf = new Compartment(FridgeLocation.DOOR_BOTTOM);
 			GridBagConstraints gbc_compartment_2 = new GridBagConstraints();
 			gbc_compartment_2.gridheight = 6;
 			gbc_compartment_2.gridwidth = 13;
@@ -266,13 +293,15 @@ public class FridgeView extends JPanel {
 			gbc_compartment_2.fill = GridBagConstraints.BOTH;
 			gbc_compartment_2.gridx = 0;
 			gbc_compartment_2.gridy = 13;
-			fridgePanel.add(compartment_2, gbc_compartment_2);
+			fridgePanel.add(door_bottom_shelf, gbc_compartment_2);
 			
 		}
 		
 		if(fridgeLocationBox.getModel().getSelectedItem().equals("Freezer")){
 			
-			compartment = new Compartment();
+			freezer_top_shelf = new Compartment(FridgeLocation.FREEZER_TOP);
+			
+			freezer_top_shelf = new Compartment(FridgeLocation.FREEZER_TOP);
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
 			gbc_compartment.gridheight = 10;
 			gbc_compartment.gridwidth = 13;
@@ -285,9 +314,9 @@ public class FridgeView extends JPanel {
 			gbc_compartment.anchor = GridBagConstraints.NORTHWEST;
 			gbc_compartment.gridx = 0;
 			gbc_compartment.gridy = 0;
-			fridgePanel.add(compartment, gbc_compartment);
+			fridgePanel.add(freezer_top_shelf, gbc_compartment);
 			
-			Compartment compartment_1 = new Compartment();
+			freezer_bottom = new Compartment(FridgeLocation.FREEZER_BOTTOM);
 			GridBagConstraints gbc_compartment_1 = new GridBagConstraints();
 			gbc_compartment_1.gridheight = 9;
 			gbc_compartment_1.gridwidth = 13;
@@ -295,12 +324,15 @@ public class FridgeView extends JPanel {
 			gbc_compartment_1.fill = GridBagConstraints.BOTH;
 			gbc_compartment_1.gridx = 0;
 			gbc_compartment_1.gridy = 10;
-			fridgePanel.add(compartment_1, gbc_compartment_1);
+			fridgePanel.add(freezer_bottom, gbc_compartment_1);
 			
 		}
 		
 		if(fridgeLocationBox.getModel().getSelectedItem().equals("Freezer Door")){
-			compartment = new Compartment();
+			
+			freezer_door = new Compartment(FridgeLocation.FREEZER_DOOR);
+			
+			
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
 			gbc_compartment.gridheight = 19;
 			gbc_compartment.gridwidth = 13;
@@ -313,7 +345,7 @@ public class FridgeView extends JPanel {
 			gbc_compartment.anchor = GridBagConstraints.NORTHWEST;
 			gbc_compartment.gridx = 0;
 			gbc_compartment.gridy = 0;
-			fridgePanel.add(compartment, gbc_compartment);
+			fridgePanel.add(freezer_door, gbc_compartment);
 			
 		}
 		
@@ -328,6 +360,50 @@ public class FridgeView extends JPanel {
 	
 	
 	
+	private void sortItems() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void addItem(Item item) throws IOException, URISyntaxException{
+		fridge.addItem(item);
+		
+		this.itemPanels.add(new ItemPanel(item));
+		
+		//TODO sort??
+		
+		updateCompartments();
+		
+	}
+
+	
+
+
+
+
+	private void updateCompartments() throws IOException, URISyntaxException {
+		initializeCompartments();
+		Component[] compartments=fridgePanel.getComponents();
+		
+		for(Component compartment: compartments){
+			ArrayList<ItemPanel> panels= new ArrayList<ItemPanel>();
+			
+			for(ItemPanel itemPanel: this.itemPanels){
+				if(itemPanel.getItem().getLocation().equals(((Compartment)compartment).getFlocation())){
+					panels.add(itemPanel);
+				}
+			}
+			((Compartment)compartment).AddItems(panels);
+		}
+		
+		
+		
+	}
+
+
+
+
 	public Fridge getFridge() {
 		return fridge;
 	}

@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import Global.FridgeLocation;
 import Repository.Item;
 
 import java.awt.GridBagConstraints;
@@ -31,13 +32,15 @@ public class Compartment extends JPanel {
 	int columns;
 	int rows;
 	private JScrollPane scrollPane;
-
+	
+	private FridgeLocation flocation;
 	/**
 	 * Create the panel.
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */
-	public Compartment() throws IOException, URISyntaxException {		
+	public Compartment(FridgeLocation location) throws IOException, URISyntaxException {	
+		this.setFlocation(location);
 				
 		setLayout(new BorderLayout(0, 0));
 		
@@ -98,6 +101,16 @@ public class Compartment extends JPanel {
 		paneWindow.add(itemPanel,gbc);
 		paneWindow.setPreferredSize(paneWindow.getLayout().preferredLayoutSize(paneWindow));
 		
+	}
+
+
+	public FridgeLocation getFlocation() {
+		return flocation;
+	}
+
+
+	public void setFlocation(FridgeLocation flocation) {
+		this.flocation = flocation;
 	}
 	
 	
