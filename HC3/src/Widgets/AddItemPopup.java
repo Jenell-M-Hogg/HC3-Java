@@ -2,6 +2,8 @@ package Widgets;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,8 +32,10 @@ public class AddItemPopup extends JPanel {
 	CategoryList categoryList = CategoryList.getInstance();
 	/**
 	 * Create the panel.
+	 * @throws URISyntaxException 
+	 * @throws IOException 
 	 */
-	public AddItemPopup() {
+	public AddItemPopup() throws IOException, URISyntaxException {
 
 		JTextField txtName;
 		
@@ -198,12 +202,15 @@ public class AddItemPopup extends JPanel {
 			if(getParent() instanceof ListView){
 				listView = (ListView)getParent();
 				listView.getFridge().addItem(item);
+				listView.addItem(item);
 			} else if(getParent() instanceof ShoppingListView){
 				shoppingListView = (ShoppingListView)getParent();
 				shoppingListView.getShopList().addItem(item);
+				//shoppingListView.addItem(item);
 			} else if(getParent() instanceof FridgeView){
 				fridgeView = (FridgeView)getParent();
 				fridgeView.getFridge().addItem(item);
+				fridgeView.addItem(item);
 			}
 		}
 	
