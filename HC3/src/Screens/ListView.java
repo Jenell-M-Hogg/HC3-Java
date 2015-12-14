@@ -227,6 +227,8 @@ public class ListView extends JPanel {
 		
 		fridge.setItems(newItes);
 	}
+	
+	
 
 	
 	//TODO
@@ -310,11 +312,7 @@ public class ListView extends JPanel {
 		}
 	}
 	
-	public void addItem(Item item) throws IOException, URISyntaxException{
-		this.fridge.addItem(item);
-		this.itemPanels.add(new ItemPanel(item));
-		this.updateList();
-	}
+
 	
 	private void updateList() {
 		
@@ -372,7 +370,24 @@ public class ListView extends JPanel {
 		
 	}
 	
-	public void AddItem() {
-		// TODO
+	public void editItem(Item item) throws IOException, URISyntaxException{
+		int index= item.getItemPanelIndex();
+		
+		this.itemPanels.set(index, new ItemPanel(item));
+		
+		for(int i=0; i<fridge.getItems().size(); i++){
+			if(fridge.getItems().get(i).getItemPanelIndex()==index){
+				fridge.getItems().set(i, item);
+				break;
+			}
+		}
+		
+		this.updateList();
+	}
+	
+	public void addItem(Item item) throws IOException, URISyntaxException{
+		this.fridge.addItem(item);
+		this.itemPanels.add(new ItemPanel(item));
+		this.updateList();
 	}
 }

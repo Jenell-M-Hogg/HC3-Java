@@ -393,6 +393,24 @@ public class FridgeView extends JPanel {
 		
 		updateCompartments();
 		
+		
+	}
+	
+	
+	public void editItem(Item item) throws IOException, URISyntaxException{
+		int index= item.getItemPanelIndex();
+		
+		this.itemPanels.set(index, new ItemPanel(item));
+		
+		for(int i=0; i<fridge.getItems().size(); i++){
+			if(fridge.getItems().get(i).getItemPanelIndex()==index){
+				fridge.getItems().set(i, item);
+				break;
+			}
+		}
+		
+		this.updateCompartments();
+		
 	}
 
 	
