@@ -9,6 +9,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +18,7 @@ import javax.swing.JPanel;
 
 import Global.Constants;
 import Global.ProjectFrame;
+import Repository.Fridge;
 import Screens.FridgeView;
 //import Screens.FridgeMainView;
 import Screens.ListView;
@@ -94,14 +97,26 @@ public class BottomBar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (currentScreen.equals("FridgeView")) {
 					//set to listView
-					ListView listView = (ListView) getParent();
-					ProjectFrame.thisInstance.setContentPane(new ListView(listView.getFridge()));
-					System.out.println(getParent());
+					FridgeView fridgeView = (FridgeView) getParent();
+					Fridge fridge = fridgeView.getFridge();
+					ListView listView;
+					listView = new ListView(fridge);
+					ProjectFrame.thisInstance.setContentPane(listView);
 				} else if (currentScreen.equals("ListView")) {
 					//set to fridgeView
-					FridgeView fridgeView = (FridgeView) getParent();
-					//ProjectFrame.thisInstance.setContentPane(new FridgeView(fridgeView.getFridge()));
-					System.out.println(getParent());
+					ListView listView = (ListView) getParent();
+					Fridge fridge = listView.getFridge();
+					FridgeView fridgeView;
+					try {
+						fridgeView = new FridgeView(fridge);
+						ProjectFrame.thisInstance.setContentPane(fridgeView);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (URISyntaxException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}	
 		});

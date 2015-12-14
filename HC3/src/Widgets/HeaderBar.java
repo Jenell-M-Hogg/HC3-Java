@@ -375,8 +375,9 @@ public class HeaderBar extends JPanel {
 			}
 	        Item item = new Item(txtName.getText());
 	        
-	        System.out.println((double)txtQuantity.getValue());
-			item.setQuantity((double)txtQuantity.getValue());
+	        if (!(txtQuantity.getValue().equals(null))) {
+	        	item.setQuantity((double)txtQuantity.getValue());	
+	        }
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 			Calendar today = new GregorianCalendar();
