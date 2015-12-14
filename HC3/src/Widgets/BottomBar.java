@@ -130,7 +130,9 @@ public class BottomBar extends JPanel {
 	        @Override
 	        public void focusGained(FocusEvent e){
 	        	txtGfhgfhg.setEnabled(true);
-	        	txtGfhgfhg.setText("");
+	        	if (txtGfhgfhg.getText().equals("Enter text to search")) {
+					txtGfhgfhg.setText("");					
+				}	
 	        }
 
 			@Override
