@@ -40,7 +40,7 @@ public class ExpiryCountDown extends JPanel {
 
 		setLayout(new GridLayout(0, 1, 0, 0));
 		
-		this.lblNewLabel = new JLabel("" + countDown);
+		this.lblNewLabel = new JLabel(countDown + "d");
 		this.lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		//lblNewLabel.setIcon(new ImageIcon(ExpiryCountDown.class.getResource("/images/ExpiryCountdown.png")));
 		add(this.lblNewLabel);
