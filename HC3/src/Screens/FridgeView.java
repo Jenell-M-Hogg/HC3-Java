@@ -3,6 +3,7 @@ package Screens;
 import javax.swing.JPanel;
 
 import Global.Constants;
+import Global.ProjectFrame;
 import Repository.Fridge;
 import Repository.Item;
 import Widgets.HeaderBar;
@@ -30,6 +31,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import Widgets.Compartment;
+
 import java.awt.GridLayout;
 
 public class FridgeView extends JPanel {
@@ -38,6 +40,7 @@ public class FridgeView extends JPanel {
 	private JLabel fridgeLabel;
 	private JLabel messageLbl;
 	private JPanel fridgePanel;
+	private Compartment compartment;
 
 	/**
 	 * Create the panel.
@@ -103,24 +106,16 @@ public class FridgeView extends JPanel {
 		panel_1.add(fridgePanel, BorderLayout.CENTER);
 		GridBagLayout gbl_fridgePanel = new GridBagLayout();
 		gbl_fridgePanel.columnWidths = new int[] {0};
-		gbl_fridgePanel.rowHeights = new int[] {0};
-		gbl_fridgePanel.columnWeights = new double[]{0.0};
-		gbl_fridgePanel.rowWeights = new double[]{0.0};
+		gbl_fridgePanel.rowHeights = new int[] {0, 0};
+		gbl_fridgePanel.columnWeights = new double[]{1.0};
+		gbl_fridgePanel.rowWeights = new double[]{0.0, 1.0};
 		fridgePanel.setLayout(gbl_fridgePanel);
 		
-		
-		
-		initializeCompartments();
-		
-	}
-
-	private void initializeCompartments() throws IOException, URISyntaxException {
-		// TODO Auto-generated method stub
-		Compartment compartment = new Compartment();
+		compartment = new Compartment();
 		GridBagConstraints gbc_compartment = new GridBagConstraints();
 		gbc_compartment.ipady = 1;
 		gbc_compartment.ipadx = 1;
-		gbc_compartment.insets = new Insets(5, 5, 5, 5);
+		gbc_compartment.insets = new Insets(5, 5, 5, 0);
 		gbc_compartment.weighty = 1.0;
 		gbc_compartment.weightx = 1.0;
 		gbc_compartment.fill = GridBagConstraints.BOTH;
@@ -128,6 +123,23 @@ public class FridgeView extends JPanel {
 		gbc_compartment.gridx = 0;
 		gbc_compartment.gridy = 0;
 		fridgePanel.add(compartment, gbc_compartment);
+		
+		JPanel panel_2 = new JPanel();
+		GridBagConstraints gbc_panel_2 = new GridBagConstraints();
+		gbc_panel_2.fill = GridBagConstraints.BOTH;
+		gbc_panel_2.gridx = 0;
+		gbc_panel_2.gridy = 1;
+		fridgePanel.add(panel_2, gbc_panel_2);
+		
+		
+		
+	}
+
+	public void initializeCompartments() throws IOException, URISyntaxException {
+		// TODO Auto-generated method stub
+
+		
+		fridgePanel.validate();
 		
 		
 		ArrayList<Item> items= fridge.getItems();

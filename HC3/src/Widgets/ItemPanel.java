@@ -65,6 +65,11 @@ public class ItemPanel extends JPanel {
 				
 				//Open item details pop-up
 				
+				ItemDetailsPopUp p=new ItemDetailsPopUp(item);
+				p.LaunchDialog(item);
+				
+				
+				
 				if (FridgeView.class.isInstance(getParent())) {
 					FridgeView aView = (FridgeView) getParent();
 					//aView.OpenItemDetails();
