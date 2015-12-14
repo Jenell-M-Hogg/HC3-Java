@@ -67,22 +67,24 @@ public class Compartment extends JPanel {
 	
 		Dimension actualSize= scrollPane.getViewport().getExtentSize();
 		Dimension parent= this.getParent().getSize();
-		
-		double howManyFit= actualSize.getHeight()/(panels.get(0).getPreferredSize().getHeight()+4);
-		rows= (int) howManyFit;
-		columns=1;
-		
-		if (rows==0){
-			rows=1;
-		}
-		
-		for(int i=0; i<panels.size(); i++){
-			int rowIndex=i%rows;
-			if (rowIndex==0 & i!=0){
-				columns++;
+		if(!panels.isEmpty()){
+			double howManyFit= actualSize.getHeight()/(panels.get(0).getPreferredSize().getHeight()+4);
+			rows= (int) howManyFit;
+			columns=1;
+			
+			if (rows==0){
+				rows=1;
 			}
-			this.addItem(panels.get(i),rowIndex,columns-1);
+			
+			for(int i=0; i<panels.size(); i++){
+				int rowIndex=i%rows;
+				if (rowIndex==0 & i!=0){
+					columns++;
+				}
+				this.addItem(panels.get(i),rowIndex,columns-1);
+			}
 		}
+		
 		
 	}
 	

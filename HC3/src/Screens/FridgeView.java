@@ -160,7 +160,7 @@ public class FridgeView extends JPanel {
 		fridgeLocationBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					initializeCompartments();
+					updateCompartments();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -382,8 +382,9 @@ public class FridgeView extends JPanel {
 
 
 
-	private void updateCompartments() throws IOException, URISyntaxException {
+	public void updateCompartments() throws IOException, URISyntaxException {
 		initializeCompartments();
+		
 		Component[] compartments=fridgePanel.getComponents();
 		
 		for(Component compartment: compartments){
@@ -396,6 +397,9 @@ public class FridgeView extends JPanel {
 			}
 			((Compartment)compartment).AddItems(panels);
 		}
+		
+		this.validate();
+		this.repaint();
 		
 		
 		
