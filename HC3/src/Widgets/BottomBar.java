@@ -95,18 +95,19 @@ public class BottomBar extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (currentScreen.equals("FridgeView")) {
+				if (ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof FridgeView) {
 					//set to listView
-					FridgeView fridgeView = (FridgeView) getParent();
+					FridgeView fridgeView = (FridgeView) ProjectFrame.thisInstance.getContentPane().getComponent(0);
 					Fridge fridge = fridgeView.getFridge();
 					ListView listView;
 					listView = new ListView(fridge);
 					ProjectFrame.thisInstance.setContentPane(listView);
-				} else if (currentScreen.equals("ListView")) {
+				} else if (ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ListView) {
 					//set to fridgeView
-					ListView listView = (ListView) getParent();
-					Fridge fridge = listView.getFridge();
+					Fridge fridge;
 					FridgeView fridgeView;
+					ListView listView = (ListView) ProjectFrame.thisInstance.getContentPane().getComponent(0);
+					fridge = listView.getFridge();
 					try {
 						fridgeView = new FridgeView(fridge);
 						ProjectFrame.thisInstance.setContentPane(fridgeView);
