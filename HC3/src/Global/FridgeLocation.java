@@ -12,7 +12,17 @@ public enum FridgeLocation {
 	CRISPER_LEFT,
 	DOOR_TOP,
 	DOOR_MIDDLE,
-	DOOR_BOTTOM
+	DOOR_BOTTOM;
 	
+	public static String[] names() {
+	    FridgeLocation[] fridgeLocations = values();
+	    String[] names = new String[fridgeLocations.length];
+
+	    for (int i = 0; i < fridgeLocations.length; i++) {
+	        names[i] = fridgeLocations[i].name();
+	    }
+
+	    return names;
+	}
 	
 }

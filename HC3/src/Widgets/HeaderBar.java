@@ -338,7 +338,7 @@ public class HeaderBar extends JPanel {
 
 		JComboBox locationsComboBox = new JComboBox();
 		
-		locationsComboBox.setModel(new DefaultComboBoxModel(new String[] {
+		/*locationsComboBox.setModel(new DefaultComboBoxModel(new String[] {
 				"FREEZER_TOP",
 				"FREEZER_BOTTOM",
 				"FREEZER_DOOR",
@@ -349,7 +349,8 @@ public class HeaderBar extends JPanel {
 				"CRISPER_LEFT",
 				"DOOR_TOP",
 				"DOOR_MIDDLE",
-				"DOOR_BOTTOM"}));
+				"DOOR_BOTTOM"}));*/
+		locationsComboBox.setModel(new DefaultComboBoxModel(FridgeLocation.names()));
 		locationPanel.add(locationsComboBox);
 				
 		Object complexMsg[] = { "Please enter desired item details below: ", 
@@ -379,10 +380,11 @@ public class HeaderBar extends JPanel {
 			}
 	        Item item = new Item(txtName.getText());
 	        
-	        if (!(txtQuantity.getValue().equals(null))) {
+	        if (txtQuantity.getValue() != null) {
 	        	item.setQuantity((double)txtQuantity.getValue());	
 	        }
 			
+	        try {
 			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
 			Calendar today = new GregorianCalendar();
 			Calendar bestBefore = new GregorianCalendar();
@@ -396,13 +398,13 @@ public class HeaderBar extends JPanel {
 
 			int countDown = item.daysBetween(today.getTime(),bestBefore.getTime());
 			item.setCountDown(countDown);
+	        } catch (Exception e) {
+	        }
 			
 			Category category = new Category((String)categoriesComboBox.getSelectedItem());
 			item.setCategory(category);
 			
-			//FridgeLocation location = new FridgeLocation((String) locationsComboBox.getSelectedItem());
-			System.out.println(locationsComboBox.getSelectedItem());
-			item.setLocation(FridgeLocation.FREEZER_TOP);
+			item.setLocation(FridgeLocation.valueOf((String)locationsComboBox.getSelectedItem()));
 
 			if(getParent() instanceof ListView){
 				listView = (ListView)getParent();
