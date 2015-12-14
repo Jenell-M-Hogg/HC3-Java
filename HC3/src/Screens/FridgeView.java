@@ -44,6 +44,7 @@ public class FridgeView extends JPanel {
 	private JLabel messageLbl;
 	private JPanel fridgePanel;
 	private Compartment compartment;
+	private JComboBox fridgeLocationBox;
 
 	/**
 	 * Create the panel.
@@ -77,9 +78,9 @@ public class FridgeView extends JPanel {
 		messageLbl.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(messageLbl);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Fridge Body", "Door", "Freezer", "Freezer Door"}));
-		panel.add(comboBox_2);
+		fridgeLocationBox = new JComboBox();
+		fridgeLocationBox.setModel(new DefaultComboBoxModel(new String[] {"Fridge Body", "Door", "Freezer", "Freezer Door"}));
+		panel.add(fridgeLocationBox);
 		
 		JLabel lblOf = new JLabel("of");
 		panel.add(lblOf);
@@ -131,13 +132,10 @@ public class FridgeView extends JPanel {
 		
 		
 		
-		
-		initializeCompartments(comboBox_2);
-		
-		comboBox_2.addActionListener(new ActionListener() {
+		fridgeLocationBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					initializeCompartments(comboBox_2);
+					initializeCompartments();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -153,7 +151,7 @@ public class FridgeView extends JPanel {
 	
 	
 	
-	public void initializeCompartments(JComboBox comboBox) throws IOException, URISyntaxException {
+	public void initializeCompartments() throws IOException, URISyntaxException {
 		// TODO Auto-generated method stub
 		Component[] comp = fridgePanel.getComponents();
 		for(Component k : comp){
@@ -161,7 +159,7 @@ public class FridgeView extends JPanel {
 		}
 		
 		
-		if(comboBox.getModel().getSelectedItem().equals("Fridge Body")){
+		if(fridgeLocationBox.getModel().getSelectedItem().equals("Fridge Body")){
 		
 		
 			compartment = new Compartment();
@@ -233,7 +231,7 @@ public class FridgeView extends JPanel {
 		
 		
 		
-		if(comboBox.getModel().getSelectedItem().equals("Door")){
+		if(fridgeLocationBox.getModel().getSelectedItem().equals("Door")){
 			
 			compartment = new Compartment();
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
@@ -272,7 +270,7 @@ public class FridgeView extends JPanel {
 			
 		}
 		
-		if(comboBox.getModel().getSelectedItem().equals("Freezer")){
+		if(fridgeLocationBox.getModel().getSelectedItem().equals("Freezer")){
 			
 			compartment = new Compartment();
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
@@ -301,7 +299,7 @@ public class FridgeView extends JPanel {
 			
 		}
 		
-		if(comboBox.getModel().getSelectedItem().equals("Freezer Door")){
+		if(fridgeLocationBox.getModel().getSelectedItem().equals("Freezer Door")){
 			compartment = new Compartment();
 			GridBagConstraints gbc_compartment = new GridBagConstraints();
 			gbc_compartment.gridheight = 19;
