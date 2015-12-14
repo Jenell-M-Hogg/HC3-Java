@@ -1,6 +1,7 @@
 package Global;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 
 import Repository.Fridge;
 import Repository.Item;
+import Screens.FridgeView;
 import Screens.ListView;
 
 public class ProjectFrame extends JFrame {
@@ -27,16 +29,34 @@ public class ProjectFrame extends JFrame {
 			Item item;
 			
 			
-			for(int i=0; i<2; i++){
+			for(int i=0; i<10; i++){
 				
 				item= new Item("My Item "+Integer.toString(i));
+				item.setLocation(FridgeLocation.FREEZER_BOTTOM);
+				fridge.addItem(item);
+			}
+			
+			for(int i=0; i<10; i++){
+				
+				item= new Item("My Item "+Integer.toString(i+10));
+				item.setLocation(FridgeLocation.BOTTOM_SHELF);
 				fridge.addItem(item);
 			}
 			
 			ProjectFrame frame = new ProjectFrame();
 			
-			thisInstance.setContentPane(new ListView(fridge));
+			FridgeView fr= new FridgeView(fridge);
+			thisInstance.setContentPane(fr);
+			thisInstance.setMinimumSize(new Dimension(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT));
+			thisInstance.pack();
+			
+			((FridgeView)thisInstance.getContentPane().getComponent(0)).initializeCompartments();
+			((FridgeView)thisInstance.getContentPane().getComponent(0)).updateCompartments();
+			
+			
 			thisInstance.setVisible(true);
+			
+			
 			
 			
 		} catch (Exception e) {
