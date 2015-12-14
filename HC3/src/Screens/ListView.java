@@ -214,11 +214,18 @@ public class ListView extends JPanel {
 	private void createItemPanels() throws IOException, URISyntaxException {
 		// Gets the items from fridge and updates the itemPanels
 		ArrayList<Item> items= fridge.getItems();
+		ArrayList<Item> newItes=new ArrayList<Item>();
 		itemPanels.clear();
 		
 		for(int i=0; i<items.size(); i++){
-			this.itemPanels.add(new ItemPanel(items.get(i)));
+			Item item = items.get(i);
+			item.setItemPanelIndex(i);
+			this.itemPanels.add(new ItemPanel(item));
+			newItes.add(item);
+			
 		}
+		
+		fridge.setItems(newItes);
 	}
 
 	

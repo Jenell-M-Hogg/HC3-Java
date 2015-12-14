@@ -31,4 +31,9 @@ public class Fridge {
 	public void setNewName(String newName){
 		this.name = newName;
 	}
+
+	public void setItems(ArrayList<Item> newItes) {
+		this.items=newItes;
+		
+	}
 }

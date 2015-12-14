@@ -244,12 +244,9 @@ public class FridgeView extends JPanel {
 			gbc_compartment_4.gridy = 15;
 			fridgePanel.add(crisper_left, gbc_compartment_4);
 			
-			ArrayList<Item> items= fridge.getItems();
-			itemPanels= new ArrayList<ItemPanel>();
+		
 			
-			for(Item item: items){
-				itemPanels.add(new ItemPanel(item));
-			}
+			createItemPanels();
 			
 			
 			sortItems();
@@ -360,6 +357,27 @@ public class FridgeView extends JPanel {
 	
 	
 	
+	private void createItemPanels() throws IOException, URISyntaxException {
+		// Gets the items from fridge and updates the itemPanels
+		ArrayList<Item> items= fridge.getItems();
+		ArrayList<Item> newItes=new ArrayList<Item>();
+		itemPanels.clear();
+		
+		for(int i=0; i<items.size(); i++){
+			Item item = items.get(i);
+			item.setItemPanelIndex(i);
+			this.itemPanels.add(new ItemPanel(item));
+			newItes.add(item);
+			
+		}
+		
+		fridge.setItems(newItes);
+	}
+
+
+
+
+
 	private void sortItems() {
 		// TODO Auto-generated method stub
 		

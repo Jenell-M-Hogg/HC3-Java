@@ -14,6 +14,16 @@ public class Item {
 	private Date bestBefore;
 	private String ownerShip="";
 	private FridgeLocation location;
+	
+	private int itemPanelIndex;
+
+	public int getItemPanelIndex() {
+		return itemPanelIndex;
+	}
+
+	public void setItemPanelIndex(int itemPanelIndex) {
+		this.itemPanelIndex = itemPanelIndex;
+	}
 
 	public Item(String name){
 		this.name=name;
