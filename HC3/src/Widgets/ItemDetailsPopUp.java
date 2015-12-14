@@ -31,6 +31,8 @@ import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class ItemDetailsPopUp extends JDialog {
 
@@ -118,7 +120,17 @@ public class ItemDetailsPopUp extends JDialog {
 
 					@Override
 					public void actionPerformed(ActionEvent arg0) {
+						dispose();
 						edit=true;
+						try {
+							EditItemDetailsPopUp editItemPopUp = new EditItemDetailsPopUp(item);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (URISyntaxException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} 
 						
 					}
 					
