@@ -420,6 +420,7 @@ public class FridgeView extends JPanel {
 
 	public void updateCompartments() throws IOException, URISyntaxException {
 		initializeCompartments();
+		ProjectFrame.thisInstance.validate();
 		
 		Component[] compartments=fridgePanel.getComponents();
 		
@@ -431,6 +432,7 @@ public class FridgeView extends JPanel {
 					panels.add(itemPanel);
 				}
 			}
+			
 			((Compartment)compartment).AddItems(panels);
 		}
 		
