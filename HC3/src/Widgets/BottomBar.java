@@ -111,6 +111,8 @@ public class BottomBar extends JPanel {
 					try {
 						fridgeView = new FridgeView(fridge);
 						ProjectFrame.thisInstance.setContentPane(fridgeView);
+						((FridgeView)ProjectFrame.thisInstance.getContentPane().getComponent(0)).updateCompartments();
+						
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
