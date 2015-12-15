@@ -1,6 +1,7 @@
 package Repository;
 
 import java.util.Date;
+
 import Global.FridgeLocation;
 
 public class Item {
@@ -11,7 +12,7 @@ public class Item {
 	private boolean countDownIsSet = false;
 	private double quantity=-1;
 	private String units="";
-	private Date bestBefore;
+	private String bestBefore;
 	private String ownerShip="";
 	private FridgeLocation location;
 	
@@ -69,11 +70,11 @@ public class Item {
 		this.units = units;
 	}
 
-	public Date getBestBefore() {
+	public String getBestBefore() {
 		return bestBefore;
 	}
 
-	public void setBestBefore(Date bestBefore) {
+	public void setBestBefore(String bestBefore) {
 		this.bestBefore = bestBefore;
 	}
 

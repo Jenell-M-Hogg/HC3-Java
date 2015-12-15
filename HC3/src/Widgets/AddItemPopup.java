@@ -1,6 +1,7 @@
 package Widgets;
 
 import java.awt.Component;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
@@ -11,14 +12,23 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Properties;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import org.jdatepicker.DateModel;
+import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.DateComponentFormatter;
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import Global.FridgeLocation;
 import Global.ProjectFrame;
@@ -29,19 +39,26 @@ import Screens.FridgeView;
 import Screens.ListView;
 import Screens.ShoppingListView;
 
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+
 public class AddItemPopup extends JPanel {
 
 	CategoryList categoryList = CategoryList.getInstance();
+	private JDatePickerImpl datePicker;
 	/**
 	 * Create the panel.
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */
 	public AddItemPopup() throws IOException, URISyntaxException {
-
+		
 		JTextField txtName;
+		setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JPanel namePanel = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) namePanel.getLayout();
+		flowLayout.setAlignment(FlowLayout.LEFT);
 		add(namePanel);
 		
 		JLabel lblName = new JLabel("Name: ");
@@ -72,6 +89,8 @@ public class AddItemPopup extends JPanel {
 		JFormattedTextField txtQuantity;
 		
 		JPanel quantityPanel = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) quantityPanel.getLayout();
+		flowLayout_1.setAlignment(FlowLayout.LEFT);
 		add(quantityPanel);
 		
 		JLabel lblQuantity = new JLabel("Quantity: ");
@@ -92,35 +111,29 @@ public class AddItemPopup extends JPanel {
 		JTextField txtBestBefore;
 		
 		JPanel bestBeforePanel = new JPanel();
+		FlowLayout flowLayout_2 = (FlowLayout) bestBeforePanel.getLayout();
+		flowLayout_2.setAlignment(FlowLayout.LEFT);
 		add(bestBeforePanel);
 		
 		JLabel lblBestBefore = new JLabel("Expected Best Before Date: ");
 		bestBeforePanel.add(lblBestBefore);
 		
-		txtBestBefore = new JTextField();
-		txtBestBefore.setEnabled(true);
-		txtBestBefore.setText("ddmmyyyy");
-		txtBestBefore.setToolTipText("This field should be entered in the form of \"ddmmyyyy\".");
-		txtBestBefore.addFocusListener(new FocusListener(){
-	        @Override
-	        public void focusGained(FocusEvent e){
-	        	txtBestBefore.setEnabled(true);
-	        	if (txtBestBefore.getText().equals("ddmmyyyy")) {
-	        		txtBestBefore.setText("");					
-				}	
-	        }
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				txtBestBefore.setEnabled(true);
-				if (txtBestBefore.getText().equals("")) {
-					txtBestBefore.setText("ddmmyyyy");					
-				}				
-			}
-	    });
-		bestBeforePanel.add(txtBestBefore);
+		
+		
+		
+		UtilDateModel model= new UtilDateModel();
+		Properties p= new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		JDatePanelImpl datePanel= new JDatePanelImpl(model, p);
+		datePicker= new JDatePickerImpl(datePanel, new DateComponentFormatter());
+		
+		bestBeforePanel.add(datePicker);
 		
 		JPanel categoryPanel = new JPanel();
+		FlowLayout flowLayout_3 = (FlowLayout) categoryPanel.getLayout();
+		flowLayout_3.setAlignment(FlowLayout.LEFT);
 		add(categoryPanel);
 		
 		JLabel lblCategory = new JLabel("Category: ");
@@ -138,6 +151,8 @@ public class AddItemPopup extends JPanel {
 		categoryPanel.add(categoriesComboBox);
 		
 		JPanel locationPanel = new JPanel();
+		FlowLayout flowLayout_4 = (FlowLayout) locationPanel.getLayout();
+		flowLayout_4.setAlignment(FlowLayout.LEFT);
 		add(locationPanel);
 		
 		JLabel lblLocation = new JLabel("Location: ");
@@ -180,19 +195,30 @@ public class AddItemPopup extends JPanel {
 	        }
 			
 	        try {
-			SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyy");
-			Calendar today = new GregorianCalendar();
-			Calendar bestBefore = new GregorianCalendar();
-			String day1 = "02122015";
-			String day2 = txtBestBefore.getText();
-			Date date = sdf.parse(day1);
-			today.setTime(date);
-			date = sdf.parse(day2);
-			bestBefore.setTime(date);
-			item.setBestBefore(date);
-
-			int countDown = item.daysBetween(today.getTime(),bestBefore.getTime());
+			
+	        	//TODO
+	        String text= datePicker.getJFormattedTextField().getText();
+	        
+	        item.setBestBefore(text);
+	        
+	        
+	        DateComponentFormatter d= new DateComponentFormatter();
+	        GregorianCalendar b = (GregorianCalendar) d.stringToValue(text);
+	        
+	        Date bb = b.getTime();
+	        Calendar today= new GregorianCalendar();
+	        Date t= today.getTime();
+	        
+	        int countDown=item.daysBetween(bb, t);
+			GregorianCalendar bestBefore = (GregorianCalendar) d.stringToValue(text);
+		
+			
+			
+			
+			//item.setBestBefore(bestBefore);
 			item.setCountDown(countDown);
+			
+			
 	        } catch (Exception e) {
 	        }
 			
