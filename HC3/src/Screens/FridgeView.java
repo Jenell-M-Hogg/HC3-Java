@@ -121,10 +121,6 @@ public class FridgeView extends JPanel {
 		add(panel_1, BorderLayout.CENTER);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
-		
-		
-		
-		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Hello", "Yooo"}));
 		panel_1.add(comboBox, BorderLayout.WEST);
