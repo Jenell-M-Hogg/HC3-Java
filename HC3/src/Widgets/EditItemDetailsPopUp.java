@@ -99,14 +99,14 @@ public class EditItemDetailsPopUp extends JPanel {
         String day1;
         String day2;
         Date date;
-        date = item.getBestBefore();
+      //  date = item.getBestBefore();
         
 		txtBestBefore = new JTextField();
 		txtBestBefore.setEnabled(true);
 		
 		try {
-		day2 = String.format("%02d", date.getDay()) + String.format("%02d", date.getMonth()) + String.format("%04d", date.getYear());
-		txtBestBefore.setText(day2);
+	//	day2 = String.format("%02d", date.getDay()) + String.format("%02d", date.getMonth()) + String.format("%04d", date.getYear());
+	//	txtBestBefore.setText(day2);
 		} catch (Exception e) {
 			txtBestBefore.setText("ddmmyyyy");
 		}
@@ -202,7 +202,7 @@ public class EditItemDetailsPopUp extends JPanel {
 			today.setTime(date);
 			date = sdf.parse(day2);
 			bestBefore.setTime(date);
-			item.setBestBefore(date);
+			//item.setBestBefore(date);
 
 			int countDown = item.daysBetween(today.getTime(),bestBefore.getTime());
 			item.setCountDown(countDown);

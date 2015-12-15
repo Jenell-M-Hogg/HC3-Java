@@ -141,7 +141,7 @@ public class ItemDetailsPopUp extends JDialog {
 						dispose();
 						edit=true;
 						try {
-							EditItemDetailsPopUp editItemPopUp = new EditItemDetailsPopUp(item);
+							AddItemPopup editItemPopUp = new AddItemPopup(item, "Edit Item");
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
