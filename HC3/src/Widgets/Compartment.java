@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import net.miginfocom.swing.MigLayout;
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Insets;

@@ -58,7 +58,7 @@ public class ItemDetailsPopUp extends JDialog {
 	 * Create the dialog.
 	 */
 	public ItemDetailsPopUp(Item item) {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemDetailsPopUp.class.getResource("/images/DefaultCategoryIcon.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ItemDetailsPopUp.class.getResource(item.getCategory().getIconLocation())));
 		setTitle(item.getName());
 		setResizable(false);
 		this.setAlwaysOnTop(true);
@@ -78,14 +78,26 @@ public class ItemDetailsPopUp extends JDialog {
 		{
 			JLabel label = new JLabel("");
 			contentPanel.add(label, "cell 1 0");
-			label.setIcon(new ImageIcon(ItemDetailsPopUp.class.getResource("/images/DefaultCategoryIcon.png")));
+			label.setIcon(new ImageIcon(ItemDetailsPopUp.class.getResource(item.getCategory().getIconLocation())));
 		}
 		{
-			JLabel lblProduce = new JLabel("Produce");
-			contentPanel.add(lblProduce, "cell 2 0");
+			try{
+				JLabel lblProduce = new JLabel(item.getCategory().getName());
+				contentPanel.add(lblProduce, "cell 2 0");
+			}
+			catch(Exception e){
+				
+			}
+			
 		}
 		{
 			JLabel lblBestBeforeDate = new JLabel("Best Before Date:");
+			try{
+				lblBestBeforeDate.setText(lblBestBeforeDate.getText()+" "+item.getBestBefore().toString());
+			}
+			catch(Exception e){
+				lblBestBeforeDate.setText(lblBestBeforeDate.getText()+" -");
+			}
 			contentPanel.add(lblBestBeforeDate, "cell 0 1");
 		}
 		{
@@ -93,16 +105,22 @@ public class ItemDetailsPopUp extends JDialog {
 			contentPanel.add(lblCountdown, "cell 0 2,alignx trailing");
 		}
 		{
-			ExpiryCountDown expiryCountDown = new ExpiryCountDown(0);
-			contentPanel.add(expiryCountDown, "cell 1 2");
+			if(!(item.getBestBefore()==null)){
+				ExpiryCountDown expiryCountDown = new ExpiryCountDown(item.getCountDown());
+				contentPanel.add(expiryCountDown, "cell 1 2");
+			}
+			
 		}
 		{
-			JLabel lblQuantity = new JLabel("Quantity:" + item.getBestBefore());
+			JLabel lblQuantity = new JLabel("Quantity:" );
 			contentPanel.add(lblQuantity, "cell 0 3,alignx trailing");
 		}
 		{
-			JLabel label = new JLabel("#");
-			contentPanel.add(label, "cell 1 3");
+			if(item.getQuantity()>0){
+				JLabel label = new JLabel(Double.toString(item.getQuantity()));
+				contentPanel.add(label, "cell 1 3");
+			}
+			
 		}
 		{
 			JLabel label = new JLabel(item.getUnits());
