@@ -96,8 +96,8 @@ public class Compartment extends JPanel {
 		GridBagConstraints gbc= new GridBagConstraints();
 		gbc.gridx=column;
 		gbc.gridy=row+1;
-		gbc.anchor= GridBagConstraints.EAST;
-		gbc.fill=GridBagConstraints.HORIZONTAL;
+		gbc.anchor= GridBagConstraints.WEST;
+		gbc.fill=GridBagConstraints.NONE;
 		gbc.insets=new Insets(2,2,2,2);
 		
 		paneWindow.add(itemPanel,gbc);
