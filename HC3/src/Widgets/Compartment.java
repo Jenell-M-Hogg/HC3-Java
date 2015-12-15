@@ -21,6 +21,7 @@ import javax.swing.ScrollPaneConstants;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import javax.swing.border.TitledBorder;
 
 public class Compartment extends JPanel {
 	private JPanel paneWindow;
@@ -37,7 +38,8 @@ public class Compartment extends JPanel {
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */
-	public Compartment(FridgeLocation location) throws IOException, URISyntaxException {	
+	public Compartment(FridgeLocation location) throws IOException, URISyntaxException {
+		setBorder(new TitledBorder(null, location.toString(), TitledBorder.LEADING, TitledBorder.TOP, null, null));	
 		this.setFlocation(location);
 				
 		setLayout(new BorderLayout(0, 0));
