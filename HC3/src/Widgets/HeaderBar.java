@@ -194,7 +194,7 @@ public class HeaderBar extends JPanel {
 
 
 	private void addNewItem() throws IOException, URISyntaxException, ParseException {
-		JPanel addItemPopup = new AddItemPopup();
+		JPanel addItemPopup = new AddItemPopup(null, "Add Item");
 		add(addItemPopup);
 	}
 	

@@ -51,7 +51,7 @@ public class AddItemPopup extends JPanel {
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */
-	public AddItemPopup() throws IOException, URISyntaxException {
+	public AddItemPopup(Item item, String title) throws IOException, URISyntaxException {
 		
 		JTextField txtName;
 		setLayout(new GridLayout(0, 1, 0, 0));
@@ -66,21 +66,32 @@ public class AddItemPopup extends JPanel {
 		
 		txtName = new JTextField();
 		txtName.setEnabled(true);
-		txtName.setText("Enter item name");
+		if (item == null) {
+			txtName.setText("Enter item name");
+		} else {
+			txtName.setText(item.getName());
+		}
+		Item newItem = item;
 		txtName.addFocusListener(new FocusListener(){
 	        @Override
 	        public void focusGained(FocusEvent e){
 	        	txtName.setEnabled(true);
-	        	if (txtName.getText().equals("Enter item name")) {
-					txtName.setText("");					
-				}	
+	        	if (newItem == null){
+	        		if (txtName.getText().equals("Enter item name")) {
+	        			txtName.setText("");					
+	        		}	
+	        	}
 	        }
 
 			@Override
 			public void focusLost(FocusEvent e) {
 				txtName.setEnabled(true);
 				if (txtName.getText().equals("")) {
-					txtName.setText("Enter item name");					
+					if (newItem == null) {
+						txtName.setText("Enter item name");
+					} else {
+						txtName.setText(newItem.getName());
+					}
 				}				
 			}
 	    });
@@ -97,13 +108,17 @@ public class AddItemPopup extends JPanel {
 		quantityPanel.add(lblQuantity);
 		
 		txtQuantity = new JFormattedTextField(NumberFormat.getNumberInstance());
-		//txtQuantity.setValue(new Double(-1));
+
+		if (item != null){
+			if (item.getQuantity() >= 0) {
+				txtQuantity.setValue(item.getQuantity());
+			}
+		}
+		
 		txtQuantity.setColumns(10);
 		txtQuantity.setToolTipText("This field must be a number.");
 		
-		//txtQuantity = new JTextField();
 		txtQuantity.setEnabled(true);
-		//txtQuantity.setText("Enter item name");
 		
 		quantityPanel.add(txtQuantity);
 		
@@ -117,9 +132,6 @@ public class AddItemPopup extends JPanel {
 		
 		JLabel lblBestBefore = new JLabel("Expected Best Before Date: ");
 		bestBeforePanel.add(lblBestBefore);
-		
-		
-		
 		
 		UtilDateModel model= new UtilDateModel();
 		Properties p= new Properties();
@@ -148,6 +160,11 @@ public class AddItemPopup extends JPanel {
 			catNames[i] = catArray[i].getName();
 		}
 		categoriesComboBox.setModel(new DefaultComboBoxModel(catNames));
+		
+		if (item != null) {
+			categoriesComboBox.setSelectedItem(item.getLocation());
+		}
+		
 		categoryPanel.add(categoriesComboBox);
 		
 		JPanel locationPanel = new JPanel();
@@ -173,7 +190,7 @@ public class AddItemPopup extends JPanel {
 		Object[] options = {"Confirm"};
 		int answer = JOptionPane.showOptionDialog(null,
 				complexMsg,
-				"Add Item",
+				title,
 				JOptionPane.INFORMATION_MESSAGE,
 				JOptionPane.PLAIN_MESSAGE,
 				null,     //do not use a custom Icon
@@ -188,7 +205,15 @@ public class AddItemPopup extends JPanel {
 	        if (txtName.getText().equals("Enter item name")) {
 				txtName.setText("");					
 			}
-	        Item item = new Item(txtName.getText());
+	        
+	        boolean itemWasNull;
+	        if (item == null) {
+	        	itemWasNull = true;
+	        	item = new Item(txtName.getText());
+	        } else {
+	        	itemWasNull = false;
+		        item.setName(txtName.getText());
+	        }
 	        
 	        if (txtQuantity.getValue() != null) {
 	        	item.setQuantity(Integer.parseInt(txtQuantity.getText()));	
@@ -227,15 +252,25 @@ public class AddItemPopup extends JPanel {
 			
 			item.setLocation(FridgeLocation.valueOf((String)locationsComboBox.getSelectedItem()));
 
-			if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ListView){
-				((ListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
-			} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ShoppingListView){
-				((ShoppingListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
-				
-				//shoppingListView.addItem(item);
-			} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof FridgeView){
-				((FridgeView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
-				
+			if (itemWasNull) {
+
+				if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ListView){
+					((ListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+				} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ShoppingListView){
+					((ShoppingListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+				} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof FridgeView){
+					((FridgeView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+
+				}
+			} else {
+				if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ListView){
+					((ListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).editItem(item);
+				} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ShoppingListView){
+					((ShoppingListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).editItem(item);
+				} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof FridgeView){
+					((FridgeView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).editItem(item);
+
+				}
 			}
 		}
 	
