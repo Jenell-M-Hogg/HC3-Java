@@ -350,4 +350,9 @@ public class ShoppingListView extends JPanel {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void editItem(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
 }
