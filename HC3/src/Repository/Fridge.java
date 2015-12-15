@@ -16,14 +16,6 @@ public class Fridge {
 		this.items=new ArrayList<Item>();
 	}
 	
-	public void addItem(Item item){
-		items.add(item);
-	}
-	
-	public ArrayList<Item> getItems(){
-		return items;
-	}
-	
 	public String returnName(){
 		return this.name;
 	}
@@ -31,9 +23,21 @@ public class Fridge {
 	public void setNewName(String newName){
 		this.name = newName;
 	}
-
-	public void setItems(ArrayList<Item> newItes) {
-		this.items=newItes;
+	
+	public void addItem(Item item){
+		items.add(item);
+	}
+	
+	public void removeItem(Item item) {
+		items.remove(item);
+	}
+	
+	public ArrayList<Item> getItems(){
+		return items;
+	}
+	
+	public void setItems(ArrayList<Item> newItems) {
+		this.items=newItems;
 		
 	}
 }

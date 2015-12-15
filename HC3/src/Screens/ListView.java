@@ -214,18 +214,16 @@ public class ListView extends JPanel {
 	private void createItemPanels() throws IOException, URISyntaxException {
 		// Gets the items from fridge and updates the itemPanels
 		ArrayList<Item> items= fridge.getItems();
-		ArrayList<Item> newItes=new ArrayList<Item>();
+		ArrayList<Item> newItems=new ArrayList<Item>();
 		itemPanels.clear();
 		
 		for(int i=0; i<items.size(); i++){
 			Item item = items.get(i);
 			item.setItemPanelIndex(i);
 			this.itemPanels.add(new ItemPanel(item));
-			newItes.add(item);
-			
+			newItems.add(item);
 		}
-		
-		fridge.setItems(newItes);
+		fridge.setItems(newItems);
 	}
 	
 	
@@ -320,8 +318,6 @@ public class ListView extends JPanel {
 		for(int i=0; i<this.itemPanels.size(); i++){
 			addToScroll(this.itemPanels.get(i),i);
 		}
-		
-		
 		
 		Dimension preferred= scrollPane.getViewport().getView().getPreferredSize();
 		Dimension actual= scrollPane.getViewport().getViewSize();
