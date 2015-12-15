@@ -215,13 +215,11 @@ public class EditItemDetailsPopUp extends JPanel {
 			item.setLocation(FridgeLocation.valueOf((String)locationsComboBox.getSelectedItem()));
 
 			if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ListView){
-				((ListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+				((ListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).editItem(item);
 			} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof ShoppingListView){
-				((ShoppingListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
-				
-				//shoppingListView.addItem(item);
+				((ShoppingListView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).editItem(item);
 			} else if(ProjectFrame.thisInstance.getContentPane().getComponent(0) instanceof FridgeView){
-				((FridgeView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).addItem(item);
+				((FridgeView)(ProjectFrame.thisInstance.getContentPane().getComponent(0))).editItem(item);
 				
 			}
 		}
