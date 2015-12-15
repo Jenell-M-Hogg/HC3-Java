@@ -12,6 +12,7 @@ import Repository.Fridge;
 import Repository.Item;
 import Screens.FridgeView;
 import Screens.ListView;
+import Screens.MainMenu;
 
 public class ProjectFrame extends JFrame {
 	public static ProjectFrame thisInstance;
@@ -69,7 +70,15 @@ public class ProjectFrame extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {	
-				fridgeTest();
+				//fridgeTest();
+				ProjectFrame frame = new ProjectFrame();
+				
+				thisInstance.setContentPane(new MainMenu());
+				thisInstance.setMinimumSize(new Dimension(Constants.FRAME_WIDTH, Constants.FRAME_HEIGHT));
+				thisInstance.pack();
+				
+				thisInstance.setVisible(true);
+				
 			}
 		});
 	}
