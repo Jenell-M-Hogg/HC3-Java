@@ -97,7 +97,6 @@ public class ShoppingListView extends JPanel {
 		add(bottomPanel, gbc_bottomPanel);
 		bottomPanel.setLayout(new BorderLayout(0, 0));
 		
-		
 		JPanel sortBy = new JPanel();
 		sortBy.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		
@@ -207,11 +206,16 @@ public class ShoppingListView extends JPanel {
 	private void createItemPanels() throws IOException, URISyntaxException {
 		// Gets the items from shopList and updates the itemPanels
 		ArrayList<Item> items= shopList.getItems();
+		ArrayList<Item> newItems=new ArrayList<Item>();
 		itemPanels.clear();
 		
 		for(int i=0; i<items.size(); i++){
-			this.itemPanels.add(new ItemPanel(items.get(i)));
+			Item item = items.get(i);
+			item.setItemPanelIndex(i);
+			this.itemPanels.add(new ItemPanel(item));
+			newItems.add(item);
 		}
+		shopList.setItems(newItems);
 	}
 	
 	//TODO
@@ -263,7 +267,7 @@ public class ShoppingListView extends JPanel {
 		this.updateList();
 	}
 
-/*	private void daySort(boolean fromLowest){
+	private void daySort(boolean fromLowest){
 		ArrayList<ItemPanel> sorted= new ArrayList<ItemPanel>();
 		sorted.add(itemPanels.get(0));
 		
@@ -287,7 +291,7 @@ public class ShoppingListView extends JPanel {
 				}
 			}
 		}
-	}*/
+	}
 	
 	private void updateList() {
 
@@ -295,11 +299,7 @@ public class ShoppingListView extends JPanel {
 		for(int i=0; i<this.itemPanels.size(); i++){
 			addToScroll(this.itemPanels.get(i),i);
 		}
-		
-		
-		
-		scrollPane.setViewportView(paneWindow);
-		
+				
 		Dimension preferred= scrollPane.getViewport().getView().getPreferredSize();
 		Dimension actual= scrollPane.getViewport().getViewSize();
 				
@@ -346,13 +346,24 @@ public class ShoppingListView extends JPanel {
 		
 	}
 
-	public void addItem(Item item) {
-		// TODO Auto-generated method stub
+	public void editItem(Item item) throws IOException, URISyntaxException {
+		int index= item.getItemPanelIndex();
 		
+		this.itemPanels.set(index, new ItemPanel(item));
+		
+		for(int i=0; i<shopList.getItems().size(); i++){
+			if(shopList.getItems().get(i).getItemPanelIndex()==index){
+				shopList.getItems().set(i, item);
+				break;
+			}
+		}
+		
+		this.updateList();
 	}
-
-	public void editItem(Item item) {
-		// TODO Auto-generated method stub
-		
+	
+	public void addItem(Item item) throws IOException, URISyntaxException {
+		this.shopList.addItem(item);
+		this.itemPanels.add(new ItemPanel(item));
+		this.updateList();
 	}
 }

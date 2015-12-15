@@ -31,4 +31,9 @@ public class ShopList {
 	public ArrayList<Item> getItems(){
 		return items;
 	}
+	
+	public void setItems(ArrayList<Item> newItems) {
+		this.items=newItems;
+		
+	}
 }
